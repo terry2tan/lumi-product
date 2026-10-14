@@ -1,0 +1,14 @@
+html.mac-app #titlebar [data-component=Brand]{left:104px!important}
+html.mac-app .home-navigation-controls{left:192px}
+html.mac-app.mac-fullscreen #titlebar [data-component=Brand]{left:16px!important}
+html.mac-app.mac-fullscreen .home-navigation-controls{left:104px}
+html.mac-app #titlebar [data-component=WindowControls]{display:none!important}
+html.mac-app .home-right-toggle{right:16px}
+html.mac-app .copilot-fullscreen-restore{right:52px}
+html.mac-app .workspace-titlebar{right:56px}
+html.mac-app .is-fullscreen-copilot .workspace-titlebar,html.mac-app .is-fullscreen-copilot .app-conversation-title{right:92px}
+html.mac-app .conversation-message-content p{white-space:pre-wrap}
+.conversation-error{padding:12px 16px;margin:12px 0;color:#e0a5a5;background:#36282c;border:1px solid #62434b;border-radius:10px;line-height:1.5}
+.conversation-error p{margin:0 0 10px;white-space:pre-wrap}
+.conversation-error button{padding:6px 12px;border-radius:6px;background:#4c343b;color:#f3d6db}
+.conversation-error button:hover{background:#63444e}
