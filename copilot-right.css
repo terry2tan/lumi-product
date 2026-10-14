@@ -1,0 +1,65 @@
+.copilot-entry-toggle{position:absolute;right:92px;top:8px;z-index:8}
+#surface.with-copilot:not(.copilot-expanded)>.workbench{grid-column:1;grid-row:1}
+#surface.with-copilot:not(.copilot-expanded)>.chat-panel{grid-column:2;grid-row:1}
+.copilot-mode-controls{display:flex;align-items:center;gap:2px;min-width:0}
+.copilot-mode-divider{width:1px;height:16px;flex:0 0 1px;margin:0 6px;background:#45464c}
+.copilot-new-chat{display:flex;align-items:center;gap:7px;min-width:0;height:28px;padding:3px 4px;border-radius:5px;font-size:14px;white-space:nowrap;color:#d4d6dc}
+.copilot-new-chat img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+.copilot-new-chat:hover{background:#35373c}
+.copilot-mode-toggle{width:24px;padding:4px}
+.copilot-toolbar-button svg{width:16px;height:16px;pointer-events:none}
+.copilot-mode-menu{position:fixed;z-index:150;width:168px;padding:6px;border:1px solid #44474d;border-radius:8px;background:#292a2e;box-shadow:0 8px 24px #0005}
+.copilot-mode-menu button{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;text-align:left;border-radius:5px;font-size:14px;color:#d7d9df}
+.copilot-mode-menu button:hover,.copilot-mode-menu button:focus-visible{background:#3b3d43}
+.copilot-mode-menu img{width:18px;height:18px;object-fit:contain;flex-shrink:0}
+html.mac-app .copilot-entry-toggle{right:16px}
+
+.copilot-entry-toggle[aria-expanded=true]{background:#29292c}
+.copilot-entry-toggle img{width:16px;height:16px;object-fit:contain}
+#surface.split.with-copilot.is-horizontal-copilot.copilot-on-left{grid-template-columns:var(--copilot-width) minmax(0,1fr)}
+#surface.with-copilot.copilot-on-left:not(.copilot-expanded)>.chat-panel{grid-column:1}
+#surface.with-copilot.copilot-on-left:not(.copilot-expanded)>.workbench{grid-column:2}
+.copilot-titlebar{position:absolute;top:7px;height:30px;display:flex;align-items:center;min-width:0;z-index:6}
+.copilot-titlebar .top-workspace-tab{flex:0 1 150px;min-width:0;max-width:100%}
+.copilot-titlebar .top-workspace-tab-label{cursor:grab;touch-action:none;user-select:none}
+.copilot-tab-divider{position:absolute;top:5px;height:20px;width:1px;background:#45464c;pointer-events:none}
+.copilot-dock-target{position:fixed;z-index:200;pointer-events:none;border:2px solid #719cdb;border-radius:16px;background:#719cdb22}
+.copilot-dock-target[hidden]{display:none}
+body.is-dragging-copilot,body.is-dragging-copilot *{cursor:grabbing!important;user-select:none!important}
+
+.copilot-more-menu{width:184px;z-index:250}
+.copilot-more-menu button:disabled{cursor:default;color:#777a82;background:transparent}
+.copilot-floating-root{position:fixed;z-index:120;right:24px;top:64px;width:min(420px,calc(100vw - 16px));height:min(720px,calc(100dvh - 80px));border:1px solid #494b52;border-radius:16px;box-shadow:0 18px 64px #0009;overflow:hidden;background:var(--bg)}
+.copilot-floating-root>#page-copilot{position:relative;inset:auto;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:inherit;background:var(--bg)}
+.copilot-floating-root .copilot-toolbar{cursor:grab;touch-action:none;user-select:none}
+.copilot-floating-root .copilot-toolbar:active{cursor:grabbing}
+.copilot-floating-root .copilot-toolbar button{cursor:pointer}
+.copilot-floating-root .chat-panel>.split-composer{padding-bottom:20px!important}
+
+.copilot-drag-handle{touch-action:none;user-select:none;cursor:grab}
+.copilot-drag-handle button{cursor:pointer}
+.copilot-titlebar .top-workspace-tab-label{cursor:grab}
+
+#copilot-mode-menu button{gap:7px;padding:0 4px}
+
+.home-navigation-controls .copilot-entry-toggle.is-docked-left{position:static;flex-shrink:0}
+
+.copilot-more-menu button>svg,.copilot-more-menu button>img{width:16px;height:16px;flex:0 0 16px;pointer-events:none}
+.copilot-more-label{flex:1}
+.copilot-floating-root.is-always-on-top{z-index:140}
+
+.copilot-floating-resize{position:absolute;top:12px;bottom:12px;width:7px;z-index:10;cursor:ew-resize;touch-action:none}
+.copilot-floating-resize.is-left{left:0}
+.copilot-floating-resize.is-right{right:0}
+.copilot-floating-resize:hover,.copilot-floating-resize:focus-visible{background:#719cdb55;outline:none}
+
+/* The current conversation uses a plain icon and title outside full preview. */
+.copilot-entry-toggle{display:flex!important;align-items:center;justify-content:flex-start;gap:8px;height:28px!important;width:28px;padding:6px!important;border-radius:6px;font-size:14px;white-space:nowrap;overflow:hidden}
+.copilot-entry-toggle.has-conversation{width:auto!important;min-width:0;max-width:120px;padding:6px!important;justify-content:flex-start;background:transparent;color:#dedee2;font-weight:500}
+.copilot-entry-toggle.has-conversation[aria-expanded=true]{background:transparent;color:#dedee2}
+.copilot-entry-toggle.has-conversation:hover{background:#35373c}
+.copilot-entry-toggle>img{flex:0 0 16px}
+.copilot-conversation-title{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.copilot-conversation-title[hidden]{display:none}
+.copilot-titlebar{pointer-events:none}
+

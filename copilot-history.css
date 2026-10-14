@@ -1,0 +1,35 @@
+.copilot-toolbar-button>svg{width:16px;height:16px;pointer-events:none}
+#page-copilot>.copilot-history-underlay{visibility:hidden!important;pointer-events:none!important}
+.copilot-history-page{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;min-height:0;background:var(--bg);color:#b4b6b8;border-radius:inherit;overflow:hidden}
+.copilot-history-heading{display:flex;align-items:center;gap:8px;flex:0 0 56px;padding:10px 12px 10px 20px;border-bottom:1px solid var(--panel-border)}
+.copilot-history-heading h2{flex:1;min-width:0;font-size:14px;line-height:22px;font-weight:600;margin:0;outline:none;color:#dedee0}
+.copilot-history-close,.copilot-history-search-toggle{width:28px;height:28px;flex-shrink:0;padding:6px;color:#a4a8b1}
+.copilot-history-close>svg,.copilot-history-search-toggle>img{width:16px;height:16px;pointer-events:none}
+.copilot-history-search{display:flex;align-items:center;gap:8px;flex:1;min-width:0;height:34px;padding:0 9px;border:1px solid #39393d;border-radius:6px;background:#252527}
+.copilot-history-search:hover{background:#2a2a2d;border-color:#46464a}
+.copilot-history-search:focus-within{border-color:#646974;box-shadow:0 0 0 1px #64697433}
+.copilot-history-search>img{width:16px;height:16px;flex-shrink:0}
+.copilot-history-search input{width:100%;min-width:0;flex:1;padding:0;border:0;outline:none;background:transparent;color:#dedee0;font-size:14px;line-height:20px}
+.copilot-history-search input::placeholder{color:#808286}
+.copilot-history-search input::-webkit-search-cancel-button{display:none}
+.copilot-history-search-clear{display:grid;place-items:center;width:22px;height:22px;flex-shrink:0;padding:0;border-radius:4px;font-size:18px;line-height:1;color:#a6a7af}
+.copilot-history-search-clear:hover,.copilot-history-search-clear:focus-visible{background:#3b3c41;color:#dedee0}
+.copilot-history-list{flex:1;min-height:0;overflow:auto;padding:12px;scrollbar-width:thin}
+.copilot-history-group{margin-bottom:20px}
+.copilot-history-group-toggle{display:flex;align-items:center;gap:4px;width:100%;min-height:30px;padding:0 10px;text-align:left;font-size:14px;line-height:20px;color:#737578}
+.copilot-history-group-toggle::after{content:'⌄';opacity:0}
+.copilot-history-group-toggle:hover::after,.copilot-history-group-toggle:focus-visible::after{opacity:.72}
+.copilot-history-group-toggle[aria-expanded=false]::after{transform:rotate(-90deg)}
+.copilot-history-item{display:flex;align-items:center;gap:8px;width:100%;min-width:0;min-height:34px;padding:6px 10px;border-radius:6px;text-align:left;font-size:14px;line-height:20px;color:#b4b6b8}
+.copilot-history-item-title{flex:1;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.copilot-history-item-time{flex-shrink:0;color:#737578;font-size:12px;line-height:18px}
+.copilot-history-item:hover,.copilot-history-item:focus-visible{background:#303033;color:#eeeef0}
+.copilot-history-item[aria-current=true]{background:#303033;color:#eeeef0}
+.copilot-history-item:focus-visible,.copilot-history-project:focus-visible,.copilot-history-group-toggle:focus-visible{outline:1.5px solid #7aa4de;outline-offset:-1px}
+.copilot-history-project{display:flex;align-items:center;gap:8px;width:100%;min-width:0;min-height:34px;padding:0 10px;border-radius:6px;text-align:left;font-size:14px;color:#b4b6b8}
+.copilot-history-project:hover,.copilot-history-project:focus-visible{background:#303033;color:#eeeef0}
+.copilot-history-project>span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.copilot-history-project>img,.copilot-history-project-result>img{width:16px;height:16px;flex-shrink:0}
+.copilot-history-project-records{padding:6px 0 2px}
+.copilot-history-project-records>.copilot-history-item{padding-left:34px}
+.copilot-history-empty{padding:32px 12px;text-align:center;color:#858993;font-size:14px}

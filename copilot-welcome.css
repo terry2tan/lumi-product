@@ -1,0 +1,21 @@
+.copilot-welcome{position:relative;display:flex;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;background:var(--bg);overflow:hidden}
+.copilot-welcome>.copilot-toolbar{flex-shrink:0}
+.copilot-welcome-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:32px 20px 24px}
+.copilot-welcome-body{display:flex;flex-direction:column;align-items:stretch;gap:20px;width:100%;max-width:800px;margin:0 auto}
+.copilot-welcome-symbol{align-self:center;width:56px;height:56px;padding:8px;color:#60626a}
+.copilot-welcome-symbol svg{display:block;width:100%;height:100%}
+.copilot-welcome-title{margin:0;text-align:center;font-size:18px;font-weight:500;line-height:28px;color:#dedee2}
+.copilot-welcome-context{display:flex;flex-direction:column;gap:10px;padding:18px 16px;color:#a8aab2;font-size:14px;line-height:24px}
+.copilot-welcome-context-label{color:#d2d3d8}
+.copilot-welcome-suggestions{display:grid;gap:12px}
+.copilot-welcome-question{display:block;width:100%;padding:16px;text-align:left;color:#b4b6bd;font-size:14px;line-height:22px;transition:background .15s,border-color .15s}
+.copilot-welcome-question:hover,.copilot-welcome-question:focus-visible{background:#2b2c30;border-color:#767880;color:#e0e1e6}
+.copilot-welcome-question:active{background:#34353a}
+.copilot-welcome-bottom{padding:12px 20px 8px}
+.copilot-welcome-composer{border-radius:0;background:transparent;box-shadow:none;max-width:800px}
+.copilot-welcome-composer .conversation-input{font-size:14px}
+.copilot-welcome-composer .conversation-send{border-radius:4px;background:#3c3e45;border-color:#62646d;box-shadow:none;color:#dedee2}
+.copilot-welcome-composer .conversation-send:hover:not(:disabled){background:#4b4d55}
+.copilot-welcome-composer .conversation-send:disabled{background:#2a2b30;border-color:#41434b;color:#696b73}
+.copilot-welcome:not(.chat-panel) .copilot-welcome-scroll{padding-top:48px}
+@media(max-width:700px){.copilot-welcome-scroll{padding:24px 16px}.copilot-welcome-bottom{padding:12px 16px 8px}}

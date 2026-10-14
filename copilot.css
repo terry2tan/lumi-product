@@ -1,0 +1,29 @@
+.titlebar-new-chat{display:flex;align-items:center;justify-content:center}
+.titlebar-new-chat img{width:16px;height:16px;pointer-events:none}
+.titlebar-new-chat[aria-expanded=true]{background:#29292c}
+#surface.split.with-copilot{display:grid;grid-template-columns:minmax(0,1fr) var(--copilot-width,360px);gap:12px;border:0;border-radius:0;background:transparent;overflow-x:auto;overflow-y:hidden}
+#surface.with-copilot>.chat-panel,#surface.with-copilot>.workbench{position:relative;inset:auto;width:100%;height:100%;min-width:0;min-height:0;border:1px solid var(--panel-border);border-radius:16px;background:var(--bg);overflow:hidden}
+#surface.with-copilot>.workbench{container-type:inline-size}
+#surface.with-copilot .chat-panel>.split-composer{padding-bottom:20px!important}
+#surface.split.with-copilot.copilot-expanded{grid-template-columns:1fr}
+#surface.with-copilot.copilot-expanded>.workbench{display:none}
+@container(max-width:760px){
+ .with-copilot .tasks-toolbar{flex-wrap:wrap;align-items:flex-start;gap:12px}
+ .with-copilot .task-tools{margin-left:auto}
+ .with-copilot .project-grid,.with-copilot .task-grid{grid-template-columns:1fr}
+ .with-copilot .file-library-page{grid-template-columns:220px minmax(0,1fr)}
+ .with-copilot .file-library-navigation [data-node-id="349:42792"],.with-copilot .file-library-navigation [data-node-id="349:42798"]{width:204px!important}
+ .with-copilot .file-library-navigation [data-node-id="349:42778"]{left:172px!important}
+ .with-copilot .file-library-navigation [data-node-id="349:42805"]{left:180px!important}
+ .with-copilot .file-library-navigation input{width:150px}
+ .with-copilot .file-list-heading,.with-copilot .file-list-row>div{grid-template-columns:minmax(0,1fr) 108px 20px}
+}
+@container(max-width:580px){
+ .with-copilot .file-library-page{grid-template-columns:180px minmax(280px,1fr);overflow:auto}
+ .with-copilot .file-library-navigation [data-node-id="349:42792"],.with-copilot .file-library-navigation [data-node-id="349:42798"]{width:164px!important}
+ .with-copilot .file-library-navigation [data-node-id="349:42778"]{left:132px!important}
+ .with-copilot .file-library-navigation [data-node-id="349:42805"]{left:140px!important}
+ .with-copilot .file-library-navigation input{width:110px}
+ .with-copilot .task-search{width:160px}
+ .with-copilot .task-templates [data-node-id="349:50832"],.with-copilot .task-templates [data-node-id="349:50843"]{flex-direction:column!important}
+}
