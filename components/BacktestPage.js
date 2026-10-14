@@ -241,8 +241,7 @@ def check(context):
   return `<header class="kb-head"><h1 tabindex="-1">策略回测</h1><div class="kb-head-tools"><input class="kb-input" type="search" data-input="q" value="${esc(S.q)}" placeholder="搜索策略" aria-label="搜索策略">${btn('导入策略文件','modal','data-modal="import"')}${btn('新建策略','new-in-chat','','is-primary')}</div></header>
    ${S.tipClient?`<div class="kb-banner"><span>这里的「策略回测」由 AI 生成策略并在本机回测，支持选股与轮动；同花顺客户端个股页底部的「策略回测」是 K 线上的指标策略，两者互不影响。</span><span class="kb-grow"></span>${btn('知道了','hide-tip','','is-small')}</div>`:''}
    ${dataBanner()}
-   <section class="kb-panel bt-new"><div class="kb-row kb-wrap"><div class="kb-grow"><b>新建策略在对话中完成</b><p class="kb-sub">在对话里说出你的想法，AI 会补齐规则请你确认，再生成代码并回测；结果自动收进「我的策略」。</p></div>${btn('在对话中新建','new-in-chat','','is-primary')}</div></section>
-   ${section('我的策略',`${mine.length} 个`,mine.map(strategyCard).join(''))}
+   ${section('我的策略',`${mine.length} 个`,mine.map(strategyCard).join('')||(q?'':'<p class="kb-empty">还没有策略。点右上角「新建策略」，在对话里说出你的想法，AI 会补齐规则请你确认，再生成代码并回测，结果自动收进这里。</p>'))}
    ${section('策略库','官方精选，下载后可改参数、可让 AI 修改',lib.map(packCard).join(''),link('在商城中查看全部','noop','data-toast="跳转到 商城 › 策略库"'))}
    <p class="kb-hint">历史回测不代表未来收益，不构成投资建议。策略库首期仅提供官方精选；用户发布与排行在后续版本开放。</p>`;
  }

@@ -81,7 +81,6 @@
 @container(max-width:560px){.bt-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.bt-axis-y{width:46px}}
 
 /* 对话中的策略卡片（BacktestChat）：在对话区里，不在 .kb-page 之下，所以单独定义字号与按钮 */
-.bt-new .kb-btn{flex:none}
 .bt-chat-card{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding:14px;border:1px solid #53555c;background:#1f2024;color:#d6d8dd;font-size:13px;line-height:20px;max-width:560px}
 .bt-chat-card p{margin:0}
 .bt-chat-card b{font-weight:500;color:#eeeff0}

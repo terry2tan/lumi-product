@@ -27,9 +27,8 @@ window.GoalsPage=(()=>{
   return `${P().settings.migrationNotice?`<div class="gl-banner" role="note"><div class="gl-grow"><b>「自动任务」已并入目标</b><p>你的 ${migrated} 个自动任务已迁移为带「定时」的目标，执行时间、内容和推送渠道都没有变。定时的会到点给你结果；「盯」的只在有实质变化时提醒。</p></div>${btn('知道了','dismiss-notice','','is-small')}</div>`:''}
    ${P().candidates.length?`<section class="gl-section"><div class="gl-row"><h2 class="gl-grow">Lumi 的建议</h2><span class="gl-sub">从最近的对话里发现，你确认后才会开始</span></div>
     <div class="gl-suggest-list">${P().candidates.map(c=>`<div class="gl-suggest"><div class="gl-grow"><b>${esc(c.title)}</b><p>${esc(c.desc)}</p><p class="gl-sub">${esc(c.why)}</p></div><div class="gl-row">${btn('设为目标','accept',`data-id="${c.id}"`,'is-primary is-small')}${btn('不需要','dismiss',`data-id="${c.id}"`,'is-small')}</div></div>`).join('')}</div></section>`:''}
-   <section class="gl-panel"><div class="gl-row gl-wrap"><div class="gl-grow"><b>新建目标在对话中完成</b><p class="gl-sub">在对话里说出想让 Lumi 持续帮你做什么，Lumi 会补齐要盯的内容和定时安排请你确认；确认后目标自动出现在这里。</p></div>${btn('在对话中新建','new-in-chat','','is-primary')}</div></section>
    <section class="gl-section"><div class="gl-row"><h2 class="gl-grow">进行中 · ${active.length}</h2></div>
-    <div class="gl-grid">${active.map(goalCard).join('')||'<p class="gl-empty">没有匹配的目标。</p>'}</div></section>
+    <div class="gl-grid">${active.map(goalCard).join('')||`<p class="gl-empty">${q?'没有匹配的目标。':'还没有进行中的目标。点右上角「新建目标」，在对话里说出想让 Lumi 持续帮你做什么，确认后会出现在这里。'}</p>`}</div></section>
    ${done.length?`<section class="gl-section"><button type="button" class="gl-link" data-act="toggle-done" aria-expanded="${S.showDone}">${S.showDone?'收起':'展开'}已完成 · ${done.length}</button>${S.showDone?`<div class="gl-grid">${done.map(goalCard).join('')}</div>`:''}</section>`:''}`;
  }
  function activityView(){
