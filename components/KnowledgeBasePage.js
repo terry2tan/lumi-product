@@ -51,7 +51,7 @@ window.KnowledgeBasePage=(()=>{
   '小红书':'只取笔记详情页的可见文字、标题、作者与已加载的图片链接；纯图片笔记没有可用文字。',
   'B 站':'读取平台已有字幕并保留时间戳；没有字幕时不保存，不用视频简介替代。'
  };
- const S={view:'home',libId:null,docId:null,packId:null,tab:'overview',homeQ:'',docQ:'',fSource:'全部',fStatus:'全部',fTag:'',modal:null,notes:false,clipForm:false,menu:null,libState:'normal',readOnlyDoc:null,
+ const S={view:'home',libId:null,docId:null,packId:null,tab:'overview',homeQ:'',docQ:'',fSource:'全部',fStatus:'全部',fTag:'',modal:null,notes:false,menu:null,libState:'normal',readOnlyDoc:null,
   clip:{url:'',stage:'idle',platform:'通用文章',mode:'正文',outcome:'ok',target:'cpo',title:'',note:'',bookmark:false,newLib:false},
   pub:{step:1,libId:null,checked:{},agree:false},draftNew:{name:'',desc:'',folderMode:'default'},downloading:{}};
  let root=null,toastTimer=0;
@@ -84,19 +84,11 @@ window.KnowledgeBasePage=(()=>{
    <div class="kb-card-foot"><span class="kb-sub">${p.count} 份资料 · v${p.version}${p.downloads?` · ${p.downloads} 次添加`:''}</span><span class="kb-grow"></span>${added?chip('已添加'):loading?chip(`下载中 ${loading}%`,'is-parsing'):btn('添加','add-pack',`data-id="${p.id}"`,'is-small')}</div>
   </article>`;
  }
- function clipFormHtml(){
-  return `<section class="kb-panel kb-clip-form" aria-label="从网页收藏"><div class="kb-row"><b>从网页收藏</b><span class="kb-grow"></span>${link('收起','toggle-clip-form')}</div>
-   <div class="kb-row"><input class="kb-input kb-grow" data-input="clip.url" value="${esc(S.clip.url)}" placeholder="粘贴文章链接、主页链接或平台分享文案" aria-label="网页链接">${btn('打开网页','clip-open','','is-primary')}</div>
-   <label class="kb-check"><input type="checkbox" data-check="clip.bookmark" ${S.clip.bookmark?'checked':''}>记为常看来源（只保存入口，不会自动抓取内容）</label>
-   <div class="kb-row kb-wrap"><span class="kb-sub">常看来源</span>${bookmarks.map((b,i)=>`<span class="kb-chip is-action"><button type="button" data-act="clip-bookmark" data-i="${i}">${esc(b.name)}</button><button type="button" data-act="remove-bookmark" data-i="${i}" aria-label="移除 ${esc(b.name)}">×</button></span>`).join('')||'<span class="kb-sub">暂无</span>'}</div>
-   <p class="kb-hint">只在你操作时读取当前页面；不批量抓取、不自动同步历史文章，不绕过登录、付费墙和验证码。</p></section>`;
- }
  function home(){
   const q=S.homeQ.trim(),hit=x=>!q||x.name.includes(q)||(x.intro||x.desc||'').includes(q);
   const mine=libs.filter(hit),official=packs.filter(p=>p.group==='official'&&hit(p)),community=packs.filter(p=>p.group==='community'&&hit(p));
   const section=(title,sub,body,extra='')=>`<section class="kb-section"><div class="kb-row"><h2>${title}</h2><span class="kb-sub">${sub}</span><span class="kb-grow"></span>${extra}</div><div class="kb-grid">${body||'<p class="kb-empty">没有找到相关知识库</p>'}</div></section>`;
-  return `<header class="kb-head"><h1 tabindex="-1">知识库</h1><div class="kb-head-tools"><input class="kb-input" type="search" data-input="homeQ" value="${esc(S.homeQ)}" placeholder="搜索知识库" aria-label="搜索知识库"><span class="kb-menu-anchor">${btn('添加资料 ▾','lib-menu','data-menu="home-add" aria-haspopup="menu"')}${S.menu==='home-add'?`<div class="kb-menu is-right" role="menu"><button type="button" role="menuitem" data-act="modal" data-modal="new-note">新建笔记</button><button type="button" role="menuitem" data-act="modal" data-modal="add" data-mode="upload">上传文件</button><button type="button" role="menuitem" data-act="modal" data-modal="add" data-mode="paste">粘贴文字</button><button type="button" role="menuitem" data-act="toggle-clip-form">从网页收藏</button></div>`:''}</span>${btn('新建知识库','modal','data-modal="new-lib"','is-primary')}</div></header>
-   ${S.clipForm?clipFormHtml():''}
+  return `<header class="kb-head"><h1 tabindex="-1">知识库</h1><div class="kb-head-tools"><input class="kb-input" type="search" data-input="homeQ" value="${esc(S.homeQ)}" placeholder="搜索知识库" aria-label="搜索知识库"><span class="kb-menu-anchor">${btn('添加资料 ▾','lib-menu','data-menu="home-add" aria-haspopup="menu"')}${S.menu==='home-add'?`<div class="kb-menu is-right" role="menu"><button type="button" role="menuitem" data-act="new-note">新建笔记</button><button type="button" role="menuitem" data-act="modal" data-modal="upload">上传文件</button><button type="button" role="menuitem" data-act="modal" data-modal="paste">粘贴文字</button><button type="button" role="menuitem" data-act="new-clip">从网页收藏</button></div>`:''}</span>${btn('新建知识库','modal','data-modal="new-lib"','is-primary')}</div></header>
    ${section('我的知识库',`${mine.length} 个`,mine.map(libCard).join(''),link('我的发布','go','data-view="publications"'))}
    ${section('官方推荐','运营提供，已过合规审核',official.map(packCard).join(''))}
    ${section('社区推荐','用户发布，先审后发',community.map(packCard).join(''),link('发布我的知识库','start-publish'))}
@@ -122,7 +114,7 @@ window.KnowledgeBasePage=(()=>{
    <section class="kb-panel"><b>主题分布</b><div class="kb-row kb-wrap">${Object.entries(tags).map(([t,n])=>`<button type="button" class="kb-chip is-action" data-act="filter-tag" data-tag="${esc(t)}">${esc(t)} ${n}</button>`).join('')||'<span class="kb-sub">暂无标签</span>'}</div><b>涉及标的</b><div class="kb-row kb-wrap">${Object.entries(stocks).map(([s,n])=>chip(`${s} ${n}`)).join('')||'<span class="kb-sub">暂无</span>'}</div></section></div>
    <section class="kb-panel"><b>可以这样问</b><div class="kb-row kb-wrap">${['这个库里有哪些资料，各自讲了什么？','不同资料对 CPO 渗透节奏的看法有什么分歧？','还缺哪些资料才能回答量产良率的问题？'].map(q=>`<button type="button" class="kb-chip is-action" data-act="ask" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div></section>`;
  }
- const emptyLib=()=>`<div class="kb-empty-box"><p>这里还没有资料</p><p class="kb-sub">写一篇笔记、上传文件、粘贴文字，或从网页收藏。资料会保存在这个知识库的文件夹里。</p><div class="kb-row kb-wrap" style="justify-content:center">${btn('新建笔记','new-note','','is-primary')}${btn('上传文件','modal','data-modal="add" data-mode="upload"')}${btn('粘贴文字','modal','data-modal="add" data-mode="paste"')}${btn('从网页收藏','clip-from-lib')}</div></div>`;
+ const emptyLib=()=>`<div class="kb-empty-box"><p>这里还没有资料</p><p class="kb-sub">写一篇笔记、上传文件、粘贴文字，或从网页收藏。资料会保存在这个知识库的文件夹里。</p><div class="kb-row kb-wrap" style="justify-content:center">${btn('新建笔记','new-note','','is-primary')}${btn('上传文件','modal','data-modal="upload"')}${btn('粘贴文字','modal','data-modal="paste"')}${btn('从网页收藏','new-clip')}</div></div>`;
  function docsTab(l){
   if(S.libState==='empty'||!l.docs.length)return emptyLib();
   const q=S.docQ.trim(),sources=['全部',...new Set(l.docs.map(d=>d.source))];
@@ -159,7 +151,7 @@ window.KnowledgeBasePage=(()=>{
   const body={overview,docs:docsTab,chats:chatsTab,artifacts:artifactsTab,settings:settingsTab}[S.tab](l);
   return `${crumb([['知识库','go','data-view="home"'],[l.name]])}
    <header class="kb-head"><div class="kb-row kb-grow"><span class="kb-cover is-large" aria-hidden="true"></span><div><h1 tabindex="-1">${esc(l.name)}</h1><p class="kb-sub">${esc(l.desc)}</p><p class="kb-sub"><code>${esc(l.folder)}</code></p></div></div>
-    <div class="kb-head-tools">${btn('新对话','new-chat')}<span class="kb-menu-anchor">${btn('添加资料 ▾','lib-menu','data-menu="add"','is-primary')}${S.menu==='add'?`<div class="kb-menu" role="menu"><button type="button" role="menuitem" data-act="new-note">新建笔记</button><button type="button" role="menuitem" data-act="modal" data-modal="add" data-mode="upload">上传文件</button><button type="button" role="menuitem" data-act="modal" data-modal="add" data-mode="paste">粘贴文字</button><button type="button" role="menuitem" data-act="clip-from-lib">从网页收藏</button></div>`:''}</span>${btn('发布到社区','start-publish',`data-id="${l.id}"`)}<span class="kb-menu-anchor"><button type="button" class="kb-icon" data-act="lib-menu" data-menu="more" aria-label="更多操作" aria-haspopup="menu">⋯</button>${S.menu==='more'?`<div class="kb-menu is-right" role="menu"><button type="button" role="menuitem" data-act="modal" data-modal="edit-lib">编辑名称、简介与封面</button><button type="button" role="menuitem" data-act="reindex">重新建立索引</button><button type="button" role="menuitem" data-act="delete-lib">删除知识库</button></div>`:''}</span></div></header>
+    <div class="kb-head-tools">${btn('新对话','new-chat')}<span class="kb-menu-anchor">${btn('添加资料 ▾','lib-menu','data-menu="add"','is-primary')}${S.menu==='add'?`<div class="kb-menu" role="menu"><button type="button" role="menuitem" data-act="new-note">新建笔记</button><button type="button" role="menuitem" data-act="modal" data-modal="upload">上传文件</button><button type="button" role="menuitem" data-act="modal" data-modal="paste">粘贴文字</button><button type="button" role="menuitem" data-act="new-clip">从网页收藏</button></div>`:''}</span>${btn('发布到社区','start-publish',`data-id="${l.id}"`)}<span class="kb-menu-anchor"><button type="button" class="kb-icon" data-act="lib-menu" data-menu="more" aria-label="更多操作" aria-haspopup="menu">⋯</button>${S.menu==='more'?`<div class="kb-menu is-right" role="menu"><button type="button" role="menuitem" data-act="modal" data-modal="edit-lib">编辑名称、简介与封面</button><button type="button" role="menuitem" data-act="reindex">重新建立索引</button><button type="button" role="menuitem" data-act="delete-lib">删除知识库</button></div>`:''}</span></div></header>
    ${libBanners(l)}
    <div class="kb-tabs" role="tablist">${tabs.map(([id,label])=>`<button type="button" role="tab" aria-selected="${S.tab===id}" class="${S.tab===id?'is-active':''}" data-act="tab" data-tab="${id}">${label}</button>`).join('')}</div>
    <div class="kb-tab-body">${S.libState==='folder-missing'&&S.tab!=='settings'?'<p class="kb-empty">文件夹不可用。重新选择文件夹后恢复。</p>':body}</div>`;
@@ -171,7 +163,7 @@ window.KnowledgeBasePage=(()=>{
   const noText=d.status==='saved'||d.status==='failed'||d.status==='parsing';
   const origin=d.source==='网页收藏'?`<div class="kb-origin"><b>出处</b><span>${esc(d.platform)} · ${esc(d.author)} · 采集于 ${esc(d.captured)}</span>${link('查看原网页 ↗','noop')}<code>${esc(d.url)}</code></div>`:d.source==='对话沉淀'?`<div class="kb-origin"><b>出处</b><span>保存自对话「${esc(d.fromChat)}」 · ${d.date}</span>${chip('AI 生成 · 待核对','is-ai')}</div>`:'';
   const body=d.status==='saved'?`<div class="kb-empty-box"><p>仅保存：这份资料没有可检索的正文</p><p class="kb-sub">图片、音视频和扫描件可以打开和下载，但不能用于问答。可以另外导入对应的文字或纪要。</p>${btn('用系统应用打开','reveal')}</div>`
-   :d.status==='failed'?`<div class="kb-empty-box"><p>解析失败：${esc(d.error)}</p><div class="kb-row" style="justify-content:center">${btn('重试','retry-doc',`data-id="${d.id}"`)}${btn('手动粘贴文字','modal','data-modal="add" data-mode="paste"')}</div></div>`
+   :d.status==='failed'?`<div class="kb-empty-box"><p>解析失败：${esc(d.error)}</p><div class="kb-row" style="justify-content:center">${btn('重试','retry-doc',`data-id="${d.id}"`)}${btn('手动粘贴文字','modal','data-modal="paste"')}</div></div>`
    :d.status==='parsing'?`<div class="kb-empty-box"><p>正在提取正文并建立索引…</p><p class="kb-sub">完成后即可检索和引用，不影响浏览其他资料。</p></div>`
    :d.bodyHtml!=null?`<h2>${esc(d.title||'未命名笔记')}</h2><div class="kb-note-body">${d.bodyHtml||'<p class="kb-sub">（空白笔记）</p>'}</div>`
    :`${d.status==='partial'?'<div class="kb-banner is-warn">只提取到部分正文，回答可能不完整。关键内容请回看原件。</div>':''}<h2>${esc(d.title.replace(/\.[a-z]+$/i,''))}</h2>${lines(4)}<p class="kb-quote">${esc(d.summary)}</p>${lines(5)}${d.source==='网页收藏'?`<button type="button" class="kb-image" data-act="load-image">图片未加载 · 点击后从原站加载</button>`:''}${lines(3)}`;
@@ -193,7 +185,8 @@ window.KnowledgeBasePage=(()=>{
   return `${crumb([['知识库','go','data-view="home"'],[l.name,'open-lib',`data-id="${l.id}"`],[d.title||'未命名笔记']])}
    ${S.noteExternal?`<div class="kb-banner is-warn"><span>这个文件刚刚在应用外被修改了。</span><span class="kb-grow"></span>${btn('重新加载文件','note-external','data-keep="0"','is-small')}${btn('保留我正在写的','note-external','data-keep="1"','is-small')}</div>`:''}
    <div class="kb-reader"><article class="kb-panel kb-article">
-    <div class="kb-row"><input class="kb-input kb-grow kb-note-title" data-input="doc.title" value="${esc(d.title)}" placeholder="笔记标题" aria-label="笔记标题"><span class="kb-sub" data-note-status role="status">${d.isNew?'尚未输入内容':'已自动保存'}</span>${btn('完成','note-done','','is-small is-primary')}</div>
+    <div class="kb-row"><input class="kb-input kb-grow kb-note-title" data-input="doc.title" value="${esc(d.title)}" placeholder="笔记标题" aria-label="笔记标题">${d.draft?`<label class="kb-select"><span>保存到</span><select data-select="note.lib" aria-label="保存到">${libs.map(x=>`<option value="${x.id}" ${x===l?'selected':''}>${esc(x.name)}</option>`).join('')}<option value="__new">+ 新建知识库…</option></select></label>`:''}<span class="kb-sub" data-note-status role="status">${d.isNew?'尚未输入内容':'已自动保存'}</span>${btn('完成','note-done','','is-small is-primary')}</div>
+    ${d.draft&&S.noteNewLib?`<div class="kb-row"><input class="kb-input kb-grow" data-input="noteNewName" placeholder="新知识库名称（最多 30 字）" maxlength="30" aria-label="新知识库名称">${btn('创建','note-create-lib','','is-small')}</div>`:''}
     <div class="kb-row kb-wrap kb-note-tools" role="toolbar" aria-label="格式">${tools.map(([label,cmd,arg])=>`<button type="button" class="kb-btn is-small" data-keep-focus data-act="note-format" data-cmd="${cmd}" data-arg="${arg||''}">${label}</button>`).join('')}<span class="kb-menu-anchor"><button type="button" class="kb-btn is-small" data-act="lib-menu" data-menu="note-ref" aria-haspopup="menu">引用资料 ▾</button>${S.menu==='note-ref'?`<div class="kb-menu" role="menu">${others.map(x=>`<button type="button" role="menuitem" data-act="note-ref" data-id="${x.id}">${esc(x.title)}</button>`).join('')||'<span class="kb-sub" style="padding:8px">库内暂无其他资料</span>'}</div>`:''}</span>${marks?`<span class="kb-grow"></span>${marks}`:''}</div>
     <div class="kb-editor" contenteditable="true" data-note-editor="${d.id}" role="textbox" aria-multiline="true" aria-label="笔记正文" data-placeholder="写下你的判断、复盘或跟踪清单…">${d.bodyHtml||''}</div>
     <p class="kb-hint">所见即所得的 Markdown 编辑（Milkdown）。内容保存为知识库文件夹里的 .md 文件；停止输入后自动保存，随后更新索引与 AI 整理。</p></article>
@@ -212,7 +205,10 @@ window.KnowledgeBasePage=(()=>{
  /* ---------- 应用内网页收藏 ---------- */
  function clipView(){
   const c=S.clip,loaded=c.stage!=='idle',fail=c.outcome==='fail',login=c.outcome==='login';
-  const page=!loaded?'<div class="kb-empty-box"><p>输入链接后在这里打开原网页</p><p class="kb-sub">加载的是真实页面，可以登录、翻页、进入具体文章。</p></div>'
+  const page=!loaded?`<div class="kb-empty-box"><p>输入链接后在这里打开原网页</p><p class="kb-sub">加载的是真实页面，可以登录、翻页、进入具体文章。</p>
+    <label class="kb-check"><input type="checkbox" data-check="clip.bookmark" ${c.bookmark?'checked':''}>记为常看来源（只保存入口，不会自动抓取内容）</label>
+    <div class="kb-row kb-wrap" style="justify-content:center"><span class="kb-sub">常看来源</span>${bookmarks.map((b,i)=>`<span class="kb-chip is-action"><button type="button" data-act="clip-bookmark" data-i="${i}">${esc(b.name)}</button><button type="button" data-act="remove-bookmark" data-i="${i}" aria-label="移除 ${esc(b.name)}">×</button></span>`).join('')||'<span class="kb-sub">暂无</span>'}</div>
+    <p class="kb-hint">只在你操作时读取当前页面；不批量抓取、不自动同步历史文章，不绕过登录、付费墙和验证码。</p></div>`
    :login?'<div class="kb-web"><div class="kb-web-bar">'+esc(c.url)+'</div><div class="kb-empty-box"><p>该页面需要登录或验证</p><p class="kb-sub">请直接在页面中完成登录或验证。应用不会代替你登录，也不会绕过验证。</p></div></div>'
    :`<div class="kb-web"><div class="kb-web-bar">${esc(c.url)}</div><div class="kb-web-body"><h2>${esc(c.title||'CPO 渗透率的三个分歧')}</h2><p class="kb-sub">光通信观察 · 10-11 21:02</p>${lines(4)}<p class="${c.mode==='选区'?'kb-selected':''}">市场对 CPO 渗透节奏的分歧集中在三处：量产良率、现场可维护性，以及头部客户的导入时间。</p>${lines(5)}<div class="wf-box" style="height:120px"></div>${lines(3)}</div></div>`;
   const preview=!loaded?'<p class="kb-empty">打开网页后在这里预览提取结果</p>'
@@ -221,7 +217,8 @@ window.KnowledgeBasePage=(()=>{
    :`<div class="kb-extract"><b>${c.mode==='选区'?'选中内容':'正文'}预览</b><p>${c.mode==='选区'?'市场对 CPO 渗透节奏的分歧集中在三处：量产良率、现场可维护性，以及头部客户的导入时间。':'市场对 CPO 渗透节奏的分歧集中在三处：量产良率、现场可维护性，以及头部客户的导入时间。……（共约 2,300 字，1 张表格，3 张图片保留原站链接）'}</p></div>`;
   const saved=c.stage==='saved';
   const result=saved?(c.outcome==='dup'?`<div class="kb-banner">已收藏过这篇内容，没有重复保存。${link('查看资料','open-saved-clip')}</div>`:`<div class="kb-banner is-notice">已保存到「${esc(libs.find(l=>l.id===c.target)?.name)}」，正在解析。<span class="kb-grow"></span>${link('查看资料','open-saved-clip')}${link('让 AI 分析','analyze-clip')}</div>`):'';
-  return `${crumb([['知识库','go','data-view="home"'],['从网页收藏']])}
+  const from=libs.find(l=>l.id===c.from);
+  return `${crumb([['知识库','go','data-view="home"'],...(from?[[from.name,'open-lib',`data-id="${from.id}"`]]:[]),['从网页收藏']])}
    <div class="kb-row kb-toolbar"><input class="kb-input kb-grow" data-input="clip.url" value="${esc(c.url)}" placeholder="粘贴文章链接、主页链接或平台分享文案" aria-label="网页地址">${btn('打开','clip-open','','is-primary')}</div>
    <div class="kb-clip"><div class="kb-clip-page" aria-label="网页视图">${page}</div>
    <aside class="kb-side" aria-label="收藏面板"><section class="kb-panel"><b>收藏到知识库</b>
@@ -277,9 +274,9 @@ window.KnowledgeBasePage=(()=>{
   const shell=(title,body,foot)=>`<div class="kb-backdrop" data-act="close-modal"><section class="kb-modal" role="dialog" aria-modal="true" aria-label="${title}"><div class="kb-row"><b>${title}</b><span class="kb-grow"></span><button type="button" class="kb-icon" data-act="close-modal" aria-label="关闭">×</button></div>${body}<div class="kb-row"><span class="kb-grow"></span>${foot}</div></section></div>`;
   const libPick=`<label class="kb-select"><span>保存到</span><select data-select="modalTarget" aria-label="保存到">${libs.map(l=>`<option value="${l.id}" ${targetId()===l.id?'selected':''}>${esc(l.name)}</option>`).join('')}<option value="__new">+ 新建知识库…</option></select></label>${S.modalNewLib?`<div class="kb-row"><input class="kb-input kb-grow" data-input="modalNewName" placeholder="新知识库名称（最多 30 字）" maxlength="30" aria-label="新知识库名称">${btn('创建','modal-create-lib','','is-small')}</div>`:''}${!inLib()?'<p class="kb-hint">默认是你最近用过的知识库。</p>':''}`;
   if(m.name==='new-lib')return shell('新建知识库',`<label class="kb-label">名称<input class="kb-input" data-input="draftNew.name" value="${esc(S.draftNew.name)}" placeholder="例如：AI 产业链跟踪" maxlength="30"></label><label class="kb-label">简介（选填）<textarea class="kb-textarea" data-input="draftNew.desc" placeholder="你希望在这里积累什么？">${esc(S.draftNew.desc)}</textarea></label><div class="kb-label">文件夹<div class="kb-seg">${[['default','默认位置新建同名文件夹'],['pick','选择已有文件夹']].map(([id,label])=>`<button type="button" class="${S.draftNew.folderMode===id?'is-active':''}" data-act="folder-mode" data-mode="${id}">${label}</button>`).join('')}</div><p class="kb-hint">${S.draftNew.folderMode==='pick'?'选择后，文件夹里已有的文件会在后台建立索引。':'资料会保存在这个文件夹里，你可以随时用资源管理器查看。'}</p></div>`,btn('取消','close-modal')+btn('创建','create-lib','','is-primary'));
-  if(m.name==='new-note')return shell('新建笔记',`${libPick}<p class="kb-hint">笔记会保存为所选知识库文件夹里的 Markdown 文件。</p>`,btn('取消','close-modal')+btn('开始写','confirm-new-note','','is-primary'));
   if(m.name==='edit-lib')return shell('编辑知识库',`<label class="kb-label">名称<input class="kb-input" value="${esc(lib().name)}"></label><label class="kb-label">简介<textarea class="kb-textarea">${esc(lib().desc)}</textarea></label><div class="kb-label">封面<div class="kb-row"><span class="kb-cover is-large"></span>${btn('上传封面','noop','','is-small')}</div></div>`,btn('取消','close-modal')+btn('保存','close-modal','','is-primary'));
-  if(m.name==='add')return shell('添加资料',`<div class="kb-seg">${[['upload','上传文件'],['paste','粘贴文字']].map(([id,label])=>`<button type="button" class="${m.mode===id?'is-active':''}" data-act="modal" data-modal="add" data-mode="${id}">${label}</button>`).join('')}</div>${m.mode==='upload'?`<button type="button" class="kb-drop" data-act="fake-upload">点击选择文件，或将文件拖到这里<small>PDF、DOCX、Markdown、TXT、HTML 可提取正文；图片、音视频、扫描件仅保存。单个文件不超过 50 MB。</small></button>`:`<label class="kb-label">标题<input class="kb-input" data-input="paste.title" placeholder="例如：本周行业会议纪要"></label><label class="kb-label">正文<textarea class="kb-textarea is-tall" data-input="paste.body" placeholder="粘贴文章、会议纪要或你的研究笔记…"></textarea></label>`}${libPick}`,btn('取消','close-modal')+(m.mode==='paste'?btn('保存为笔记','save-paste','','is-primary'):''));
+  if(m.name==='upload')return shell('上传文件',`<button type="button" class="kb-drop" data-act="fake-upload">点击选择文件，或将文件拖到这里<small>PDF、DOCX、Markdown、TXT、HTML 可提取正文；图片、音视频、扫描件仅保存。单个文件不超过 50 MB。</small></button>${libPick}`,btn('取消','close-modal'));
+  if(m.name==='paste')return shell('粘贴文字',`<label class="kb-label">标题<input class="kb-input" data-input="paste.title" placeholder="例如：本周行业会议纪要"></label><label class="kb-label">正文<textarea class="kb-textarea is-tall" data-input="paste.body" placeholder="粘贴文章、会议纪要或你的研究笔记…"></textarea></label>${libPick}`,btn('取消','close-modal')+btn('保存为笔记','save-paste','','is-primary'));
   if(m.name==='update'){const l=lib();return shell(`更新到 v${l.updateTo}`,`<div class="kb-list"><div class="kb-list-row"><span>新增 1 个文件</span><span class="kb-sub">现金流质量核对表.md</span></div><div class="kb-list-row"><span>替换 2 个未改动的文件</span><span class="kb-sub">财报阅读的五步清单.md 等</span></div><div class="kb-list-row"><span>保留 1 个你改过的文件，不更新</span><span class="kb-sub">财报比较口径检查表.md</span></div></div><p class="kb-hint">你自己新增的资料和批注不受影响。</p>`,btn('暂不更新','close-modal')+btn('更新','apply-update','','is-primary'))}
   if(m.name==='save-chat')return shell('保存到知识库',`<label class="kb-label">标题<input class="kb-input" data-input="saveChat.title" value="${esc(m.title||'')}"></label>${libPick}<p class="kb-hint">保存为笔记文件，记录来自哪次对话与保存时间，并标注为 AI 生成。</p>`,btn('取消','close-modal')+btn('保存','confirm-save-chat','','is-primary'));
   if(m.name==='copy-doc')return shell('复制到其他知识库',`${libPick}<p class="kb-hint">一份文件只属于一个知识库。复制后两份文件互不影响。</p>`,btn('取消','close-modal')+btn('复制','confirm-copy','','is-primary'));
@@ -291,13 +288,13 @@ window.KnowledgeBasePage=(()=>{
 
  /* ---------- 交互说明 ---------- */
  const NOTES={
-  home:['R1.1 原「项目」入口统一改称「知识库」；存量项目自动出现在「我的知识库」（R1.2）。','R8.1 首页三区：我的知识库 / 官方推荐 / 社区推荐。','「添加资料」与知识库详情页的菜单一致：新建笔记、上传文件、粘贴文字、从网页收藏。从首页进入时在流程里选择保存到哪个知识库，默认最近用过的库，也可就地新建。','「新建知识库」单独成按钮：它是建容器，不是加内容。','R5.1 「从网页收藏」就地展开，不跳转；勾选「记为常看来源」才保存书签（R5.7）。','卡片角标：建立索引中（R1.3）、有更新（R8.5）、来自资料包。'],
+  home:['R1.1 原「项目」入口统一改称「知识库」；存量项目自动出现在「我的知识库」（R1.2）。','R8.1 首页三区：我的知识库 / 官方推荐 / 社区推荐。','「添加资料」与知识库详情页的菜单一致，形式统一：上传文件、粘贴文字是各自独立的弹窗；新建笔记、从网页收藏直接进入全页。四者都在流程里选择保存到哪个知识库：从首页进入默认最近用过的库，从库内进入默认当前库，也可就地新建。','「新建知识库」单独成按钮：它是建容器，不是加内容。','卡片角标：建立索引中（R1.3）、有更新（R8.5）、来自资料包。'],
   lib:['R1.4 在原有对话、对话产物之上增加「概览」「资料」。','R2.3 每份资料如实展示解析状态：可问答 / 部分可用 / 仅保存 / 解析中 / 解析失败。','R3.1 搜索命中正文时显示命中片段。','R3.2 库内「新对话」默认挂载本库；R3.4 回答带出处，点击打开原文。','R4 概览中的观点、标签、标的由入库时 AI 整理生成，可在「设置」关闭（R4.5）。','R2.4 文件夹是真源：外部增删改自动跟上；文件夹不可用时提示重新选择。'],
   doc:['R4.1 右侧为 AI 整理结果，标注「AI 生成」；标签与日期可改，可重新整理（R4.2）。','R2.7 批注不修改原文件。','R5.4 网页收藏的资料展示出处；R5.8 图片点击后才从原站加载。','「仅保存」「解析失败」「解析中」各有独立状态页，不展示空白正文。'],
-  clip:['R5.2 左侧是真实网页，可登录、翻页；R5.3 右侧预览提取结果，确认后保存。','R5.5 提取失败如实提示并提供粘贴文字；不用简介或评论冒充正文。','R5.6 重复收藏不产生第二份。','R6 内容类型自动识别，此处可手动切换查看各平台规则。','R5.9 只读取当前页面，不批量抓取，不绕过登录与验证。'],
+  clip:['R5.1（已调整）首页与库内的「从网页收藏」都直接进入本页，不再在首页就地展开；保存位置在右侧选择。','R5.7 勾选「记为常看来源」才保存书签，常看来源在打开网页前展示。','R5.2 左侧是真实网页，可登录、翻页；R5.3 右侧预览提取结果，确认后保存。','R5.5 提取失败如实提示并提供粘贴文字；不用简介或评论冒充正文。','R5.6 重复收藏不产生第二份。','R6 内容类型自动识别，此处可手动切换查看各平台规则。','R5.9 只读取当前页面，不批量抓取，不绕过登录与验证。'],
   pack:['R8.2 下载前只读预览：简介、目录、试读、推荐提问。','R8.3 添加后在本地创建独立副本；重复添加不产生第二份。','R8.6 展示作者、认证、版本、更新时间与内容性质。','R8.7 下载失败不留下半成品。'],
   publish:['R9.2 原创笔记带正文；第三方资料仅链接或仅标题。','R9.3 逐项标明公开方式，可取消勾选。','R9.7 本地路径、账号信息、对话记录不随包发布。','R9.4 先审后发；R9.5 可更新版本、下架。'],
-  note:['R10.1 「添加资料 → 新建笔记」在知识库文件夹里生成一个 .md 文件。','R10.2 所见即所得的 Markdown 编辑（Milkdown），停止输入后自动保存，没有保存按钮。','R10.3 可编辑范围：笔记、粘贴存下的文字、保存的 AI 回答、网页收藏、资料包里的 Markdown；PDF、Word 不可编辑。','R10.4 编辑非原创来源的资料后保留「AI 生成」「出处」标记，并加「已编辑」。','R10.5 保存后自动更新索引与 AI 整理，输入过程中不触发。','R10.6 「引用资料」把库内其他资料链接进笔记，点击跳转。','R10.7 文件在应用外被修改时提示，由用户选择重新加载或保留，不静默覆盖。'],
+  note:['R10.1 「添加资料 → 新建笔记」直接进入编辑器，在知识库文件夹里生成一个 .md 文件；点「完成」前可在顶部「保存到」切换或新建知识库。','R10.2 所见即所得的 Markdown 编辑（Milkdown），停止输入后自动保存，没有保存按钮。','R10.3 可编辑范围：笔记、粘贴存下的文字、保存的 AI 回答、网页收藏、资料包里的 Markdown；PDF、Word 不可编辑。','R10.4 编辑非原创来源的资料后保留「AI 生成」「出处」标记，并加「已编辑」。','R10.5 保存后自动更新索引与 AI 整理，输入过程中不触发。','R10.6 「引用资料」把库内其他资料链接进笔记，点击跳转。','R10.7 文件在应用外被修改时提示，由用户选择重新加载或保留，不静默覆盖。'],
   publications:['R9.4 审核中 / 已发布 / 未通过（附原因）。','R9.5 下架不影响已添加用户的本地副本。']
  };
  function notesHtml(){
@@ -326,32 +323,32 @@ window.KnowledgeBasePage=(()=>{
   go(el){go(el.dataset.view)},
   'open-lib'(el){S.lastLib=el.dataset.id;go('lib',{libId:el.dataset.id,tab:'overview',docQ:'',fTag:'',fSource:'全部',fStatus:'全部',libState:'normal'});window.KnowledgeChat?.setRefs([{kind:'lib',id:lib().id,name:lib().name,auto:true}])},
   'open-doc'(el){go('doc',{docId:el.dataset.id})},
-  'confirm-new-note'(){const id=targetId();S.modal=null;S.modalTarget=null;S.modalNewLib=false;S.libId=id;S.lastLib=id;acts['new-note']()},
-  'new-note'(){const l=lib(),d=doc('','笔记','新建笔记','ready','2026-10-13',{bodyHtml:'',isNew:true,refs:[]});l.docs.unshift(d);l.updated='刚刚';S.libState='normal';go('note',{docId:d.id,noteExternal:false});root.querySelector('.kb-note-title')?.focus()},
+  'new-note'(){const l=libs.find(x=>x.id===targetId()),d=doc('','笔记','新建笔记','ready','2026-10-13',{bodyHtml:'',isNew:true,draft:true,refs:[]});l.docs.unshift(d);l.updated='刚刚';S.lastLib=l.id;S.libState='normal';go('note',{libId:l.id,docId:d.id,noteExternal:false,noteNewLib:false});root.querySelector('.kb-note-title')?.focus()},
   'edit-note'(el){const d=lib().docs.find(x=>x.id===el.dataset.id)||curDoc();if(d.bodyHtml==null)d.bodyHtml=`<p>${esc(d.summary||'（原有正文）')}</p><p>（这里是这份资料原有的正文，可以直接修改。）</p>`;d.refs=d.refs||[];go('note',{docId:d.id,noteExternal:false})},
   'note-format'(el){const editor=root.querySelector('[data-note-editor]');editor.focus();document.execCommand(el.dataset.cmd,false,el.dataset.arg||null);syncEditor();noteChanged()},
   'note-ref'(el){const d=curDoc(),x=lib().docs.find(y=>y.id===el.dataset.id);d.bodyHtml=(d.bodyHtml||'')+`<p><button type="button" class="kb-note-ref" contenteditable="false" data-act="open-doc" data-id="${x.id}">${esc(x.title)}</button>&nbsp;</p>`;d.refs=[...new Set([...(d.refs||[]),x.id])];S.menu=null;draw();noteChanged()},
-  'note-done'(){const d=curDoc();if(!d.title.trim())d.title='未命名笔记';noteTimers.forEach(clearTimeout);go('doc',{docId:d.id});toast('已保存到知识库文件夹')},
+  'note-done'(){const d=curDoc();d.draft=false;S.noteNewLib=false;if(!d.title.trim())d.title='未命名笔记';noteTimers.forEach(clearTimeout);go('doc',{docId:d.id});toast('已保存到知识库文件夹')},
+  'note-move'(el){const to=libs.find(x=>x.id===el.value),from=lib(),d=curDoc();if(!to||to===from)return;from.docs.splice(from.docs.indexOf(d),1);to.docs.unshift(d);to.updated='刚刚';S.libId=S.lastLib=to.id;S.noteNewLib=false;draw();toast('已移到「'+to.name+'」')},
+  'note-create-lib'(){const name=(S.noteNewName||'').trim();if(!name){toast('请填写知识库名称');return}if(libs.some(l=>l.name===name)){toast('已有同名知识库，请换一个名称');return}const l=makeLib(name);S.noteNewName='';acts['note-move']({value:l.id})},
   'note-external-demo'(){S.noteExternal=!S.noteExternal;draw()},
   'note-external'(el){S.noteExternal=false;toast(el.dataset.keep==='1'?'已保留你正在写的内容，并覆盖文件':'已重新加载文件内容');draw()},
   'open-pack'(el){go('pack',{packId:el.dataset.id})},
   tab(el){S.tab=el.dataset.tab;S.menu=null;draw(false)},
-  modal(el){S.menu=null;if(el.dataset.modal!=='add'||!S.modal)S.modalNewLib=false;S.modal={name:el.dataset.modal,mode:el.dataset.mode};draw()},
+  modal(el){S.menu=null;S.modalNewLib=false;S.modal={name:el.dataset.modal};draw()},
   'close-modal'(el,e){if(el.classList.contains('kb-backdrop')&&e.target!==el)return;S.modal=null;S.modalTarget=null;S.modalNewLib=false;draw()},
   'toggle-notes'(){S.notes=!S.notes;draw()},
   'lib-state'(el){S.libState=el.dataset.state;draw()},
   'lib-menu'(el){S.menu=S.menu===el.dataset.menu?null:el.dataset.menu;draw()},
   'doc-menu'(el){S.menu=S.menu===el.dataset.id?null:el.dataset.id;draw()},
   'filter-tag'(el){S.fTag=el.dataset.tag;S.tab='docs';draw()},
-  'toggle-clip-form'(){S.menu=null;S.clipForm=!S.clipForm;draw()},
   'modal-create-lib'(){const name=(S.modalNewName||'').trim();if(!name){toast('请填写知识库名称');return}if(libs.some(l=>l.name===name)){toast('已有同名知识库，请换一个名称');return}const l=makeLib(name);S.modalTarget=l.id;S.modalNewLib=false;S.modalNewName='';toast('已创建知识库「'+name+'」');draw()},
   'clip-bookmark'(el){S.clip.url=bookmarks[el.dataset.i].url;acts['clip-open']()},
   'remove-bookmark'(el){bookmarks.splice(el.dataset.i,1);toast('已移除来源入口，已保存的资料不受影响');draw()},
-  'clip-from-lib'(){S.clip.target=S.libId;go('clip',{clip:{...S.clip,stage:'idle',url:''}})},
+  'new-clip'(){go('clip',{clip:{...S.clip,stage:'idle',url:'',title:'',note:'',newLib:false,from:inLib(),target:targetId()}})},
   'clip-open'(){const c=S.clip;if(!c.url.trim()){toast('请先粘贴链接');return}if(!/^https?:\/\//.test(c.url.trim())){const m=c.url.match(/https?:\/\/\S+/);if(!m){toast('没有识别到有效的 http / https 链接');return}c.url=m[0]}
    if(c.bookmark&&!bookmarks.some(b=>b.url===c.url))bookmarks.push({name:new URL(c.url).hostname,url:c.url});
    c.platform=/xueqiu/.test(c.url)?'雪球':/tieba/.test(c.url)?'贴吧':/xiaohongshu|xhslink/.test(c.url)?'小红书':/bilibili|b23/.test(c.url)?'B 站':'通用文章';
-   c.stage='loaded';c.title=c.outcome==='login'?'':({'B 站':'硅光与 CPO 技术讲解（字幕）','贴吧':'【讨论】CPO 量产节奏到底卡在哪','小红书':'一图看懂 CPO 产业链'}[c.platform]||'CPO 渗透率的三个分歧');c.target=inLib()||S.lastLib||c.target;go('clip')},
+   c.stage='loaded';c.title=c.outcome==='login'?'':({'B 站':'硅光与 CPO 技术讲解（字幕）','贴吧':'【讨论】CPO 量产节奏到底卡在哪','小红书':'一图看懂 CPO 产业链'}[c.platform]||'CPO 渗透率的三个分歧');go('clip')},
   'clip-mode'(el){S.clip.mode=el.dataset.mode;draw()},
   'clip-outcome'(el){S.clip.outcome=el.dataset.outcome;S.clip.stage=S.clip.stage==='idle'?'idle':'loaded';draw()},
   'clip-create-lib'(){const name=(S.clip.newName||'').trim();if(!name){toast('请填写知识库名称');return}const l={id:'n'+(++seq),name,desc:'',folder:'D:\\投研\\'+name,updated:'刚刚',autoOrganize:true,instruction:'',chats:[],tasks:[],docs:[],artifacts:[]};libs.unshift(l);S.clip.target=l.id;S.clip.newLib=false;toast('已创建知识库「'+name+'」');draw()},
@@ -401,7 +398,7 @@ window.KnowledgeBasePage=(()=>{
   root.onclick=e=>{syncEditor();const el=e.target.closest('[data-act]');if(!el||el.disabled){if(S.menu&&!e.target.closest('.kb-menu')){S.menu=null;draw()}return}e.stopPropagation();acts[el.dataset.act]?.(el,e)};
   root.onkeydown=e=>{if(e.key==='Escape'&&(S.modal||S.menu)){S.modal=null;S.menu=null;draw();return}if((e.key==='Enter'||e.key===' ')&&e.target.matches('.kb-card')){e.preventDefault();e.target.click()}if(e.key==='Enter'&&e.target.matches('[data-input="clip.url"]'))acts['clip-open']()};
   root.oninput=e=>{if(e.target.matches('[data-note-editor]')){syncEditor();noteChanged();return}const key=e.target.dataset.input;if(!key)return;setPath(key,e.target.value);if(key==='doc.title'&&S.view==='note')noteChanged();if(['homeQ','docQ'].includes(key))draw(key)};
-  root.onchange=e=>{const t=e.target;if(t.dataset.select){if(t.dataset.select==='clip.target'&&t.value==='__new'){S.clip.newLib=true;draw();return}if(t.dataset.select==='modalTarget'&&t.value==='__new'){S.modalNewLib=true;draw();return}setPath(t.dataset.select,t.value);draw()}else if(t.dataset.check){setPath(t.dataset.check,t.checked);draw()}else if(t.dataset.pub){S.pub.checked[t.dataset.pub]=t.checked;draw()}};
+  root.onchange=e=>{const t=e.target;if(t.dataset.select){if(t.dataset.select==='clip.target'&&t.value==='__new'){S.clip.newLib=true;draw();return}if(t.dataset.select==='modalTarget'&&t.value==='__new'){S.modalNewLib=true;draw();return}if(t.dataset.select==='note.lib'){syncEditor();if(t.value==='__new'){S.noteNewLib=true;draw()}else acts['note-move'](t);return}setPath(t.dataset.select,t.value);draw()}else if(t.dataset.check){setPath(t.dataset.check,t.checked);draw()}else if(t.dataset.pub){S.pub.checked[t.dataset.pub]=t.checked;draw()}};
  }
  function mount(wb){
   root=document.createElement('section');root.className='kb-page';root.dataset.morePage='projects';root.setAttribute('aria-label','知识库');wb.append(root);bind();draw();return root;

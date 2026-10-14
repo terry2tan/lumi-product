@@ -136,7 +136,6 @@ button.kb-list-row:hover{background:#25262a}
 .kb-web>.kb-empty-box{flex:1;border:0;justify-content:center}
 .kb-selected{background:#3a3d45;outline:1px solid #858890;padding:2px 4px}
 .kb-extract{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border:1px dashed #5d5f66;color:#bdc0c6;font-size:12px}
-.kb-clip-form{gap:10px}
 .kb-sample{gap:10px}
 .kb-bubble{align-self:flex-end;max-width:80%;padding:8px 12px;border:1px solid #5d5f66;background:#25262a}
 .kb-answer{display:flex;flex-direction:column;gap:10px}
