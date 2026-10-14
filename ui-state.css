@@ -1,0 +1,29 @@
+/* Shared selected-button colors. */
+:root{--control-selected-bg:#333237;--control-selected-hover:#3d3c42;--control-selected-text:#eeeff0;--selected:var(--control-selected-bg)}
+.rail-button.is-active,
+.home-sidebar-actions .home-sidebar-action.is-current,
+.home-sidebar .sidebar-chat-row.is-current .history-row,
+.home-sidebar .sidebar-chat-row.is-current .sidebar-chat-main,
+.copilot-toolbar-button[aria-pressed=true],
+.titlebar-new-chat[aria-expanded=true],
+.conversation-icon-button.is-selected,
+.conversation-icon-button[aria-pressed=true],
+.conversation-icon-button[aria-expanded=true],
+.top-workspace-tab.is-active,
+.market-status-tool.active,
+.copilot-history-item[aria-current=true],
+.account-popover .account-menu-button.action.selected{background:var(--control-selected-bg);color:var(--control-selected-text);border-color:transparent;box-shadow:none}
+.action.selected:not(.fluid-check),.action[aria-pressed=true]:not(.fluid-check),.action[aria-selected=true],.hit-button.selected{background:var(--control-selected-bg)!important;box-shadow:none!important}
+.home-sidebar-actions .home-sidebar-action.is-current:hover,
+.home-sidebar .sidebar-chat-row.is-current:hover .history-row,
+.home-sidebar .sidebar-chat-row.is-current:hover .sidebar-chat-main,
+.rail-button.is-active:hover,.rail-button.is-active:focus-visible,
+.copilot-toolbar-button[aria-pressed=true]:hover,
+.top-workspace-tab.is-active:hover{background:var(--control-selected-hover)}
+.home-sidebar .sidebar-chat-row.is-current>.sidebar-hover-actions{background:linear-gradient(90deg,transparent,var(--control-selected-bg) 6px)}
+.home-sidebar .sidebar-chat-row.is-current:hover>.sidebar-hover-actions{background:linear-gradient(90deg,transparent,var(--control-selected-hover) 6px)}
+.conversation-report-card[aria-pressed=true]{background:var(--control-selected-bg);border-color:#55545b;color:var(--control-selected-text)}
+/* Shared pin controls keep the supplied 16px icons centered. */
+.context-menu button.page-pin-action{display:flex;align-items:center;gap:8px}
+.page-pin-action>img,.page-row>.pin,.pin-window-icon>img{width:16px;height:16px;flex-shrink:0}
+.pin-window-icon>img{display:block}

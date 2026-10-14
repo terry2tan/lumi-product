@@ -1,0 +1,29 @@
+/* Adapt the source components to their containers; no viewport-wide canvas scaling. */
+const responsiveObservers=[];
+function flow(el){if(!el)return el;for(const k of ['position','inset','left','right','top','bottom','width','height','transform','aspectRatio'])el.style[k]='';el.classList.add('flow-node');return el;}
+function box(cls,...children){const el=document.createElement('div');el.className=cls;el.append(...children.filter(Boolean));return el;}
+function sourceCard(root,config){const [cardId,titleId,iconId,actionId,rows]=config,card=node(root,'344:'+cardId);if(!card)return;const title=flow(node(root,'344:'+titleId)),icon=flow(node(root,'344:'+iconId)),action=flow(node(root,'344:'+actionId));icon?.classList.add('card-heading-icon');const header=box('fluid-card-heading',icon,title,action);const body=box('fluid-card-body');for(const ids of rows){const parts=ids.map(id=>flow(node(root,'344:'+id)));const check=parts.find(x=>x?.getAttribute('aria-label')?.startsWith('待办'));if(check){check.classList.add('fluid-check');const text=box('fluid-row-text',...parts.filter(x=>x!==check));body.append(box('fluid-todo-row',check,text));}else body.append(box('fluid-card-row',...parts));}card.replaceChildren(header,body);flow(card);card.classList.add('fluid-card');return card;}
+function adaptHome(){const home=$('#surface>.home');if(!home)return;const cards=$('[data-component=HomeCards]',home),root=cards;const ordered=[
+['16883','16916','16917','16918',[['16893','16886'],['16902','16895'],['16909','16904']]],
+['16824','16879','16880','16881',[['16835','16836'],['16847','16848'],['16859','16860'],['16871','16872']]],
+['16920','16974','16975','16979',[['16933','16931','16932'],['16945','16942','16943'],['16957','16954','16955'],['16969','16966','16967']]]
+].map(c=>sourceCard(root,c));cards.replaceChildren(...ordered);cards.classList.add('fluid-home-cards');
+const scroll=box('home-scroll'),hero=box('home-hero',$('[data-component=WelcomeLogo]',home),$('[data-component=WelcomeTitle]',home));scroll.append(hero,cards,$('[data-component=Suggestions]',home));home.append(scroll);
+}
+function adaptChat(){const panel=$('.chat-panel');if(!panel||panel.classList.contains('conversation-view'))return;const root=$('[data-component=SplitChat]',panel);if(!root)return;const toolbar=node(root,'344:18705'),composer=node(root,'344:18803');panel.append(toolbar);panel.append(composer);const scroll=box('chat-scroll');panel.append(scroll);const content=node(root,'344:18721');if(state.answer){scroll.append($('.response-logo',panel),$('.user-bubble',panel),$('[data-component=Answer]',panel));content.remove();}else{scroll.append(content);const greeting=node(content,'344:18722');greeting.classList.add('fluid-greeting');const paragraph=node(content,'344:18726');flow(paragraph);paragraph.style.paddingTop='100px';paragraph.textContent=paragraph.textContent.trim();greeting.style.height='auto';const title=node(content,'344:18731'),tail=node(content,'344:18732'),badge=node(content,'344:18733');if(title&&tail){const text=box('opening-text',flow(badge),flow(title),flow(tail));node(content,'344:18730').replaceWith(text);}const todo=node(content,'344:18743')?.parentElement;if(todo){const rows=[['18755','18753','18754'],['18767','18764','18765'],['18779','18776','18777'],['18791','18788','18789']];const body=box('split-todo-body');for(const ids of rows){const parts=ids.map(id=>node(todo,'344:'+id));if(parts.every(Boolean)){const [check,...text]=parts.map(flow);check.classList.add('fluid-check');body.append(box('fluid-todo-row',check,box('fluid-row-text',...text)));}}if(body.children.length===4){const all=$$('p',todo).find(p=>p.textContent.includes('全部 6')),title=$$('p',todo).find(p=>p.textContent.includes('今日待办'));const heading=box('fluid-card-heading',flow(title),flow(all));todo.replaceChildren(heading,body);todo.className='fluid-card split-todos';todo.removeAttribute('style');}}
+}root.remove();}
+function adaptCatalog(){const grid=$('[data-component=CatalogGrid]');if(!grid||$('.catalog-tiles',grid))return;const root=grid.firstElementChild,rows=['344:25960','344:26000','344:26040'].map(id=>node(grid,id));const tiles=box('catalog-tiles');rows.forEach(row=>{if(row){tiles.append(...row.children);row.remove();}});root.append(tiles);for(const tile of tiles.children){tile.style.height='auto';tile.style.width='auto';const image=$('img',tile);if(image){const holder=image.parentElement;holder.classList.add('catalog-thumbnail');}}}
+function adaptPlots(){for(const el of $$('.candles,.volume')){
+ if(el.classList.contains('fuyao-live'))continue;
+ const g=Geometry[el.dataset.component],art=$(':scope > .plot-art',el)||box('plot-art',...[...el.childNodes].filter(child=>!child.classList?.contains('chart-crosshair')));
+ el.prepend(art);Object.assign(art.style,{width:g.width+'px',height:g.height+'px'});
+ const labels=el.closest('.stock-detail-page')?[...art.querySelectorAll('p')]:[];
+ const update=()=>{if(!el.clientWidth||!el.clientHeight)return;
+  const sx=el.clientWidth/g.width,sy=el.clientHeight/g.height;art.style.transform=`scale(${sx},${sy})`;
+  for(const label of labels){const right=label===label.parentElement.lastElementChild;label.style.transformOrigin=right?'right center':'left center';label.style.transform=`scale(${1/sx},${1/sy})`;label.classList.add('stock-chart-scale');if(right)label.style.textAlign='right'}
+ };
+ const observer=new ResizeObserver(update);observer.observe(el);responsiveObservers.push(observer);update();
+}}
+function responsiveLayout(){responsiveObservers.splice(0).forEach(o=>o.disconnect());adaptHome();adaptChat();adaptCatalog();adaptPlots();}
+
+function viewportSafeOverlays(){for(const el of $$('.popover')){const r=el.getBoundingClientRect();el.style.left=Math.max(8,Math.min(r.left,innerWidth-r.width-8))+'px';el.style.top=Math.max(48,Math.min(r.top,innerHeight-r.height-8))+'px';}}

@@ -1,0 +1,66 @@
+:root { --font-ui: 14px; --font-caption: 12px; }
+
+/* Keep the generated source intact while making interface text readable. */
+.fragment [style*="font-size:10px"],
+.fragment [style*="font-size:12px"],
+.fragment [style*="font-size:13px"] {
+  font-size: var(--font-ui) !important;
+}
+.fragment p[style*="font-size:12px"],
+.fragment p[style*="font-size:13px"] {
+  line-height: 20px !important;
+}
+
+/* Captions, timestamps and chart scale annotations remain secondary. */
+[data-node-id="344:16791"],
+[data-node-id="344:18833"],
+[data-node-id="344:22338"],
+[data-node-id="344:22348"],
+[data-component="DetachedWindow"] [data-node-id^="I344:22353;"] {
+  font-size: var(--font-caption) !important;
+  line-height: 16px !important;
+}
+.plot-art p[data-node-id^="I"][style*="font-size:12px"] {
+  font-size: var(--font-caption) !important;
+  line-height: 16px !important;
+}
+
+/* Let enlarged labels fit their existing cards and controls. */
+[data-component="HomeCards"] [style*="border-radius:42px"],
+.chat-scroll [style*="border-radius:42px"] {
+  height: auto !important;
+  min-height: 26px;
+}
+[data-component="CatalogSummary"] [data-node-id="344:26086"],
+[data-component="CatalogSummary"] [data-node-id="344:26096"],
+[data-component="CatalogSummary"] [data-node-id="344:26106"] {
+  height: 40px !important;
+  line-height: 20px !important;
+}
+.market-chart {
+  grid-template-rows: 80px minmax(220px,1.75fr) minmax(120px,1fr) minmax(140px,.9fr);
+}
+.chart-toolbar > div {
+  width: max-content !important;
+  min-width: 100%;
+  gap: 0 !important;
+}
+[data-node-id="344:17635"] {
+  height: 32px !important;
+  width: max-content !important;
+  min-width: 100%;
+  padding-right: 28px;
+  overflow: visible !important;
+  justify-content: flex-start !important;
+}
+[data-node-id="344:17635"] > div:has(> p) {
+  width: auto !important;
+  height: 28px !important;
+  padding: 4px 8px !important;
+}
+[data-node-id="344:17679"] {
+  height: 24px;
+  line-height: 20px !important;
+}
+[data-node-id="344:17683"] { height: 24px; }
+[data-component="ChartToolbar"] p { line-height: 20px !important; }

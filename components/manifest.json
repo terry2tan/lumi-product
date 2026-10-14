@@ -1,0 +1,146 @@
+{
+  "Brand": {
+    "node": "344:16565",
+    "bytes": 1194
+  },
+  "WindowControls": {
+    "node": "344:16574",
+    "bytes": 805
+  },
+  "ChatToolbar": {
+    "node": "344:16588",
+    "bytes": 1975
+  },
+  "Sidebar": {
+    "node": "344:16601",
+    "bytes": 25088
+  },
+  "CompactSidebar": {
+    "node": "344:17491",
+    "bytes": 12113
+  },
+  "HomeCards": {
+    "node": "344:16823",
+    "bytes": 28116
+  },
+  "Suggestions": {
+    "node": "344:16750",
+    "bytes": 9178
+  },
+  "Composer": {
+    "node": "344:16790",
+    "bytes": 5598
+  },
+  "WelcomeTitle": {
+    "node": "344:16821",
+    "bytes": 283
+  },
+  "WelcomeLogo": {
+    "node": "344:16822",
+    "bytes": 311
+  },
+  "SplitChat": {
+    "node": "344:18702",
+    "bytes": 23471
+  },
+  "MarketNav": {
+    "node": "344:17627",
+    "bytes": 13708
+  },
+  "StockList": {
+    "node": "344:17632",
+    "bytes": 6546
+  },
+  "ChartToolbar": {
+    "node": "344:17634",
+    "bytes": 14200
+  },
+  "Candles": {
+    "node": "344:17686",
+    "bytes": 180142
+  },
+  "Volume": {
+    "node": "344:18295",
+    "bytes": 33220
+  },
+  "News": {
+    "node": "344:18426",
+    "bytes": 35587
+  },
+  "Quote": {
+    "node": "344:18562",
+    "bytes": 38692
+  },
+  "WorkspaceTab": {
+    "node": "344:18691",
+    "bytes": 1329
+  },
+  "CatalogToolbar": {
+    "node": "344:25938",
+    "bytes": 3557
+  },
+  "CatalogSummary": {
+    "node": "344:26080",
+    "bytes": 14012
+  },
+  "CatalogGrid": {
+    "node": "344:25947",
+    "bytes": 41298
+  },
+  "Report": {
+    "node": "344:26526",
+    "bytes": 3343
+  },
+  "Answer": {
+    "node": "344:23531",
+    "bytes": 5636
+  },
+  "PageMenu": {
+    "node": "344:26780",
+    "bytes": 9796
+  },
+  "PinnedMenu": {
+    "node": "344:26828",
+    "bytes": 3615
+  },
+  "UnpinnedMenu": {
+    "node": "344:26849",
+    "bytes": 3586
+  },
+  "HistoryMenu": {
+    "node": "344:26650",
+    "bytes": 34044
+  },
+  "Account": {
+    "node": "344:25911",
+    "bytes": 318
+  },
+  "DetachedWindow": {
+    "node": "344:22268",
+    "bytes": 24892
+  },
+  "FullCandles": {
+    "node": "344:18920",
+    "bytes": 180140
+  },
+  "FullVolume": {
+    "node": "344:19529",
+    "bytes": 33220
+  },
+  "UserBubble": {
+    "node": "344:23527",
+    "bytes": 941
+  },
+  "CatalogTabs": {
+    "node": "344:26118",
+    "bytes": 3475
+  },
+  "CatalogSoloTab": {
+    "node": "344:26420",
+    "bytes": 1257
+  },
+  "PreviewTabs": {
+    "node": "344:26559",
+    "bytes": 2962
+  }
+}
