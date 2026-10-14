@@ -1,0 +1,35 @@
+.workbench.has-market-tool-panel .market-content{left:var(--market-tool-width);grid-template-columns:minmax(320px,1fr) 284px}
+.has-market-tool-panel .market-content>[data-component=StockList]{display:none}
+.market-status-tool.active{background:#333237;color:#f0f1f4}
+.market-tool-panel{position:absolute;inset:var(--market-navigation-height) auto var(--market-status-height) 0;width:var(--market-tool-width);z-index:9;display:flex;flex-direction:column;min-height:0;border-right:1px solid #3a3b3e;background:#202022;color:#b4b6b8;font-size:14px;line-height:1.5}
+.market-tool-heading{display:flex;align-items:center;gap:9px;min-height:48px;padding:8px 12px 8px 16px;border-bottom:1px solid #35363a;flex-shrink:0}
+.market-tool-heading h2{margin:0;font-size:16px;font-weight:500;color:#e3e4e6}
+.market-tool-heading-icon{display:flex;flex:none}
+.market-tool-heading-icon svg{width:20px;height:20px}
+.market-tool-close{margin-left:auto;width:28px;height:28px;padding:0;border-radius:5px;font-size:22px;line-height:1;color:#989ba1}
+.market-tool-close:hover{background:#343539;color:#eee}
+.market-tool-view{flex:1;min-height:0;overflow-y:auto;scrollbar-width:thin;padding:20px 16px}
+.market-tool-wireframe{display:flex;flex-direction:column;gap:20px}
+.market-tool-view .wf-box{padding:16px;border-color:#53555c}
+.market-tool-view .wf-text{gap:12px;padding:0}
+.market-tool-view .wf-line{height:5px}
+.market-tool-wf-summary{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.market-tool-wf-summary>.wf-line{width:40%}
+.market-tool-wf-summary>.wf-line:last-child{width:18%;opacity:.35}
+.market-tool-view .wf-tabs{gap:8px;margin:0}
+.market-tool-view .wf-tabs>.wf-box{flex:1;width:auto;height:32px;padding:13px 10px}
+.market-tool-wf-list{display:flex;flex-direction:column;gap:16px}
+.market-tool-wf-card{display:flex;flex-direction:column;gap:18px}
+.market-tool-wf-meta{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.market-tool-wf-meta>.wf-line{width:24%;height:4px;opacity:.4}
+.market-tool-view .market-tool-wf-tag{width:68px;height:24px;padding:9px 10px}
+.market-tool-wf-timeline{margin-left:4px;padding-left:20px;border-left:1px solid #53555c}
+.market-tool-wf-timeline>.market-tool-wf-card{position:relative}
+.market-tool-wf-timeline>.market-tool-wf-card:before{content:"";position:absolute;left:-25px;top:16px;width:9px;height:9px;border:1px solid #70737a;border-radius:50%;background:#202022}
+.market-tool-wf-author{display:flex;align-items:center;gap:12px}
+.market-tool-wf-avatar{width:32px;height:32px;flex-shrink:0;border:1px solid #53555c;border-radius:50%}
+.market-tool-wf-author>.wf-text{flex:1;gap:8px}
+.market-tool-wf-author .wf-line:last-child{height:4px;opacity:.35}
+.market-tool-wf-actions{display:flex;gap:12px}
+@container (max-width:800px){.market-tool-panel{box-shadow:8px 0 20px #0005}.workbench.has-market-tool-panel .market-content{left:0;grid-template-columns:clamp(190px,20%,249px) minmax(320px,1fr) 284px}.has-market-tool-panel .market-content>[data-component=StockList]{display:block}}
+@container (max-width:540px){.market-tool-panel{bottom:80px}}
