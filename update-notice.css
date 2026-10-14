@@ -1,0 +1,66 @@
+.update-notice {
+  position: fixed;
+  left: calc(var(--rail-width, 64px) + 4px);
+  bottom: 16px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 316px;
+  max-width: calc(100vw - var(--rail-width, 64px) - 16px);
+  padding: 10px 12px;
+  border: 1px solid #444449;
+  border-radius: 10px;
+  background: #2a2a2e;
+  box-shadow: 0 8px 28px #0006;
+  color: #eeeef0;
+  font-size: 14px;
+  line-height: 20px;
+  overflow: visible;
+}
+.update-notice-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.update-notice-heading p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.update-notice-icon { width: 20px; height: 20px; flex-shrink: 0; color: #6baef5; }
+.update-notice-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border: 1px solid #444449;
+  border-radius: 50%;
+  background: #2a2a2e;
+  color: #929298;
+}
+.update-notice-close svg { width: 16px; height: 16px; }
+.update-notice-close:hover,.update-notice-close:focus-visible { background: #3b3b42; color: #f0f0f2; }
+.update-notice-button {
+  flex-shrink: 0;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: background-color .14s;
+}
+.update-notice-primary { background: #2c94ef; color: #fff; }
+.update-notice-primary:hover,.update-notice-primary:focus-visible { background: #46a4f6; }
+.update-notice-primary:active { background: #197ed6; }
+.update-notice-secondary { border-color: #49494f; background: #36363c; color: #dddde2; }
+.update-notice-secondary:hover,.update-notice-secondary:focus-visible { background: #42424a; color: #fff; }
+.update-notice-secondary:active { background: #2f2f35; }
+.update-notice-button:focus-visible { outline: 2px solid #80baff; outline-offset: 2px; }
+@media (max-width: 350px) {
+  .update-notice { padding-left: 10px; padding-right: 10px; }
+  .update-notice-button { padding-left: 6px; padding-right: 6px; }
+}

@@ -1,0 +1,21 @@
+:root{--right-sidebar-width:50vw;--copilot-width:360px;--sidebar-card-height:clamp(240px,calc(28dvh + 60px),320px)}
+.panel-resize-handle{position:absolute;width:8px;z-index:30;cursor:col-resize;touch-action:none;outline:0}
+.panel-resize-handle::after{content:"";position:absolute;top:0;bottom:0;left:3px;width:2px;border-radius:2px;background:transparent;transition:background .12s}
+.panel-resize-handle:hover::after,.panel-resize-handle:focus-visible::after,.panel-resize-handle.is-dragging::after{background:#6799e6}
+.panel-resize-handle.is-fixed{cursor:default}
+body.is-resizing-panels,body.is-resizing-panels *{cursor:col-resize!important;user-select:none!important}
+#stage:has(#surface.is-horizontal-copilot) .workspace-titlebar.is-split{padding-left:12px}
+#surface.split.with-copilot.is-horizontal-copilot{display:grid;grid-template-columns:minmax(0,1fr) var(--copilot-width);overflow-x:auto;overflow-y:hidden}
+#surface.with-copilot.is-horizontal-copilot>.chat-panel,#surface.with-copilot.is-horizontal-copilot>.workbench{height:100%;min-width:0}
+.home-card.is-stacked-home{flex-direction:column}
+.home-card.is-stacked-home>.home-sidebar{position:relative!important;inset:auto!important;width:100%;height:var(--sidebar-card-height);flex:0 0 var(--sidebar-card-height)}
+.home-card.is-stacked-home>#surface{width:100%;height:auto;flex:1}
+#stage.has-page-right-sidebar #surface{right:8px}
+#stage.has-inline-page-right-sidebar #surface{right:calc(var(--right-sidebar-width) + 20px)}
+@media(min-width:701px){
+ .home-card>.home-right-sidebar,.is-home-layout:not(.has-home-sidebar) .home-card>.home-right-sidebar{position:absolute;right:0;top:0;bottom:0;width:var(--right-sidebar-width);height:auto;z-index:25;box-shadow:-12px 0 28px #0003}
+ .home-card.is-stacked-home>.home-right-sidebar{top:calc(var(--sidebar-card-height) + var(--panel-gap))}
+ .home-card.is-inline-right>.home-right-sidebar,.is-home-layout:not(.has-home-sidebar) .home-card.is-inline-right>.home-right-sidebar{position:relative;inset:auto;width:var(--right-sidebar-width);height:100%;flex:0 0 var(--right-sidebar-width);box-shadow:none;z-index:auto}
+ .page-right-sidebar{width:var(--right-sidebar-width);box-shadow:-12px 0 28px #0003}
+ .has-inline-page-right-sidebar .page-right-sidebar{box-shadow:none}
+}

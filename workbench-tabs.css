@@ -1,0 +1,8 @@
+.workbench-pages{position:absolute;inset:0;display:flex;flex-direction:column;min-width:0;overflow:hidden;background:var(--bg)}
+.workbench-page-tabs{display:flex;align-items:center;gap:0;flex:0 0 44px;min-width:0;padding:7px 12px;border-bottom:1px solid var(--panel-border);background:#202024;color:#bfc0c5}
+.workbench-page-tabs .top-workspace-tabs{max-width:100%;flex:0 1 auto}
+.workbench-page-tabs .top-workspace-tab-add{margin-left:6px;padding:6px;line-height:0}
+.workbench-page-tabs .top-workspace-tab-add svg{display:block;width:16px;height:16px}
+.workbench-pages-body{position:relative;flex:1;min-height:0;min-width:0;overflow:hidden}
+.workbench-pages-body>.artifact-preview-header{position:absolute;inset:0 0 auto;height:48px;z-index:1}
+.workbench-pages-body.has-page-preview>.workspace-document-preview{top:48px}
