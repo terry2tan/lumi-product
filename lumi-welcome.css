@@ -1,0 +1,27 @@
+.conversation-view.personal-conversation.lumi-welcome .lumi-welcome-scroll{display:flex;padding:32px 24px;overscroll-behavior:contain}
+.lumi-welcome-body{width:min(100%,760px);margin:auto;display:flex;flex-direction:column;align-items:center;gap:28px}
+.lumi-welcome-intro{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;min-width:0;width:100%}
+.lumi-welcome-avatar{position:relative;display:block;width:112px;height:100px;margin-bottom:6px}
+.lumi-welcome-avatar>img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.lumi-welcome-avatar.is-pet-ready>img{opacity:0}
+.lumi-welcome-intro h1{max-width:100%;margin:0;font-size:26px;line-height:36px;font-weight:600;overflow-wrap:anywhere}
+.lumi-welcome-capabilities{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.lumi-welcome-capability{min-width:0;padding:20px;border:1px solid #34353b;border-radius:14px;background:#25262b}
+.lumi-welcome-icon{display:block;width:24px;height:24px;margin-bottom:14px;color:var(--blue)}
+.lumi-welcome-icon svg{width:100%;height:100%;display:block}
+.lumi-welcome-capability h2{margin:0 0 8px;font-size:16px;line-height:24px;font-weight:500}
+.lumi-welcome-capability p{margin:0;color:#9699a2;font-size:14px;line-height:22px;overflow-wrap:anywhere}
+.lumi-welcome-start{flex-shrink:0;min-width:176px;min-height:44px;padding:10px 28px;border-radius:9px;background:var(--blue);color:#fff;font-size:16px;line-height:24px;font-weight:500}
+.lumi-welcome-start:hover{background:#46a4f6}.lumi-welcome-start:active{background:#197ed6}.lumi-welcome-start:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.lumi-welcome-start:disabled{opacity:.65;cursor:wait}
+@container conversation (max-width:640px){
+  .conversation-view.personal-conversation.lumi-welcome .lumi-welcome-scroll{padding:16px 20px}
+  .lumi-welcome-body{gap:16px}
+  .lumi-welcome-intro{gap:8px}
+  .lumi-welcome-avatar{width:88px;height:78px;margin-bottom:2px}
+  .lumi-welcome-capabilities{grid-template-columns:minmax(0,1fr);gap:10px}
+  .lumi-welcome-capability{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:14px;row-gap:4px;padding:14px}
+  .lumi-welcome-icon{grid-row:1 / span 2;margin:2px 0 0}
+  .lumi-welcome-capability h2{margin:0}
+  .lumi-welcome-capability p{grid-column:2}
+}

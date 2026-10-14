@@ -1,0 +1,20 @@
+.lumi-watchlist{min-width:0;padding:0}
+.lumi-watch-viewport{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;outline:none;border-radius:9px}
+.lumi-watch-viewport:focus-visible{outline:2px solid #8b85bd;outline-offset:2px}
+.lumi-watch-table{width:100%;display:block;border-collapse:collapse;font-size:14px;line-height:20px;font-variant-numeric:tabular-nums}
+.lumi-watch-table th,.lumi-watch-table td{padding:0 16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;font-weight:400}
+.lumi-watch-table colgroup{display:none}.lumi-watch-table tbody{display:block}
+.lumi-watch-table .lumi-watch-col-0{flex:1;min-width:0;display:block;line-height:40px;padding:0 0 0 16px;text-align:left}.lumi-watch-table .lumi-watch-col-1{flex:none;padding:0 8px;text-align:right;color:#9699a2;font-size:14px}
+.lumi-watch-table .lumi-watch-col-2{flex:0 0 40px;width:40px;padding:0 8px 0 0;text-align:center}
+.lumi-watch-category{display:block}.lumi-watch-category th{display:block;height:30px;line-height:30px;color:#9699a2;text-align:left;font-size:14px;background:#25262b}
+.lumi-watch-row{display:flex;height:40px;align-items:center;border-bottom:1px solid #303137}.lumi-watch-row td{display:flex;align-items:center;height:40px}
+.lumi-watch-row:hover,.lumi-watch-row:focus-within,.lumi-watch-row.is-menu-open{background:#303137}
+.lumi-watch-more{display:grid;place-items:center;width:28px;height:28px;border-radius:6px;color:#b8bbc3;opacity:0;pointer-events:none}
+.lumi-watch-more svg,.lumi-watch-menu-item svg{width:16px;height:16px;flex-shrink:0}
+.lumi-watch-row:hover .lumi-watch-more,.lumi-watch-row:focus-within .lumi-watch-more,.lumi-watch-row.is-menu-open .lumi-watch-more{opacity:1;pointer-events:auto}
+.lumi-watch-more:hover,.lumi-watch-more[aria-expanded=true]{background:#414249;color:#eee}.lumi-watch-more:focus-visible{outline:2px solid #8b85bd;outline-offset:1px}
+.lumi-watch-menu{position:fixed;z-index:1000;width:184px;padding:6px;border:1px solid #42434c;border-radius:10px;background:#2a2b30;box-shadow:0 8px 28px #0006;color:#e4e5e7}
+.lumi-watch-menu-item{display:flex;align-items:center;gap:10px;width:100%;height:36px;padding:0 10px;border-radius:6px;font-size:14px;text-align:left;white-space:nowrap}
+.lumi-watch-menu-item:hover,.lumi-watch-menu-item:focus-visible{background:#3b3c43;outline:none}.lumi-watch-menu-item.is-remove{color:#ec9296}
+.lumi-watch-empty{height:40px!important;text-align:center!important;color:#9699a2}
+@media(hover:none){.lumi-watch-more{opacity:1;pointer-events:auto}}

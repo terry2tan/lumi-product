@@ -1,0 +1,38 @@
+.personal-conversation .lumi-message-row{position:relative;width:fit-content;max-width:min(86%,calc(100% - 56px));min-width:0}
+.conversation-view.personal-conversation .lumi-message-row>.conversation-message-content{max-width:100%}
+.lumi-message-row:after{content:'';position:absolute;top:0;bottom:0;right:-56px;width:56px;pointer-events:none}
+.lumi-message-row.is-actions-visible:after,.lumi-message-row:has(:focus-visible):after{pointer-events:auto}
+.lumi-message-actions{position:absolute;z-index:1;left:calc(100% + 4px);top:4px;display:flex;gap:0;opacity:0;pointer-events:none;transition:opacity .15s}
+.lumi-message-actions .conversation-icon-button{width:26px;height:26px;flex-basis:26px;padding:4px;border-radius:6px}
+.lumi-message-row.is-actions-visible>.lumi-message-actions,.lumi-message-row:has(:focus-visible)>.lumi-message-actions{opacity:1;pointer-events:auto}
+.lumi-reply-quote{position:absolute;left:12px;top:12px;z-index:5}
+.lumi-reply-quote-chip{display:inline-flex;align-items:center;gap:2px;border:1px solid #45454d;border-radius:9px;background:#303036;color:#c8c9ce;padding:3px}
+.lumi-reply-quote-open{display:flex;align-items:center;gap:7px;height:26px;padding:3px 6px;background:transparent;border:0;border-radius:5px;color:inherit;font-size:14px;white-space:nowrap;cursor:pointer}
+.lumi-reply-quote-open>svg{width:18px;height:18px}
+.lumi-reply-quote-remove{display:flex;align-items:center;justify-content:center;width:24px;height:24px;padding:4px;border:0;border-radius:50%;background:transparent;color:#a5a6ad;cursor:pointer}
+.lumi-reply-quote-remove>svg{width:16px;height:16px}
+.lumi-reply-quote-open:hover,.lumi-reply-quote-remove:hover{background:#414147;color:#f0f0f4}
+.lumi-reply-quote-open:focus-visible,.lumi-reply-quote-remove:focus-visible{outline:2px solid #638dcb;outline-offset:2px}
+.lumi-reply-quote-preview{position:absolute;left:0;bottom:calc(100% + 10px);width:min(420px,calc(100cqi - 48px));max-height:220px;overflow:auto;padding:14px;border:1px solid #4a4b53;border-radius:12px;background:#303036;box-shadow:0 8px 24px #0006;color:#dedee4;font-size:14px;line-height:1.7}
+.lumi-reply-quote-preview[hidden]{display:none}
+.lumi-reply-quote:before{content:'';position:absolute;left:0;right:0;top:-12px;height:12px}
+.lumi-reply-quote-author{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lumi-reply-quote-author>img{width:24px;height:24px;object-fit:contain}
+.lumi-reply-quote-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.lumi-home-composer.has-reply-quote{height:191px!important}
+.lumi-home-composer.has-reply-quote [data-node-id="344:16792"]{height:168px!important}
+.lumi-home-composer.has-reply-quote .conversation-input{top:52px!important}
+.lumi-home-composer.has-reply-quote [data-node-id="344:16795"]{top:126px!important}
+.lumi-home-composer.has-reply-quote [data-node-id="344:16791"]{top:180px!important}
+.lumi-sent-quote{margin:0 0 10px;padding:2px 0 2px 10px;border-left:2px solid #92a9cd;color:#c6d0df;font-size:13px;line-height:1.6;max-width:100%}
+.lumi-sent-quote>strong{display:block;margin-bottom:3px;font-weight:500}
+.lumi-sent-quote>div{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;white-space:pre-wrap;overflow-wrap:anywhere}
+@container conversation (max-width:700px){.personal-conversation .lumi-message-row{max-width:calc(100% - 56px)}}
+.conversation-view.chat-panel.personal-conversation .lumi-message-row{max-width:100%}
+.conversation-view.chat-panel.personal-conversation .lumi-message-row>.conversation-message-content{width:100%;max-width:100%}
+.conversation-view.chat-panel.personal-conversation .lumi-message-row:after{content:none}
+.conversation-view.chat-panel.personal-conversation .lumi-message-actions{left:auto;right:8px;top:8px;gap:2px;padding:3px;border:1px solid #ffffff14;border-radius:10px;background:#26272dcc;-webkit-backdrop-filter:blur(12px) saturate(140%);backdrop-filter:blur(12px) saturate(140%);box-shadow:0 2px 8px #0003}
+.conversation-view.chat-panel.personal-conversation .lumi-message-actions .conversation-icon-button{color:#c4c5cd}
+.conversation-view.chat-panel.personal-conversation .lumi-message-actions .conversation-icon-button:hover{background:#ffffff14;color:#f1f1f5}
+.conversation-view.chat-panel.personal-conversation .lumi-message-actions .conversation-icon-button:active{background:#ffffff24}
+@media(prefers-reduced-motion:reduce){.lumi-message-actions{transition:none}}
