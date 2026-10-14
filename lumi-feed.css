@@ -56,3 +56,42 @@
 .lumi-profile-manage-goals{padding:2px 6px;border-radius:6px;color:#a3a6ad;font-size:12px;line-height:18px}
 .lumi-profile-manage-goals:hover{background:#2c2d31;color:#e4e4e6}
 @container conversation (max-width:560px){.lumi-feed-select{margin-left:0;max-width:100%}.lumi-feed-thread-actions>button:not(:last-child){display:none}}
+
+/* 带看讲解栏（LumiTour）：固定在工作区右侧，紫色为 Lumi 本次添加，黄色为用户画线 */
+.lumi-tour{position:fixed;z-index:60;width:320px;display:flex;flex-direction:column;border-left:1px solid #3a3b40;background:#1b1c1f;color:#d6d8dd;font-size:13px;line-height:21px;box-shadow:-12px 0 24px rgba(0,0,0,.25)}
+.lumi-tour-top{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid #34363b}
+.lumi-tour-top img{width:32px;height:32px;object-fit:contain}
+.lumi-tour-top div{display:flex;flex-direction:column;flex:1;min-width:0}
+.lumi-tour-top b{color:#eeeff0;font-weight:600}
+.lumi-tour-top span{color:#888c94;font-size:12px;line-height:18px}
+.lumi-tour-x{width:28px;height:28px;border:0;background:none;color:#aaaeb5;font-size:20px;cursor:pointer}
+.lumi-tour-x:hover{color:#eeeff0}
+.lumi-tour-steps{display:flex;gap:6px;padding:14px 16px 0}
+.lumi-tour-steps i{flex:1;height:3px;background:#3a3b40}
+.lumi-tour-steps i.is-on{background:#c2b6ff}
+.lumi-tour-body{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:12px;padding:14px 16px}
+.lumi-tour-body p{margin:0}
+.lumi-tour-msg{color:#e6e7ea;font-size:14px;line-height:23px}
+.lumi-tour-pause{padding:8px 10px;border:1px solid #6b5a3a;background:#2a251c;color:#e0c88f;font-size:12px}
+.lumi-tour-did{display:flex;gap:8px;color:#888c94;font-size:12px;line-height:19px}
+.lumi-tour-did span{color:#c2b6ff}
+.lumi-tour-legend{display:flex;gap:14px;color:#888c94;font-size:12px}
+.lumi-tour-legend span{display:inline-flex;align-items:center;gap:6px}
+.lumi-tour-legend i{width:16px;border-top:2px dashed #c2b6ff}
+.lumi-tour-legend i.is-user{border-top:2px solid #e0b15c}
+.lumi-tour-foot{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px 14px;border-top:1px solid #34363b}
+.lumi-tour-foot p{flex-basis:100%;margin:0;color:#6f727a;font-size:12px;line-height:18px}
+.lumi-tour-btn{flex:1;min-height:30px;padding:4px 10px;border:1px solid #53555c;background:none;color:#d6d8dd;font:inherit;cursor:pointer}
+.lumi-tour-btn:hover{border-color:#858890}
+.lumi-tour-btn.is-primary{border-color:#c2b6ff;background:#c2b6ff;color:#17181a}
+.lumi-tour-btn.is-off{opacity:.4;pointer-events:none}
+
+/* 卡片评价与带看入口同一行，位于正文下方；「更多」菜单向上展开 */
+.lumi-feed-follow.is-tour{align-items:center}
+.lumi-feed-follow .lumi-feed-ask{margin-left:auto;color:#888c94;font-size:12px}
+.lumi-feed-follow .lumi-feed-thread-actions .lumi-feed-menu{top:auto;bottom:calc(100% + 6px)}
+.lumi-feed>.kb-notes-toggle{top:10px;bottom:auto;right:16px}
+.lumi-feed>.kb-notes{top:48px;bottom:auto;right:16px;max-height:calc(100% - 200px)}
+@container conversation (max-width:560px){.lumi-feed-follow .lumi-feed-ask{display:none}}
+.lumi-tour .lumi-tour-notes-toggle{position:static;align-self:flex-start}
+.lumi-tour .lumi-tour-notes{position:static;width:auto;max-height:none}

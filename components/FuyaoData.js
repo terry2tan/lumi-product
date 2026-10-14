@@ -37,7 +37,7 @@ window.FuyaoData=(()=>{
   function drawList(){const byCode=new Map(snapshots.map(r=>[r.thscode,r]));list.replaceChildren();for(const row of stocks){const value=byCode.get(row.thscode)||{},button=el('button','stock-list-row'),name=el('span','stock-list-name');button.type='button';button.dataset.thscode=row.thscode;button.classList.toggle('selected',row.thscode===selected.thscode);button.setAttribute('aria-pressed',String(row.thscode===selected.thscode));name.append(el('span',null,row.name||row.thscode),el('small',null,row.ticker||row.thscode.split('.')[0]));const change=el('span',null,percent(value.price_change_ratio_pct)),price=el('span','stock-list-price',number(value.last_price,row.asset_type==='fund-etf'?3:2));direction(change,value.price_change_ratio_pct);direction(price,priceDirection(value.last_price,value.prev_price));button.append(name,price,change);button.onclick=()=>{selected=row;load();drawList()};list.append(button)}}
   function plot(reset=false){
    const supplied=historyReady?FuyaoPlot.mergeSnapshot(records,currentQuote,snapshotTime):[];
-   const plotted=chart.update(supplied,{period,symbol:selected.thscode,reset,digits:selected.asset_type==='fund-etf'?3:2});
+   const plotted=chart.update(supplied,{period,symbol:selected.thscode,reset,digits:selected.asset_type==='fund-etf'?3:2});window.UserDrawings?.apply(chart,selected.thscode);
    body.querySelector('.stock-chart-averages').textContent=[5,20,60].map(n=>'MA'+n+' '+(plotted.length<n?'--':number(plotted.slice(-n).reduce((sum,r)=>sum+r.close_price,0)/n,selected.asset_type==='fund-etf'?3:2))).join('    ');
    if(!available())chart.status('尚未连接行情');else if(!historyReady)chart.status(historyFailed?'K线数据暂不可用':'正在加载行情…');
   }
@@ -66,7 +66,8 @@ window.FuyaoData=(()=>{
   body.fuyaoSelect=row=>{DemoMarketData.remember(row);if(!stocks.some(r=>r.thscode===row.thscode))stocks.push(row);selected=row;drawList();if(started)load();else body.fuyaoActivate()};
   function dispose(){if(closed)return;closed=true;clearInterval(timer);document.removeEventListener('visibilitychange',resume);chart.destroy()}
   const resume=()=>{if(!document.hidden&&body.isConnected&&body.getClientRects().length&&started)updatePrices()};
-  const timer=setInterval(()=>{if(!body.isConnected){dispose();return}if(!body.getClientRects().length||document.hidden||!started)return;updatePrices()},2000);
+  // 行情页的 DOM 会被缓存并在切回时重新挂上，断开期间只暂停刷新，不销毁图表。
+  const timer=setInterval(()=>{if(!body.isConnected||!body.getClientRects().length||document.hidden||!started)return;updatePrices()},2000);
   document.addEventListener('visibilitychange',resume);body.disposeStockChart=dispose;
   drawList();setHeader(selected);fillQuote({},null);plot();if(state.selectedPage==='个股')body.fuyaoActivate();
  }

@@ -61,7 +61,8 @@
     {text:'要给我起个名字吗？',delay:1100,action:{label:'编辑Lumi个人资料',type:'lumi-profile'}},
     {text:'发现你最近在电池行业有很多短线交易，是否需要我帮你监控相关标的的异动和行业资讯？',delay:2200}
   ];
-  lumi.onboarding={phase:'welcome',next:0};
+  /* 「你的 Lumi」进入即是动态信息流，不再先走欢迎页与自我介绍。 */
+  lumi.onboarding={phase:'complete',next:lumiIntroduction.length};
   function holdingsReview(){return{text:'好，我先把持仓关系和公告观察重点放在一起。科华数据与太辰光合计占仓位 40%，我会把共同的算力线索合并整理，再区分各自公司的变化。',table:{headers:['持仓','仓位占比','公告观察重点'],rows:lumiProfile.holdings.map(holding=>[holding.name,`${holding.weight}%`,holding.name==='科华数据'?'算力基础设施项目、订单兑现与现金流':holding.name==='太辰光'?'光通信需求、客户订单与毛利率':'新增订单、产能利用与交付节奏'])},after:'你可以把近期公告发给我，我会按这张对照补上已确认的变化和待核实的内容。'}};
   function replyFor(text,thread,quote){
     if(thread.kind==='personal'&&/调整.*投资偏好|重新梳理.*投资周期/.test(text))return{text:'可以，我们先确认三件事：你通常打算持有多久、希望怎样控制回撤，以及什么变化值得在盘中提醒你。\n\n你可以直接说新的偏好，我会按你最新的说明继续这段对话。'};
@@ -87,11 +88,7 @@
     if(savedId)messageCounter=Math.max(messageCounter,Number(savedId[1]));
   }
   const restoredLumi=threads.get('lumi');
-  if(restoredLumi&&!restoredLumi.onboarding){
-    const onlyInitial=restoredLumi.messages.every(item=>item.origin==='initial');
-    restoredLumi.onboarding={phase:onlyInitial?'welcome':'complete',next:onlyInitial?0:lumiIntroduction.length};
-    if(onlyInitial)restoredLumi.messages=[];
-  }
+  if(restoredLumi&&restoredLumi.onboarding?.phase!=='complete')restoredLumi.onboarding={phase:'complete',next:lumiIntroduction.length};
   addEventListener('conversation:changed',event=>{if(event.detail.reason!=='stream')persist()});addEventListener('pagehide',persist);
   let requestSequence=0;
   const changed=(id,reason='update',messageId=null)=>window.dispatchEvent(new CustomEvent('conversation:changed',{detail:{id,reason,messageId}}));

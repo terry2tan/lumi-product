@@ -4,7 +4,7 @@
 window.GoalsPage=(()=>{
  const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  const P=()=>ProactiveStore;
- const S={view:'list',tab:'goals',goalId:null,q:'',showDone:false,openRun:null,form:null,editing:null};
+ const S={view:'list',tab:'goals',goalId:null,q:'',showDone:false,openRun:null,form:null,editing:null,notes:false};
  let root=null,toastTimer=0;
  const btn=(label,act,attrs='',cls='')=>`<button type="button" class="gl-btn ${cls}" data-act="${act}" ${attrs}>${esc(label)}</button>`;
  const chip=(text,cls='')=>`<span class="gl-chip ${cls}">${esc(text)}</span>`;
@@ -27,6 +27,7 @@ window.GoalsPage=(()=>{
   return `${P().settings.migrationNotice?`<div class="gl-banner" role="note"><div class="gl-grow"><b>「自动任务」已并入目标</b><p>你的 ${migrated} 个自动任务已迁移为带「定时」的目标，执行时间、内容和推送渠道都没有变。定时的会到点给你结果；「盯」的只在有实质变化时提醒。</p></div>${btn('知道了','dismiss-notice','','is-small')}</div>`:''}
    ${P().candidates.length?`<section class="gl-section"><div class="gl-row"><h2 class="gl-grow">Lumi 的建议</h2><span class="gl-sub">从最近的对话里发现，你确认后才会开始</span></div>
     <div class="gl-suggest-list">${P().candidates.map(c=>`<div class="gl-suggest"><div class="gl-grow"><b>${esc(c.title)}</b><p>${esc(c.desc)}</p><p class="gl-sub">${esc(c.why)}</p></div><div class="gl-row">${btn('设为目标','accept',`data-id="${c.id}"`,'is-primary is-small')}${btn('不需要','dismiss',`data-id="${c.id}"`,'is-small')}</div></div>`).join('')}</div></section>`:''}
+   <section class="gl-panel"><div class="gl-row gl-wrap"><div class="gl-grow"><b>新建目标在对话中完成</b><p class="gl-sub">在对话里说出想让 Lumi 持续帮你做什么，Lumi 会补齐要盯的内容和定时安排请你确认；确认后目标自动出现在这里。</p></div>${btn('在对话中新建','new-in-chat','','is-primary')}</div></section>
    <section class="gl-section"><div class="gl-row"><h2 class="gl-grow">进行中 · ${active.length}</h2></div>
     <div class="gl-grid">${active.map(goalCard).join('')||'<p class="gl-empty">没有匹配的目标。</p>'}</div></section>
    ${done.length?`<section class="gl-section"><button type="button" class="gl-link" data-act="toggle-done" aria-expanded="${S.showDone}">${S.showDone?'收起':'展开'}已完成 · ${done.length}</button>${S.showDone?`<div class="gl-grid">${done.map(goalCard).join('')}</div>`:''}</section>`:''}`;
@@ -60,8 +61,8 @@ window.GoalsPage=(()=>{
  }
  function formView(){
   const f=S.form,groups=[...new Set(P().signals.map(s=>s.group))];
-  return `<div class="gl-crumb"><button type="button" class="gl-link" data-act="back">目标</button><span>›</span><b>${S.editing?'编辑目标':'新建目标'}</b></div>
-   <header class="gl-head"><h1 tabindex="-1">${S.editing?'编辑目标':'新建目标'}</h1></header>
+  return `<div class="gl-crumb"><button type="button" class="gl-link" data-act="back">目标</button><span>›</span><b>编辑目标</b></div>
+   <header class="gl-head"><h1 tabindex="-1">编辑目标</h1></header>
    <section class="gl-panel"><label class="gl-label">想让 Lumi 持续帮你做什么<input class="gl-input" data-form="title" value="${esc(f.title)}" placeholder="例如：盯住铂力特的订单与交付；每天开盘前给我盘前要点"></label>
     <label class="gl-label">补充说明（可选）<textarea class="gl-textarea" data-form="desc" placeholder="你最在意的方面、什么情况下需要提醒你">${esc(f.desc)}</textarea></label>
     <label class="gl-label">涉及的标的（可选）<input class="gl-input" data-form="securities" value="${esc(f.securities)}" placeholder="用顿号分隔，例如：科华数据、太辰光"></label></section>
@@ -73,18 +74,30 @@ window.GoalsPage=(()=>{
     <label class="gl-label">每次要做什么<textarea class="gl-textarea" data-form="prompt" placeholder="例如：整理隔夜外盘和我自选股的公告，生成 3 条盘前要点">${esc(f.prompt)}</textarea></label>`:''}</section>
    <section class="gl-panel"><h2>结果推送到</h2><div class="gl-row gl-wrap">${P().channels.map(c=>`<label class="gl-option"><input type="checkbox" data-push="${c}" ${f.push.includes(c)?'checked':''} ${c==='应用内'?'disabled':''}> ${c}${c==='应用内'?'<small>「你的 Lumi」信息流，始终开启</small>':''}</label>`).join('')}</div>
     <p class="gl-hint">「盯」的提醒推送到微信、飞书仍在评估（需求 R8.10），本稿暂按定时结果处理。</p></section>
-   <div class="gl-row">${btn(S.editing?'保存':'创建目标','save-goal','','is-primary')}${btn('取消','back')}</div>`;
+   <div class="gl-row">${btn('保存','save-goal','','is-primary')}${btn('取消','back')}</div>`;
+ }
+ /* ---------- 交互说明（摘自需求稿 proactive-agent/INTERACTION.html 与 REQUIREMENTS.md） ---------- */
+ const NOTES={
+  list:['R4.4 目标列出 Lumi 正在替你持续跟进的事；需求稿放在 Lumi 个人页的「目标」页签，本稿先作为独立页面。','列表每张卡片：标题、检查项类型（定时 / 盯 N 项）、最近一条进展、下次检查时间与推送渠道；已完成的折叠在底部。','R4.2 / R8.7 新建目标在对话中完成：说出想让 Lumi 持续做什么 → 必要时补齐要盯的内容 → 确认卡（检查项、定时、推送、补充假设）→ 创建并收进这里。试试在对话里输入「每个交易日 08:30 给我自选股的盘前要点」。','R6.5 想盯但暂时没有数据支撑的内容在确认卡里单独写明原因，数据就绪后自动开始，不用重新创建。','R4.2 「Lumi 的建议」：收盘后回看当天对话发现的候选目标，写明依据；「设为目标」才生效，「不需要」后不再提议同一内容。每天最多 3 条，7 天未处理自动消失。','R8.5 / R8.6 原「自动任务」升级后自动迁移为带「定时」的目标，执行时间、内容与推送渠道不变；说明条可关闭。'],
+  activity:['R5.3 / R5.4 顶部显示今天的运行次数、提醒条数与当前频率档位的上限；达到上限后当天不再运行。','R3.3 每次后台运行一行：时间、触发原因、结论。结论有五种：已提醒、无事可报、已拦截（注明原因）、已跳过、已中断。','展开一行可看检查了什么、为什么没有打扰你；已提醒的可跳到「你的 Lumi」里对应的卡片。','因重复、超出当日条数或静默时段被拦下的结论，可以「仍要查看」读到全文。','R8.2 定时检查到点必给结果，不计入提醒条数。'],
+  detail:['R4.1 检查项分两种：「定时」到点必给结果（原自动任务）；「盯」只在有实质变化时提醒，后台只读不动。两种可以放在同一个目标里。','R4.3 / R6.5 数据不支持的检查项标为「暂时盯不了」并写明原因，数据就绪后自动开始。','R8.3 有定时检查的目标可「立即执行」，结果进入「你的 Lumi」；执行记录保留；离线错过会提示且不补跑，连续 3 次失败自动暂停并通知。','进展时间线中标「已提醒」的条目对应推送过的卡片，可直接查看。','R4.5 「Lumi 的笔记」是 Lumi 为这个目标记下的要点，对你可见、可改。','暂停后不再检查但保留历史；标记完成后归档；删除需二次确认，已推送的消息不受影响。','R3.4 在「你的 Lumi」里选择「不再提醒这类」后，详情页顶部显示提示并可恢复；定时结果不受影响。'],
+  form:['编辑已有目标：标题与说明、涉及标的、要盯的信号、是否定时给结果、推送渠道。新建不在这里，统一进对话。','信号按信号目录分组，每项标明监控方式；暂时盯不了的置灰并写明原因（R6.5）。','R8.1 打开「定时给我结果」后选择频率、时间与每次要做什么；到点一定给结果，没有变化也写明「没有新变化」。','R8.10 「盯」的提醒推送到微信、飞书仍在评估，本稿暂按定时结果处理；应用内（「你的 Lumi」）始终开启。']
+ };
+ function notesHtml(){
+  const key=S.view==='list'?(S.tab==='activity'?'activity':'list'):S.view;
+  const demo=key==='list'?`<div class="kb-seg kb-wrap"><button type="button" class="${P().settings.migrationNotice?'is-active':''}" data-act="demo-migration">显示迁移说明</button></div>`
+   :key==='activity'?`<div class="kb-seg kb-wrap">${['少','多'].map(v=>`<button type="button" class="${P().settings.volume===v?'is-active':''}" data-act="demo-volume" data-value="${v}">频率「${v}」</button>`).join('')}</div>`:'';
+  return `<button type="button" class="kb-notes-toggle" data-act="toggle-notes" aria-expanded="${S.notes}">交互说明</button>${S.notes?`<aside class="kb-notes" aria-label="交互说明"><b>交互说明</b><ul>${(NOTES[key]||[]).map(n=>`<li>${esc(n)}</li>`).join('')}</ul>${demo?`<b>状态演示</b>${demo}`:''}</aside>`:''}`;
  }
  let lastKey='';
  function draw(){
   if(!root)return;const key=`${S.view}:${S.tab}:${S.goalId}`,scroll=key===lastKey?root.querySelector('.gl-scroll')?.scrollTop||0:0;lastKey=key;
-  const head=S.view==='list'?`<header class="gl-head"><div class="gl-grow"><h1 tabindex="-1">目标</h1><p class="gl-sub">说一次，Lumi 持续替你盯着；需要定时的，到点给你结果。</p></div><div class="gl-head-tools">${S.tab==='goals'?`<input class="gl-input" type="search" data-input="q" value="${esc(S.q)}" placeholder="搜索目标" aria-label="搜索目标">`:''}${btn('新建目标','new-goal','','is-primary')}</div></header>
+  const head=S.view==='list'?`<header class="gl-head"><div class="gl-grow"><h1 tabindex="-1">目标</h1><p class="gl-sub">说一次，Lumi 持续替你盯着；需要定时的，到点给你结果。</p></div><div class="gl-head-tools">${S.tab==='goals'?`<input class="gl-input" type="search" data-input="q" value="${esc(S.q)}" placeholder="搜索目标" aria-label="搜索目标">`:''}${btn('新建目标','new-in-chat','','is-primary')}</div></header>
    <div class="gl-tabs" role="tablist">${[['goals','目标'],['activity','活动']].map(([id,label])=>`<button type="button" role="tab" aria-selected="${S.tab===id}" class="${S.tab===id?'is-active':''}" data-act="tab" data-tab="${id}">${label}</button>`).join('')}</div>`:'';
   const body=S.view==='detail'?detailView():S.view==='form'?formView():S.tab==='activity'?activityView():listView();
-  root.innerHTML=`<div class="gl-scroll">${head}${body}</div>`;
+  root.innerHTML=`<div class="gl-scroll">${head}${body}</div>${notesHtml()}`;
   root.querySelector('.gl-scroll').scrollTop=scroll;
  }
- const blankForm=()=>({title:'',desc:'',securities:'',signals:[],timed:false,rule:'每个交易日',time:'08:30',prompt:'',push:['应用内']});
  function formFrom(g){const t=P().timedCheck(g);return{title:g.title,desc:g.desc,securities:g.securities.join('、'),signals:g.checks.filter(c=>c.kind==='signal').map(c=>c.signal),timed:!!t,rule:t?.rule||'每个交易日',time:t?.time||'08:30',prompt:t?.prompt||'',push:[...g.push]}}
  function saveGoal(){
   const f=S.form;if(!f.title.trim()){toast('请先写下想让 Lumi 做什么');root.querySelector('[data-form="title"]')?.focus();return}
@@ -93,16 +106,21 @@ window.GoalsPage=(()=>{
   const checks=[...(f.timed?[{kind:'timed',rule:f.rule,time:f.time,prompt:f.prompt.trim()}]:[]),...f.signals.map(signal=>({kind:'signal',signal}))];
   const data={title:f.title.trim(),desc:f.desc.trim()||'（没有补充说明）',securities:f.securities.split(/[、,，\s]+/).filter(Boolean),checks,push:f.push};
   const off=f.signals.map(id=>P().signal(id)).filter(s=>!s.ready).map(s=>s.name);
-  if(S.editing){P().updateGoal(S.editing,data);S.goalId=S.editing}else{S.goalId=P().addGoal(data).id}
+  P().updateGoal(S.editing,data);S.goalId=S.editing;
   S.view='detail';S.editing=null;S.form=null;draw();toast(off.length?`已保存。${off.join('、')}暂时盯不了，数据就绪后自动开始`:'已保存');
  }
+ /* 与「新建策略」一致：新建目标在页面 Copilot 对话中完成，表单只用于编辑已有目标。 */
+ function openChat(){if(!state.draft)state.draft='';if(state.mode!=='split')togglePageCopilot();else render({preservePage:true})}
  function bind(){
   root.addEventListener('click',e=>{
    const el=e.target.closest('[data-act]');if(!el||!root.contains(el))return;const a=el.dataset.act,id=el.dataset.id;
+   if(a==='toggle-notes'){S.notes=!S.notes;return draw()}
+   if(a==='demo-migration'){P().settings.migrationNotice=!P().settings.migrationNotice;return draw()}
+   if(a==='demo-volume'){P().settings.volume=el.dataset.value;return draw()}
    if(a==='tab'){S.tab=el.dataset.tab;S.openRun=null;return draw()}
    if(a==='open-goal'){S.view='detail';S.goalId=id;return draw()}
    if(a==='back'){S.view=S.goalId&&S.view==='form'&&S.editing?'detail':'list';S.form=null;S.editing=null;return draw()}
-   if(a==='new-goal'){S.view='form';S.editing=null;S.form=blankForm();return draw()}
+   if(a==='new-in-chat'){openChat();return toast('在对话中描述你的目标，Lumi 会先补齐要盯什么、何时给结果，请你确认')}
    if(a==='edit'){S.view='form';S.editing=S.goalId;S.form=formFrom(P().goal(S.goalId));return draw()}
    if(a==='toggle-timed'){S.form.timed=!S.form.timed;return draw()}
    if(a==='save-goal')return saveGoal();
