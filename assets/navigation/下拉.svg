@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><defs xmlns="http://www.w3.org/2000/svg">
+<linearGradient id="paint0_linear_835_9763" x1="813.032" y1="1954.19" x2="813.032" y2="1968.25" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.48"/>
+<stop offset="1" stop-color="white" stop-opacity="0.24"/>
+</linearGradient>
+<linearGradient id="paint1_linear_835_9763" x1="544.013" y1="2071.88" x2="544.013" y2="2077.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.48"/>
+<stop offset="1" stop-color="white" stop-opacity="0.24"/>
+</linearGradient>
+<clipPath id="clip0_835_9763">
+<rect width="241" height="22" fill="white" transform="translate(182 465)"/>
+</clipPath>
+<clipPath id="clip1_835_9763">
+<rect width="42" height="241" fill="white" transform="translate(140 497)"/>
+</clipPath>
+<clipPath id="clip2_835_9763">
+<rect width="43" height="22" fill="white" transform="translate(439 490)"/>
+</clipPath>
+<clipPath id="clip3_835_9763">
+<rect width="43" height="22" fill="white" transform="translate(140 897)"/>
+</clipPath>
+<clipPath id="clip4_835_9763">
+<rect width="230" height="103" fill="white" transform="translate(519 897)"/>
+</clipPath>
+<clipPath id="clip5_835_9763">
+<rect width="17.5" height="17.5" fill="white" transform="translate(708.25 1952)"/>
+</clipPath>
+<clipPath id="clip6_835_9763">
+<rect width="7" height="7" fill="white" transform="translate(484.5 2071)"/>
+</clipPath>
+</defs><g transform="translate(-340 -1741)"><path xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" d="M343.538 1746.34C343.576 1746.24 343.64 1746.15 343.722 1746.09C343.804 1746.03 343.901 1746 344 1746H352C352.099 1746 352.195 1746.03 352.277 1746.09C352.36 1746.15 352.424 1746.24 352.461 1746.34C352.499 1746.44 352.509 1746.55 352.49 1746.66C352.471 1746.76 352.423 1746.86 352.353 1746.94L348.353 1751.34C348.259 1751.44 348.132 1751.5 348 1751.5C347.867 1751.5 347.74 1751.44 347.647 1751.34L343.647 1746.94C343.577 1746.86 343.529 1746.76 343.51 1746.66C343.49 1746.55 343.5 1746.44 343.538 1746.34Z" fill="#B4B6B8"/></g></svg>

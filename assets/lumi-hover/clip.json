@@ -1,0 +1,14 @@
+{
+  "frameWidth": 224,
+  "frameHeight": 216,
+  "frameCount": 48,
+  "columns": 8,
+  "fps": 24,
+  "duration": 2000,
+  "alpha": true,
+  "order": "row-major",
+  "restFrames": [
+    0,
+    47
+  ]
+}

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none"><defs xmlns="http://www.w3.org/2000/svg">
+<linearGradient id="paint0_linear_835_9763" x1="813.032" y1="1954.19" x2="813.032" y2="1968.25" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.48"/>
+<stop offset="1" stop-color="white" stop-opacity="0.24"/>
+</linearGradient>
+<linearGradient id="paint1_linear_835_9763" x1="544.013" y1="2071.88" x2="544.013" y2="2077.5" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.48"/>
+<stop offset="1" stop-color="white" stop-opacity="0.24"/>
+</linearGradient>
+<clipPath id="clip0_835_9763">
+<rect width="241" height="22" fill="white" transform="translate(182 465)"/>
+</clipPath>
+<clipPath id="clip1_835_9763">
+<rect width="42" height="241" fill="white" transform="translate(140 497)"/>
+</clipPath>
+<clipPath id="clip2_835_9763">
+<rect width="43" height="22" fill="white" transform="translate(439 490)"/>
+</clipPath>
+<clipPath id="clip3_835_9763">
+<rect width="43" height="22" fill="white" transform="translate(140 897)"/>
+</clipPath>
+<clipPath id="clip4_835_9763">
+<rect width="230" height="103" fill="white" transform="translate(519 897)"/>
+</clipPath>
+<clipPath id="clip5_835_9763">
+<rect width="17.5" height="17.5" fill="white" transform="translate(708.25 1952)"/>
+</clipPath>
+<clipPath id="clip6_835_9763">
+<rect width="7" height="7" fill="white" transform="translate(484.5 2071)"/>
+</clipPath>
+</defs><g transform="translate(-540 -1741)"><path xmlns="http://www.w3.org/2000/svg" d="M548.659 1742.37C548.958 1742.31 549.268 1742.32 549.561 1742.41C549.854 1742.5 550.122 1742.65 550.338 1742.87L554.131 1746.66L554.282 1746.84C554.422 1747.02 554.528 1747.22 554.593 1747.44C554.679 1747.73 554.691 1748.04 554.628 1748.34C554.564 1748.64 554.427 1748.92 554.228 1749.15C554.03 1749.38 553.776 1749.56 553.491 1749.67L551.242 1750.53C550.925 1750.66 550.64 1750.85 550.412 1751.1C550.241 1751.29 550.105 1751.51 550.01 1751.74L549.928 1751.98L549.469 1753.65C549.399 1753.9 549.264 1754.13 549.077 1754.32C548.891 1754.5 548.659 1754.63 548.405 1754.7C548.152 1754.77 547.885 1754.77 547.632 1754.7C547.378 1754.63 547.147 1754.5 546.962 1754.31L545.18 1752.53L542.853 1754.86C542.658 1755.05 542.342 1755.05 542.146 1754.86C541.951 1754.66 541.951 1754.34 542.146 1754.15L544.473 1751.82L542.691 1750.04C542.506 1749.86 542.372 1749.62 542.304 1749.37C542.235 1749.12 542.235 1748.85 542.302 1748.6C542.369 1748.34 542.501 1748.11 542.685 1747.92C542.87 1747.74 543.1 1747.6 543.353 1747.53L545.02 1747.07L545.261 1746.99C545.495 1746.9 545.713 1746.76 545.901 1746.59C546.153 1746.36 546.347 1746.08 546.469 1745.76L547.329 1743.51C547.438 1743.23 547.617 1742.97 547.849 1742.77C548.082 1742.58 548.36 1742.44 548.659 1742.37Z" fill="#B4B6B8"/></g></svg>

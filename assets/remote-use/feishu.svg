@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <defs>
+    <filter id="feishu-shadow" x="-4" y="-3" width="56" height="58" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#11131A" flood-opacity=".18"/>
+    </filter>
+  </defs>
+  <rect x="2" y="1.5" width="44" height="44" rx="11" fill="#fff" filter="url(#feishu-shadow)"/>
+  <path fill="#00D6B9" d="M14.7 12.1c-.7 0-1 .8-.5 1.2 5.1 4.4 9 9.1 12 14.2l8.4-4.1c-.5-3.7-2-7.3-4.4-10.3-.5-.6-1.2-1-2-1H14.7Z"/>
+  <path fill="#3370FF" d="M10.2 19.4c-.5-.5-1.3-.1-1.3.6v13.4c0 1 .5 1.9 1.3 2.4 4.2 2.7 9.3 3.8 14.2 3.1 6.6-.9 12.3-4.8 15.8-10.4-3.2 2.6-6.1 3.8-9 3.7-5.6-.2-12.5-4.8-21-12.8Z"/>
+  <path fill="#133C9A" d="M21.6 28.1c5.6-3 8.8-7.3 13-8.3 2.5-.6 5.2-.4 7.7.7.5.2.7.8.3 1.2-1.7 2-2.9 4.8-4.2 7.2-1.3 2.4-3.2 4-5.5 4.6-3.3.8-7.2-1-11.3-3.9-.6-.4-.5-1.2 0-1.5Z"/>
+</svg>
