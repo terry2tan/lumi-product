@@ -1,0 +1,96 @@
+.more-feature-page{position:absolute;inset:0;padding:28px;overflow:auto;scrollbar-width:thin;background:#1c1d21;container-type:inline-size}
+.wf-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:32px}
+.wf-heading h1{margin:0;font-size:26px;line-height:36px;font-weight:500;color:#eeeff0;outline:none}
+.wf-body,.wf-stack{display:flex;flex-direction:column;gap:20px;min-width:0}
+.wf-box{min-width:0;border:1px solid #53555c;padding:22px;background:transparent;border-radius:0}
+.wf-line{display:block;width:var(--wf-line-width,64%);max-width:220px;height:5px;background:#5d5f66;opacity:.65}
+.wf-text{display:flex;flex-direction:column;gap:16px;min-width:0;padding:8px 0}
+.wf-text+.wf-text{margin-top:24px}
+.wf-search{width:220px;min-height:34px;padding:14px 18px}
+.wf-tabs{display:flex;gap:12px;margin-bottom:4px}
+.wf-tabs>.wf-box{width:94px;height:36px;padding:15px 18px}
+.wf-two-column{display:grid;gap:20px;align-items:start;min-width:0}
+.wf-backtest{grid-template-columns:210px minmax(0,1fr)}
+.wf-news{grid-template-columns:minmax(0,1fr) 260px}
+.wf-futures{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+.wf-list-card{margin-top:22px;padding:20px 14px}
+.wf-field{padding:17px;min-height:40px;margin-top:20px}
+.wf-controls,.wf-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.wf-controls .wf-field{margin-top:0}
+.wf-chart{height:320px;position:relative;padding:0;overflow:hidden}
+.wf-chart svg{display:block;width:100%;height:100%;stroke:#46484f;stroke-width:1;fill:none;opacity:.6}
+.wf-table{border:1px solid #53555c;min-width:0}
+.wf-table-row{display:grid;grid-template-columns:repeat(var(--wf-columns,4),minmax(0,1fr));min-height:58px}
+.wf-table-row+.wf-table-row{border-top:1px solid #41434a}
+.wf-table-row>div{display:flex;align-items:center;padding:20px 16px;min-width:0}
+.wf-table-row>div+div{border-left:1px solid #41434a}
+.wf-news-list{border:1px solid #53555c;padding:0 24px}
+.wf-news-row{display:flex;align-items:center;gap:24px;padding:26px 0}
+.wf-news-row+.wf-news-row{border-top:1px solid #41434a}
+.wf-news-row .wf-text{flex:1}
+.wf-thumbnail{width:90px;height:68px;padding:0;flex-shrink:0}
+.wf-settings{grid-template-columns:210px minmax(0,1fr);gap:32px}
+.wf-settings-navigation{display:flex;flex-direction:column;gap:12px}
+.wf-settings-category{padding:22px 18px}
+.wf-settings-category.current{background:#303238;border-color:#74777e}
+.wf-settings-group>.wf-text{margin-bottom:12px}
+.wf-settings-row{display:flex;align-items:center;justify-content:space-between;gap:28px;padding:18px 0;border-top:1px solid #41434a}
+.wf-settings-row>.wf-text{flex:1;gap:12px}
+.wf-settings-row .wf-line:last-child{height:4px;opacity:.35}
+.wf-settings-toggle{width:38px;height:20px;flex-shrink:0;border:1px solid #70737a;border-radius:12px;padding:3px}
+.wf-settings-toggle i{display:block;width:12px;height:12px;border-radius:50%;background:#7d8088}
+.wf-settings-option{width:120px;min-height:34px;padding:14px 12px;flex-shrink:0}
+.wf-banner{height:150px;padding:0}
+.wf-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:20px;min-width:0}
+.wf-card{display:flex;flex-direction:column;gap:20px}
+.wf-card-image{height:116px;padding:0}
+.wf-actions{display:flex;gap:12px;flex-shrink:0}
+.wf-action{width:84px;height:34px;padding:14px 12px}
+.wf-card>.wf-actions{margin-top:auto}
+.wf-card-heading{display:flex;align-items:center;gap:16px;min-width:0}
+.wf-card-heading>.wf-text{flex:1}
+.wf-status{width:60px;height:28px;padding:11px 10px;flex-shrink:0}
+.wf-card-detail{padding:14px}
+.wf-project-symbol{width:38px;height:34px;padding:0;flex-shrink:0}
+.wf-library{grid-template-columns:210px minmax(0,1fr)}
+.wf-category-list{display:flex;flex-direction:column;gap:12px;min-width:0}
+.wf-category{padding:22px 18px}
+.wf-category.current{background:#303238;border-color:#74777e}
+.market-watchlist-wireframe{padding:8px;overflow:hidden;color:#aaaeb5;font-size:12px}
+.wf-watch-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,28%);gap:8px;height:100%;min-height:0}
+.wf-watch-main{display:grid;grid-template-rows:minmax(0,1fr) minmax(200px,26%);gap:8px;min-width:0;min-height:0}
+.wf-watch-quotes,.wf-watch-recommendations,.wf-watch-analysis{display:flex;flex-direction:column;min-width:0;min-height:0;border:1px solid #4b4d53;background:#202124;overflow:hidden}
+.wf-watch-groups{display:flex;align-items:center;gap:6px;min-height:34px;padding:4px 6px;border-bottom:1px solid #484a50;overflow:hidden;white-space:nowrap}
+.wf-watch-groups>span{display:grid;place-items:center;flex:none;min-width:68px;height:24px;padding:0 8px;border:1px solid #46484d}
+.wf-watch-groups>.is-selected{background:#36383e;border-color:#858890;color:#d6d8dd}
+.wf-watch-groups>.wf-watch-group-placeholder{width:72px}
+.wf-watch-group-placeholder .wf-line{height:4px}
+.wf-watch-groups>.wf-watch-manage{margin-left:auto}
+.wf-watch-table-scroll{flex:1;min-height:0;min-width:0;overflow:auto;scrollbar-width:thin}
+.wf-watch-grid{min-width:640px}
+.wf-watch-row{display:grid;grid-template-columns:repeat(var(--wf-columns),minmax(0,1fr));min-height:32px;border-bottom:1px solid #34363b}
+.wf-watch-row>span{display:flex;align-items:center;min-width:0;padding:0 10px;border-right:1px solid #303238}
+.wf-watch-row>span:last-child{border-right:0}
+.wf-watch-row .wf-line{height:4px;opacity:.48}
+.wf-watch-header{position:sticky;top:0;z-index:1;background:#292b30;color:#aaadb4;font-size:11px}
+.wf-watch-header>span{white-space:nowrap}
+.wf-watch-row.is-selected{background:#34373d;box-shadow:inset 2px 0 #9a9da4}
+.wf-watch-row.is-selected .wf-line{opacity:.85}
+.wf-watch-quotes-grid .wf-watch-row{grid-template-columns:1fr 1.4fr repeat(8,minmax(0,1fr))}
+.wf-watch-picks-grid .wf-watch-row{grid-template-columns:1.3fr 3.2fr repeat(4,minmax(0,1fr)) .8fr}
+.wf-watch-recommendations>header,.wf-watch-analysis>header{display:flex;align-items:center;justify-content:space-between;min-height:32px;padding:0 10px;border-bottom:1px solid #484a50;font-size:12px;color:#bdc0c6}
+.wf-watch-charts{display:grid;grid-template-rows:1fr 1fr;gap:8px;min-width:0;min-height:0}
+.wf-watch-analysis>header>span:last-child{font-size:11px;color:#888c94}
+.wf-watch-chart{flex:1;min-height:0;padding:12px 10px 0}
+.wf-watch-volume{flex:0 0 22%;min-height:40px;padding:6px 10px 12px}
+.wf-watch-analysis .wf-chart{height:100%;border-color:#494c53;background-image:linear-gradient(#393c423b 1px,transparent 1px),linear-gradient(90deg,#393c423b 1px,transparent 1px);background-size:25% 25%}
+@media(max-width:760px){.market-watchlist-wireframe{padding:8px}}
+.wf-list-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0}
+.wf-list-toolbar>.wf-text{flex:1}
+@container(max-width:900px){.wf-two-column{grid-template-columns:1fr}.wf-chart{height:260px}.wf-news .wf-stack{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+@container(max-width:900px){.wf-category-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.wf-category{padding:18px 14px}}
+@container(max-width:900px){.wf-settings-navigation{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.wf-settings-category{padding:18px 14px}.wf-settings{gap:20px}}
+@container(max-width:480px){.wf-heading{flex-wrap:wrap}.wf-search{width:100%}.wf-tabs{gap:8px}.wf-tabs>.wf-box{width:64px;padding:15px 10px}.wf-controls,.wf-summary{gap:10px}.wf-box{padding:16px}.wf-chart{padding:0;height:210px}.wf-table-row>div{padding:16px 10px}.wf-news .wf-stack{grid-template-columns:1fr}.wf-news-list{padding:0 16px}.wf-news-row{gap:16px}.wf-thumbnail{width:56px;height:56px;padding:0}}
+@container(max-width:480px){.wf-settings-navigation{grid-template-columns:repeat(2,minmax(0,1fr))}.wf-settings-row{gap:16px}.wf-settings-option{width:84px;padding:12px}.wf-settings-row>.wf-text{min-width:0}}
+@container(max-width:480px){.wf-category-list{grid-template-columns:repeat(2,minmax(0,1fr))}.wf-banner{height:110px;padding:0}.wf-card-image{height:96px;padding:0}.wf-action{width:64px;padding:14px 10px}.wf-status{padding:11px 10px}.wf-project-symbol{padding:0}.wf-list-toolbar{gap:12px}.wf-actions{gap:8px}}
+@media(max-width:760px){.more-feature-page{padding:20px 16px}}

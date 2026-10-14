@@ -1,0 +1,2 @@
+/* Figma report page, composed independently from the workbench shell. */
+function reportPage(wb){const header=document.createElement('div');header.className='report-header';const back=document.createElement('button');back.textContent='‹ 返回';back.setAttribute('aria-label','关闭文件预览');back.onclick=()=>{state.page=state.previousPage;render()};header.append(back);wb.append(header);const page=document.createElement('section');page.className='report';page.setAttribute('aria-label','CPO产业链介绍');page.append(fragment('Report'));wb.append(page);}
