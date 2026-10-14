@@ -1,0 +1,475 @@
+/* Channel cards adapted from 260716 远程使用; tokens stay local to this component. */
+.lumi-remote-list,.lumi-remote-dialog{--yh-card-radius:10px;--yh-card-gap:12px;--yh-color-fill-4:transparent;--yh-color-fill-2:#4a4b51;--yh-color-fill-1:#53555b;--yh-semantic-text-primary:#e4e5e7;--yh-semantic-text-secondary:#b4b6b8;--yh-semantic-text-tertiary:#9699a2;--yh-semantic-border-subtle:#34353b;--yh-semantic-action:#2c94ef;--yh-semantic-action-hover:#47b3ff;--yh-semantic-bg-control:#36373d;--yh-color-fall-2:#6cbea0;--yh-color-danger-2:#ef686c;--yh-text-body-line:22px;--yh-text-caption-line:20px;--yh-text-section-size:16px;--yh-text-section-line:24px;--yh-font-weight-strong:500;--yh-button-radius:6px;--yh-radius-pill:999px;--yh-space-1:4px;--yh-space-2:6px;--yh-space-4:8px;--yh-space-6:12px;--yh-space-7:16px;--yh-space-8:20px;--border:#34353b;--border-strong:#63656c;--text-2:#b4b6b8}
+.lumi-remote-list{padding:0;container-type:inline-size;font-size:14px;line-height:22px}
+.lumi-remote-card {
+  overflow: hidden;
+  border-radius: var(--yh-card-radius);
+  background: var(--yh-color-fill-4);
+}
+
+.lumi-remote-card-head {
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  gap: var(--yh-card-gap);
+  padding: var(--yh-space-7) var(--yh-space-8);
+}
+
+.lumi-remote-logo {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 14px;
+  object-fit: contain;
+}
+
+.lumi-remote-copy {
+  display: grid;
+  min-width: 180px;
+  flex: 1;
+  gap: var(--yh-space-1);
+}
+
+.lumi-remote-copy strong {
+  color: var(--yh-semantic-text-primary);
+  font-size: 14px;
+  font-weight: var(--yh-font-weight-strong);
+  line-height: var(--yh-text-body-line);
+}
+
+.lumi-remote-copy small {
+  color: var(--yh-semantic-text-tertiary);
+  font-size: 14px;
+  line-height: var(--yh-text-caption-line);
+}
+
+.lumi-remote-guide-link {
+  width: max-content;
+  color: var(--yh-semantic-action);
+  font-size: 14px;
+  line-height: var(--yh-text-caption-line);
+  padding: 0;
+  text-align: left;
+}
+
+.lumi-remote-guide-link:hover,
+.lumi-remote-guide-link:focus-visible {
+  color: var(--yh-semantic-action-hover);
+}
+
+.lumi-remote-status {
+  width: 72px;
+  flex: 0 0 72px;
+  height: 24px;
+  border-radius: var(--yh-radius-pill);
+  color: var(--yh-semantic-text-tertiary);
+  font-size: 14px;
+  line-height: var(--yh-text-body-line);
+  padding: 0 var(--yh-space-4);
+  text-align: center;
+  transition: background-color .16s ease, color .16s ease;
+}
+
+.lumi-remote-unbind-label {
+  display: none;
+}
+
+.lumi-remote-card[data-state="connected"] .lumi-remote-status {
+  background: transparent;
+  color: var(--yh-color-fall-2);
+  cursor: pointer;
+  text-align: center;
+}
+
+.lumi-remote-card[data-state="paused"] .lumi-remote-status {
+  background: transparent;
+  color: var(--yh-semantic-text-secondary);
+  cursor: pointer;
+  text-align: center;
+}
+
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:hover,
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:focus-visible,
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:hover,
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:focus-visible {
+  height: 24px;
+  background: color-mix(in srgb, var(--yh-color-danger-2) 20%, transparent);
+  color: var(--yh-color-danger-2);
+}
+
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:hover [data-status-label],
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:focus-visible [data-status-label],
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:hover [data-status-label],
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:focus-visible [data-status-label] {
+  display: none;
+}
+
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:hover .lumi-remote-unbind-label,
+.lumi-remote-card[data-state="connected"] .lumi-remote-status:focus-visible .lumi-remote-unbind-label,
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:hover .lumi-remote-unbind-label,
+.lumi-remote-card[data-state="paused"] .lumi-remote-status:focus-visible .lumi-remote-unbind-label {
+  display: inline;
+}
+
+.lumi-remote-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex: 0 0 44px;
+  border-radius: 999px;
+  background: var(--yh-color-fill-2);
+  padding: 2px;
+  transition: background-color .18s ease;
+}
+
+.lumi-remote-switch span {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e9eaec;
+  transition: transform .18s ease;
+}
+
+.lumi-remote-switch[aria-checked="true"] {
+  background: var(--yh-semantic-action);
+}
+
+.lumi-remote-switch[aria-checked="true"] span {
+  transform: translateX(20px);
+}
+
+.lumi-remote-switch:disabled {
+  opacity: .48;
+}
+
+.lumi-remote-expand {
+  display: grid;
+  grid-template-rows: 0fr;
+  border-top: 0 solid var(--border);
+  transition: grid-template-rows .22s ease, border-top-width .22s ease;
+}
+
+.lumi-remote-card[data-state="loading"] .lumi-remote-expand,
+.lumi-remote-card[data-state="waiting"] .lumi-remote-expand,
+.lumi-remote-card[data-state="expired"] .lumi-remote-expand,
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-expand,
+.lumi-remote-card[data-state="connecting"] .lumi-remote-expand,
+.lumi-remote-card[data-state="error"] .lumi-remote-expand {
+  grid-template-rows: 1fr;
+  border-top-width: 1px;
+  border-top-color: var(--yh-semantic-border-subtle);
+}
+
+.lumi-remote-expand > * {
+  min-height: 0;
+}
+
+.lumi-remote-state {
+  display: none;
+  min-height: 252px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 28px;
+  text-align: center;
+}
+
+.lumi-remote-card[data-state="loading"] [data-state-view="loading"],
+.lumi-remote-card[data-state="waiting"] [data-state-view="waiting"],
+.lumi-remote-card[data-state="expired"] [data-state-view="waiting"],
+.lumi-remote-card[data-state="refreshing"] [data-state-view="waiting"],
+.lumi-remote-card[data-state="connecting"] [data-state-view="connecting"],
+.lumi-remote-card[data-state="error"] [data-state-view="error"] {
+  display: flex;
+}
+
+.lumi-remote-loading,
+.lumi-remote-connecting,
+.lumi-remote-error {
+  flex-direction: column;
+}
+
+.lumi-remote-state strong {
+  color: var(--yh-semantic-text-primary);
+  font-size: 14px;
+  font-weight: var(--yh-font-weight-strong);
+  line-height: var(--yh-text-body-line);
+}
+
+.lumi-remote-state p {
+  margin: var(--yh-space-2) 0 0;
+  color: var(--yh-semantic-text-tertiary);
+  font-size: 14px;
+  line-height: var(--yh-text-body-line);
+}
+
+.lumi-remote-state button:not(.lumi-remote-qr-button):not(.lumi-remote-expired-qr):not(.lumi-remote-countdown-trigger) {
+  height: 38px;
+  border-radius: var(--yh-button-radius);
+  background: var(--yh-semantic-bg-control);
+  margin-top: var(--yh-space-8);
+  padding: 0 var(--yh-space-7);
+  font-size: 14px;
+  font-weight: var(--yh-font-weight-strong);
+}
+
+.lumi-remote-state button:not(.lumi-remote-qr-button):not(.lumi-remote-expired-qr):not(.lumi-remote-countdown-trigger):hover {
+  background: var(--yh-color-fill-1);
+}
+
+.lumi-remote-waiting {
+  column-gap: 96px;
+  text-align: left;
+}
+
+.lumi-remote-waiting-copy {
+  min-width: 260px;
+}
+
+.lumi-remote-pairing-illustration {
+  display: block;
+  width: 88px;
+  height: 36px;
+  margin-bottom: var(--yh-space-7);
+  color: var(--yh-semantic-text-secondary);
+}
+
+.lumi-remote-pairing-illustration svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.lumi-remote-pairing-device {
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lumi-remote-pairing-device-detail {
+  stroke: var(--yh-semantic-text-tertiary);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.lumi-remote-pairing-dot {
+  fill: var(--yh-semantic-text-tertiary);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lumi-remote-pairing-pulse 1.35s ease-in-out infinite;
+}
+
+.lumi-remote-pairing-dot:nth-child(3) {
+  animation-delay: 0s;
+}
+
+.lumi-remote-pairing-dot:nth-child(4) {
+  animation-delay: .18s;
+}
+
+.lumi-remote-pairing-dot:nth-child(5) {
+  animation-delay: .36s;
+}
+
+@keyframes lumi-remote-pairing-pulse {
+  0%,
+  55%,
+  100% {
+    opacity: .38;
+    transform: translateY(0) scale(.82);
+  }
+
+  25% {
+    opacity: 1;
+    transform: translateY(-1.5px) scale(1);
+  }
+}
+
+.lumi-remote-waiting small {
+  display: block;
+  margin-top: var(--yh-space-6);
+  color: var(--yh-semantic-text-tertiary);
+  font-size: 14px;
+  line-height: var(--yh-text-caption-line);
+}
+
+.lumi-remote-countdown-trigger {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  line-height: inherit;
+}
+
+.lumi-remote-countdown-trigger:focus-visible {
+  outline: none;
+}
+
+.lumi-remote-countdown-trigger b {
+  color: var(--yh-semantic-text-secondary);
+  font-weight: 500;
+}
+
+.lumi-remote-qr-button {
+  display: grid;
+  width: 204px;
+  height: 204px;
+  flex: 0 0 204px;
+  place-items: center;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+}
+
+.lumi-remote-qr-button:hover {
+  box-shadow: 0 0 0 1px var(--yh-color-border-1);
+}
+
+.lumi-remote-qr-button canvas {
+  display: block;
+  width: 184px;
+  height: 184px;
+}
+
+.lumi-remote-expired-qr {
+  position: relative;
+  display: none;
+  width: 204px;
+  height: 204px;
+  flex: 0 0 204px;
+  place-items: center;
+  border: 1px solid var(--yh-semantic-border-subtle);
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px;
+  overflow: hidden;
+}
+
+.lumi-remote-card[data-state="expired"] .lumi-remote-waiting .lumi-remote-qr-button,
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-waiting .lumi-remote-qr-button {
+  display: none;
+}
+
+.lumi-remote-card[data-state="expired"] .lumi-remote-waiting .lumi-remote-expired-qr,
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-waiting .lumi-remote-expired-qr {
+  display: grid;
+}
+
+.lumi-remote-expired-qr canvas {
+  display: block;
+  width: 184px;
+  height: 184px;
+  opacity: .1;
+  filter: grayscale(1);
+}
+
+.lumi-remote-expired-qr-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--yh-space-7);
+  background: rgb(255 255 255 / 22%);
+}
+
+.lumi-remote-expired-qr-copy {
+  display: grid;
+  justify-items: center;
+  gap: var(--yh-space-7);
+}
+
+.lumi-remote-expired-qr-copy strong {
+  color: #25262a;
+  font-size: var(--yh-text-section-size);
+  line-height: var(--yh-text-section-line);
+}
+
+.lumi-remote-expired-qr-copy > span {
+  color: var(--yh-color-danger-2);
+  font-size: 14px;
+  font-weight: var(--yh-font-weight-strong);
+  line-height: var(--yh-text-body-line);
+}
+
+.lumi-remote-qr-refresh-spinner {
+  display: none;
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgb(37 38 42 / 16%);
+  border-top-color: var(--yh-semantic-action);
+  border-radius: 50%;
+  animation: lumi-remote-spin .8s linear infinite;
+}
+
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-expired-qr-copy {
+  display: none;
+}
+
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-qr-refresh-spinner {
+  display: block;
+}
+
+.lumi-remote-card[data-state="refreshing"] .lumi-remote-expired-qr {
+  pointer-events: none;
+}
+
+.lumi-remote-expired-qr:hover,
+.lumi-remote-expired-qr:focus-visible {
+  box-shadow: 0 0 0 2px var(--yh-semantic-action);
+}
+
+.lumi-remote-expired-qr:active {
+  transform: scale(.98);
+}
+
+.lumi-remote-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgb(255 255 255 / 16%);
+  border-top-color: var(--yh-semantic-action-hover);
+  border-radius: 50%;
+  margin-bottom: 16px;
+  animation: lumi-remote-spin .8s linear infinite;
+}
+
+.lumi-remote-state-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  margin-bottom: 14px;
+  color: var(--text-2);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@keyframes lumi-remote-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lumi-remote-pairing-dot,
+  .lumi-remote-spinner {
+    animation: none;
+  }
+}
+
+
+.lumi-remote-card{border-radius:0}.lumi-remote-card+.lumi-remote-card{border-top:1px solid #34353b}
+.lumi-remote-card-head{padding:12px 16px;gap:12px;min-height:78px}.lumi-remote-logo{width:32px;height:32px;flex-basis:32px;border-radius:8px}.lumi-remote-copy{min-width:0}.lumi-remote-copy small{overflow-wrap:anywhere}.lumi-remote-copy strong{font-size:16px;line-height:24px}.lumi-remote-title{display:flex;align-items:center;flex-wrap:wrap;gap:4px 12px}.lumi-remote-guide-link{justify-self:start;padding:0;line-height:22px;font-size:14px;color:#75b8f3}
+.lumi-remote-status{width:76px;flex-basis:76px;padding:0 4px;white-space:nowrap}.lumi-remote-status:disabled{cursor:default;opacity:1}
+.lumi-remote-state{padding:20px 16px;min-height:232px}.lumi-remote-waiting{gap:24px}.lumi-remote-waiting-copy{min-width:0;flex:1}.lumi-remote-waiting-copy p{font-size:14px}.lumi-remote-waiting-copy small{font-size:14px}
+.lumi-remote-expired-qr-copy>span{font-size:14px}.lumi-remote-countdown-trigger:focus-visible{outline:2px solid #559cff;outline-offset:2px}
+.lumi-remote-list button:focus-visible{outline:2px solid #559cff;outline-offset:2px}.lumi-remote-switch:hover{filter:brightness(1.16)}.lumi-remote-switch:disabled{cursor:wait}
+.lumi-remote-dialog{width:min(480px,calc(100vw - 32px));padding:24px;border:1px solid #42434c;border-radius:16px;background:#242529;color:#e4e5e7;font-size:14px;line-height:24px;max-height:calc(100vh - 40px);overflow:auto}
+.lumi-remote-dialog::backdrop{background:#0008}.lumi-remote-dialog h2{font-size:18px;line-height:26px;margin:0}.lumi-remote-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.lumi-remote-dialog-close{flex:0 0 28px;width:28px;height:28px;border-radius:6px;font-size:22px;color:#b4b6b8}.lumi-remote-dialog p{color:#b4b6b8}.lumi-remote-guide-steps{padding-left:22px;margin:16px 0 0}.lumi-remote-guide-steps li+li{margin-top:10px}.lumi-remote-dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}.lumi-remote-dialog-actions button{padding:7px 16px;border-radius:6px;font-size:14px;background:#36373d}.lumi-remote-dialog-actions .is-primary{background:#2c94ef;color:#fff}.lumi-remote-dialog-actions .is-danger{background:#bf4d55;color:#fff}.lumi-remote-dialog button:hover{filter:brightness(1.16)}
+@container(max-width:420px){.lumi-remote-card-head{display:grid;grid-template-columns:32px minmax(0,1fr) 44px;column-gap:12px;row-gap:4px}.lumi-remote-logo{grid-column:1;grid-row:1 / span 2}.lumi-remote-copy{grid-column:2;grid-row:1 / span 2}.lumi-remote-status{grid-column:3;grid-row:2;width:max-content;min-width:44px;padding:0;justify-self:end;align-self:start}.lumi-remote-switch{grid-column:3;grid-row:1;justify-self:end;align-self:end}.lumi-remote-waiting{flex-direction:column;gap:20px;align-items:center}.lumi-remote-waiting-copy{width:100%;text-align:center}.lumi-remote-pairing-illustration{margin:0 auto 16px}}
+@media(prefers-reduced-motion:reduce){.lumi-remote-list *{animation:none!important;transition:none!important}}
