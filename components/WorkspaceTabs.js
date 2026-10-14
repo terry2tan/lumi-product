@@ -2,7 +2,7 @@
 (() => {
   const files=new Map(),shared={active:null,lastContent:null,tabs:[]};let marketNode=null,blankSequence=0,currentNav=null;
   try{localStorage.removeItem('thsai-v4-workbench-tabs')}catch{}
-  const sections=[['market','行情'],['workbench','工作台'],['catalog','商城'],['tasks','自动任务'],['documents','文件'],['projects','知识库'],['feedback','反馈'],['settings','系统设置'],['news','资讯','rss'],['funds','基金/ETF','chart-pie'],['futures','期货','chart-candlestick'],['backtest','策略回测','flask-conical']];
+  const sections=[['market','行情'],['workbench','工作台'],['catalog','商城'],['goals','目标'],['documents','文件'],['projects','知识库'],['feedback','反馈'],['settings','系统设置'],['news','资讯','rss'],['funds','基金/ETF','chart-pie'],['futures','期货','chart-candlestick'],['backtest','策略回测','flask-conical']];
   const recentTabs=new Map([['market',[]],['workbench',[]]]);let recentMenu=null,recentAnchor=null;
   const section=id=>sections.find(item=>item[0]===id);
   const currentSection=()=>sections.find(item=>item[1]===state.nav);

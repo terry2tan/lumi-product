@@ -1,0 +1,100 @@
+/* 目标交互稿：沿用知识库与业务页线框的描边与灰阶（knowledge-base.css），用真实文案替换占位线。
+   「定时」与「盯」两类检查项用实线与虚线区分，不引入新色。 */
+.gl-page{position:absolute;inset:0;background:#1c1d21;color:#d6d8dd;font-size:13px;line-height:20px;container-type:inline-size;overflow:hidden}
+.gl-scroll{position:absolute;inset:0;overflow:auto;scrollbar-width:thin;padding:28px;display:flex;flex-direction:column;gap:20px}
+.gl-scroll>*{flex-shrink:0}
+.gl-page h1{margin:0;font-size:26px;line-height:36px;font-weight:500;color:#eeeff0;outline:none}
+.gl-page h2{margin:0;font-size:16px;line-height:24px;font-weight:500;color:#eeeff0}
+.gl-page h3{margin:0;font-size:14px;line-height:20px;font-weight:500;color:#eeeff0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gl-page p{margin:0}
+.gl-page b{font-weight:500;color:#eeeff0}
+.gl-page button{font:inherit;color:inherit;cursor:pointer}
+.gl-page :focus-visible{outline:1px solid #9a9da4;outline-offset:2px}
+.gl-sub,.gl-hint{color:#888c94;font-size:12px;line-height:18px}
+.gl-hint{max-width:76ch}
+.gl-grow{flex:1;min-width:0}
+.gl-row{display:flex;align-items:center;gap:12px;min-width:0}
+.gl-wrap{flex-wrap:wrap;gap:8px}
+.gl-head{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.gl-head-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-left:auto}
+.gl-head-tools .gl-input{width:220px}
+.gl-crumb{display:flex;align-items:center;gap:8px;color:#888c94;font-size:12px;flex-wrap:wrap}
+.gl-crumb b{color:#bdc0c6;font-weight:400}
+.gl-btn{min-height:34px;padding:6px 16px;border:1px solid #53555c;background:transparent;white-space:nowrap}
+.gl-btn:hover{background:#2a2c31}
+.gl-btn.is-primary{border-color:#aaaeb5;color:#eeeff0;background:#303238}
+.gl-btn.is-small{min-height:28px;padding:3px 10px;font-size:12px}
+.gl-btn.is-danger{border-color:#7d5a5a;color:#d9a4a4}
+.gl-link{padding:0;border:0;background:none;color:#aeb7c6;text-decoration:underline;text-underline-offset:3px;text-align:left}
+.gl-link:hover{color:#eeeff0}
+.gl-input,.gl-textarea,.gl-page select{min-height:34px;padding:6px 10px;border:1px solid #53555c;background:transparent;color:#eeeff0;font:inherit;outline:none;border-radius:0;min-width:0}
+.gl-input:focus,.gl-textarea:focus,.gl-page select:focus{border-color:#aaaeb5}
+.gl-input::placeholder,.gl-textarea::placeholder{color:#6d7077}
+.gl-textarea{display:block;width:100%;min-height:72px;resize:vertical}
+.gl-page select option{background:#25262a;color:#eeeff0}
+.gl-label{display:flex;flex-direction:column;gap:6px;color:#aaaeb5;font-size:12px}
+.gl-label .gl-input{width:100%}
+.gl-label.is-inline{flex-direction:row;align-items:center;gap:8px}
+.gl-chip{display:inline-flex;align-items:center;gap:6px;min-height:22px;padding:1px 8px;border:1px solid #46484d;color:#aaaeb5;font-size:12px;line-height:18px;white-space:nowrap}
+.gl-chip.is-timed{border-color:#858890;color:#eeeff0}
+.gl-chip.is-signal{border-style:dashed;color:#d6d8dd}
+.gl-chip.is-muted{color:#888c94}
+.gl-tabs{display:flex;gap:4px;border-bottom:1px solid #41434a}
+.gl-tabs button{padding:8px 14px;border:1px solid transparent;border-bottom:0;background:none;color:#aaaeb5;white-space:nowrap}
+.gl-tabs button.is-active{border-color:#53555c;color:#eeeff0;background:#25262a}
+.gl-banner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border:1px solid #858890;color:#eeeff0}
+.gl-banner p{color:#bdc0c6;margin-top:2px}
+.gl-banner.is-warn{border-color:#8a6d4a;color:#d8b98c}
+.gl-section{display:flex;flex-direction:column;gap:12px}
+.gl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:16px}
+.gl-card{display:flex;flex-direction:column;gap:10px;min-width:0;padding:18px;border:1px solid #53555c;cursor:pointer}
+.gl-card:hover{background:#25262a;border-color:#74777e}
+.gl-card.is-done{opacity:.6}
+.gl-latest{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;color:#bdc0c6}
+.gl-status{flex:none;color:#aaaeb5;font-size:12px}
+.gl-status.paused{color:#d8b98c}
+.gl-suggest-list{display:flex;flex-direction:column;border:1px dashed #5d5f66}
+.gl-suggest{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 16px;border-top:1px dashed #41434a}
+.gl-suggest:first-child{border-top:0}
+.gl-suggest p{margin-top:2px}
+.gl-panel{display:flex;flex-direction:column;gap:12px;min-width:0;padding:18px;border:1px solid #53555c}
+.gl-checks{display:flex;flex-direction:column;border:1px solid #41434a}
+.gl-check{display:flex;align-items:center;gap:12px;min-height:48px;padding:8px 14px;border-top:1px solid #34363b}
+.gl-check:first-child{border-top:0}
+.gl-check.is-off b{color:#888c94}
+.gl-fields{display:flex;flex-direction:column;gap:8px}
+.gl-field{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px}
+.gl-field>span{color:#888c94}
+.gl-warn{color:#d8b98c}
+.gl-timeline{list-style:none;margin:0;padding:0 0 0 14px;border-left:1px solid #41434a;display:flex;flex-direction:column;gap:14px}
+.gl-timeline li{position:relative}
+.gl-timeline li::before{content:'';position:absolute;left:-18px;top:6px;width:7px;height:7px;border-radius:50%;background:#53555c}
+.gl-timeline li.is-hit::before{background:#d6d8dd}
+.gl-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
+.gl-stat{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border:1px solid #53555c}
+.gl-stat b{font-size:22px;line-height:30px}
+.gl-stat small{font-size:12px;color:#888c94;font-weight:400}
+.gl-stat i{display:block;height:3px;background:linear-gradient(90deg,#d6d8dd var(--p),#34363b var(--p))}
+.gl-stat .gl-btn{align-self:flex-start}
+.gl-table{border:1px solid #53555c;min-width:0}
+.gl-tr{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,1.4fr) minmax(0,1.2fr);align-items:center;gap:12px;min-height:44px;padding:8px 14px;border-top:1px solid #34363b}
+.gl-table.is-compact .gl-tr{grid-template-columns:140px minmax(0,1fr) 80px}
+.gl-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.gl-th{border-top:0;min-height:36px;color:#888c94;font-size:12px;background:#222327}
+.gl-result{padding:1px 8px;border:1px solid #46484d;background:none;color:#aaaeb5;font-size:12px;white-space:nowrap}
+.gl-result.ok{border-color:#858890;color:#eeeff0}
+.gl-result.mute{border-color:#8a6d4a;color:#d8b98c}
+.gl-result.lumi{border-style:dashed;color:#d6d8dd}
+.gl-run-detail{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:10px 14px 12px 146px;background:#222327;border-top:1px solid #34363b;color:#bdc0c6}
+.gl-signal-group{display:flex;flex-direction:column;gap:8px}
+.gl-option{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid #46484d;cursor:pointer}
+.gl-option small{color:#888c94;font-size:12px}
+.gl-option.is-off{border-style:dotted;color:#888c94}
+.gl-option input{accent-color:#d6d8dd}
+.gl-toggle{flex:none;width:38px;height:20px;padding:3px;border:1px solid #70737a;border-radius:12px;background:none}
+.gl-toggle i{display:block;width:12px;height:12px;border-radius:50%;background:#7d8088;transition:transform .15s}
+.gl-toggle.is-on{border-color:#d6d8dd}
+.gl-toggle.is-on i{background:#eeeff0;transform:translateX(18px)}
+.gl-empty{padding:18px;color:#888c94;text-align:center}
+.gl-toast{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);padding:8px 16px;border:1px solid #74777e;background:#2a2c31;color:#eeeff0;z-index:5}
+@container(max-width:640px){.gl-scroll{padding:20px 16px}.gl-tr{grid-template-columns:90px minmax(0,1fr) minmax(0,1fr)}.gl-tr>span:nth-child(3){display:none}.gl-run-detail{padding-left:14px}.gl-head-tools .gl-input{width:100%}}

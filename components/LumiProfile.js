@@ -1,11 +1,7 @@
 /* Lumi identity and profile view shared by home and Copilot. */
 window.LumiProfile=(()=>{
   const identity={name:'Lumi',avatar:'assets/lumi-pink.png'};
-  const goals=[
-    {title:'关注持仓的关键变化',description:'合并公告、业绩和行业消息，减少重复提醒。',completed:false},
-    {title:'跟踪算力主题的共同风险',description:'对照科华数据与太辰光，关注订单与业绩兑现。',completed:false},
-    {title:'建立投资偏好',description:'已整理投资周期、风险偏好和提醒方式。',completed:true}
-  ];
+  /* 目标与「目标」页共用 ProactiveStore，勾选完成即同步。 */
   let view=null;
   const make=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
   const pencil=()=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L20 8a2.8 2.8 0 0 0-4-4L5 15z"/></svg>';
@@ -58,8 +54,10 @@ window.LumiProfile=(()=>{
     form.onkeydown=e=>{if(e.key==='Escape'){e.stopPropagation();cancel.click()}};
     const lastActive=make('p','lumi-profile-active',activity());lastActive.dataset.lumiProfileActivity='';info.append(nameRow,form,make('p','lumi-profile-role','你的个人投资助手'),lastActive);header.append(avatarArea,info);inner.append(header);
     const goalCard=section('目标'),goalList=make('ul','lumi-profile-goals lumi-profile-settings-group');
-    const updateGoals=()=>{for(const row of goalList.children){const goal=goals[Number(row.dataset.goalIndex)];row.classList.toggle('is-complete',goal.completed);row.querySelector('input').checked=goal.completed}};
-    goals.forEach((goal,index)=>{const row=make('li','lumi-profile-goal');row.dataset.goalIndex=index;const label=make('label'),check=make('input');check.type='checkbox';check.setAttribute('aria-label',`完成目标：${goal.title}`);check.onchange=()=>{goal.completed=check.checked;updateGoals()};const text=make('span','lumi-profile-row-text');text.append(make('strong',null,goal.title),make('span','lumi-profile-description',goal.description));label.append(text,check);row.append(label);goalList.append(row)});updateGoals();goalCard.append(goalList);inner.append(goalCard);
+    const fillGoals=()=>{goalList.replaceChildren();for(const goal of ProactiveStore.goals){const done=goal.status==='done',row=make('li','lumi-profile-goal'+(done?' is-complete':''));const label=make('label'),check=make('input');check.type='checkbox';check.checked=done;check.setAttribute('aria-label',`完成目标：${goal.title}`);check.onchange=()=>ProactiveStore.updateGoal(goal.id,{status:check.checked?'done':'active'});const text=make('span','lumi-profile-row-text');text.append(make('strong',null,goal.title),make('span','lumi-profile-description',goal.desc));label.append(text,check);row.append(label);goalList.append(row)}};
+    fillGoals();addEventListener('proactive:changed',fillGoals);
+    const manage=make('button','lumi-profile-manage-goals','管理目标 ›');manage.type='button';manage.onclick=()=>GoalsPage.open();
+    goalCard.querySelector('.lumi-profile-section-heading').append(manage);goalCard.append(goalList);inner.append(goalCard);
     const profile=ChatStore.get('lumi').profile,knowledge=section('知识'),facts=make('dl','lumi-profile-facts lumi-profile-settings-group');
     for(const [title,text] of [['投资偏好',`${profile.risk} · ${profile.horizon} · 关注回撤`],['提醒方式',profile.reminders],['持仓信息',profile.holdings.map(holding=>`${holding.name} ${holding.weight}%`).join('、')]]){const row=make('div','lumi-profile-fact');row.append(make('dt',null,title),make('dd',null,text));facts.append(row)}knowledge.append(facts);inner.append(knowledge);
     const monitors=section('盯盘');monitors.append(LumiWatchlist.render());inner.append(monitors);const remote=section('远程使用');remote.append(LumiRemoteUse.render());inner.append(remote);view.append(inner);return view;

@@ -2,7 +2,7 @@
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
 const stage=$('#stage'),surface=$('#surface'),sidebar=$('#sidebar'),overlays=$('#overlays');
 const state={mode:'home',homeView:'new',activeThreadId:null,copilotThreadId:null,pendingThreadId:null,page:'market',previousPage:'market',nav:'首页',compact:innerWidth<=900,railExpanded:innerWidth>900,preview:false,answer:false,copilotExpanded:false,copilotOpen:false,copilotFloating:false,pageCopilotKind:'copilot',menu:null,context:null,selectedPage:'个股',pinned:['自选','个股','交易'],others:['沪深股','港股','美股','英股','环球','拓展','选股','发现','资讯','我的'],draft:'',sentMessage:'',selected:new Set(),todos:new Set([0]),history:[],detached:false};
-const navigationPages={'行情':'market','工作台':'workbench','商城':'catalog','自动任务':'tasks','文件':'documents','知识库':'projects','反馈':'feedback','系统设置':'settings','策略回测':'backtest','资讯':'news','基金/ETF':'funds','期货':'futures'};
+const navigationPages={'行情':'market','工作台':'workbench','商城':'catalog','目标':'goals','文件':'documents','知识库':'projects','反馈':'feedback','系统设置':'settings','策略回测':'backtest','资讯':'news','基金/ETF':'funds','期货':'futures'};
 function canOpenPageCopilot(){return !!navigationPages[state.nav]}
 function isPageCopilotFullscreen(){return state.mode==='split'&&state.copilotExpanded&&canOpenPageCopilot()&&(!WorkspaceTabs.isWorkspace()||WorkspaceTabs.active()==='chat')}
 
@@ -74,6 +74,7 @@ function workbench(){
  if(state.page==='feedback')FeedbackPage.mount(wb);
  if(state.page==='projects')KnowledgeBasePage.mount(wb);
  if(state.page==='backtest')BacktestPage.mount(wb);
+ if(state.page==='goals')GoalsPage.mount(wb);
  if(['catalog','documents','tasks','news','funds','futures','settings'].includes(state.page))MoreFeaturePages.mount(wb,state.page);
  WorkspaceTabs.syncContent(wb);
 }

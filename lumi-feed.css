@@ -1,0 +1,58 @@
+/* 「你的 Lumi」信息流：沿用 Lumi 个人对话的气泡底色、字号与紫色强调（conversation.css、lumi.css）。 */
+.lumi-feed{position:relative}
+.lumi-feed-body{flex:1;min-height:0;display:flex;flex-direction:column}
+.lumi-feed .lumi-feed-log{padding:var(--lumi-log-padding) clamp(16px,4cqi,48px) 24px}
+.lumi-feed-status{position:absolute;z-index:3;top:calc(var(--lumi-toolbar-height,0px) + var(--lumi-avatar-top) + var(--lumi-avatar-height) + 4px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;white-space:nowrap;color:#898c93;font-size:13px;line-height:20px}
+.lumi-feed-status[hidden]{display:none}
+.lumi-feed-dot{color:#5d5f66}
+.lumi-feed-link{padding:0;border:0;background:none;color:#a3a6ad;font:inherit;cursor:pointer}
+.lumi-feed-link:hover{color:#e4e4e6;text-decoration:underline;text-underline-offset:3px}
+.lumi-feed-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.lumi-feed-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:2px}
+.lumi-feed-title{margin:0;font-size:16px;line-height:24px;font-weight:600;color:#eeeff0}
+.lumi-feed-seg{display:flex;padding:2px;border-radius:9px;background:#26272b}
+.lumi-feed-seg button{padding:3px 12px;border-radius:7px;color:#9b9da4;font-size:13px;line-height:20px}
+.lumi-feed-seg button.is-active{background:#3a3b40;color:#eeeff0}
+.lumi-feed-select{margin-left:auto;max-width:200px;padding:4px 8px;border:1px solid #393a3e;border-radius:8px;background:#26272b;color:#d6d8dd;font:inherit;font-size:13px;outline:none}
+.lumi-feed-select option{background:#26272b}
+.lumi-feed-filter-note{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 14px;border-radius:12px;background:#26272b;color:#b4b6bc;font-size:13px}
+.lumi-feed-day{margin:14px 0 2px;text-align:center;color:#898c93;font-size:12px;line-height:18px}
+.lumi-feed-card{display:flex;flex-direction:column;gap:6px;width:100%;padding:14px 18px;border:1px solid transparent;border-radius:18px;background:#2c2d31;color:#e4e4e6;text-align:left;cursor:pointer;transition:background .15s,border-color .15s}
+.lumi-feed-card:hover{background:#323338}
+.lumi-feed-card:focus-visible{outline:2px solid #9789d8;outline-offset:2px}
+.lumi-feed-meta{display:flex;align-items:center;gap:8px;min-width:0;color:#9b9da4;font-size:12px;line-height:18px}
+.lumi-feed-source{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lumi-feed-time{flex:none;margin-left:auto}
+.lumi-feed-tag{flex:none;padding:1px 8px;border-radius:6px;font-size:12px;line-height:18px}
+.lumi-feed-tag.is-insight{background:#303047;color:#c2b6ff}
+.lumi-feed-tag.is-timed{background:#2a3446;color:#8fbbff}
+.lumi-feed-tag.is-alert{background:#3a3323;color:#e0b15c}
+.lumi-feed-unread{flex:none;width:7px;height:7px;border-radius:50%;background:#ff4b59}
+.lumi-feed-card h3{margin:0;color:#eeeff0;font-size:15px;line-height:24px;font-weight:600}
+.lumi-feed-card p{margin:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;color:#b4b6bc;font-size:14px;line-height:22px}
+.lumi-feed-pushed{color:#898c93;font-size:12px;line-height:18px}
+.lumi-feed-empty{margin:24px 0;color:#898c93;text-align:center;font-size:13px}
+.lumi-feed.is-thread .lumi-floating-avatar{display:none}
+.lumi-feed-thread-head{position:relative;display:flex;align-items:center;gap:12px;min-height:48px;padding:8px clamp(16px,4cqi,48px);border-bottom:1px solid #2e2f33}
+.lumi-feed-thread-head .lumi-feed-meta{flex:1}
+.lumi-feed-thread-head .lumi-feed-time{margin-left:0}
+.lumi-feed-back{flex:none;padding:4px 10px;border-radius:8px;color:#b4b6bc;font-size:13px}
+.lumi-feed-back:hover{background:#2c2d31;color:#eeeff0}
+.lumi-feed-thread-actions{position:relative;display:flex;gap:4px;flex:none}
+.lumi-feed-thread-actions>button{padding:4px 10px;border:1px solid #393a3e;border-radius:8px;color:#b4b6bc;font-size:12px;line-height:18px}
+.lumi-feed-thread-actions>button:hover{background:#2c2d31;color:#eeeff0}
+.lumi-feed-thread-actions>button.is-selected{border-color:#466084;background:#303f58;color:#8fbbff}
+.lumi-feed-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:6;display:flex;flex-direction:column;min-width:168px;padding:6px;border:1px solid #45474e;border-radius:10px;background:#292a2f;box-shadow:0 8px 24px #0005}
+.lumi-feed-menu button{padding:8px 12px;border-radius:6px;color:#ddd;font-size:13px;text-align:left;white-space:nowrap}
+.lumi-feed-menu button:hover{background:#3b3c42}
+.lumi-feed-thread-host{flex:1;min-height:0;display:flex}
+.lumi-feed-thread-host>.conversation-view{flex:1;height:auto}
+.lumi-feed-follow{display:flex;flex-wrap:wrap;gap:8px;width:100%;max-width:1000px;margin:0 auto;padding:0 clamp(20px,5cqi,88px) 4px}
+.lumi-feed-follow .conversation-inline-action{margin-top:0}
+.lumi-feed-follow.is-tour{padding-top:4px}
+.lumi-feed-toast{position:absolute;left:50%;bottom:96px;z-index:8;transform:translateX(-50%);max-width:min(560px,calc(100% - 32px));padding:9px 16px;border-radius:10px;background:#3a3b42;color:#eeeff0;font-size:13px;line-height:20px;box-shadow:0 8px 24px #0008}
+.lumi-feed-toast[hidden]{display:none}
+.lumi-profile-section-heading:has(.lumi-profile-manage-goals){display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lumi-profile-manage-goals{padding:2px 6px;border-radius:6px;color:#a3a6ad;font-size:12px;line-height:18px}
+.lumi-profile-manage-goals:hover{background:#2c2d31;color:#e4e4e6}
+@container conversation (max-width:560px){.lumi-feed-select{margin-left:0;max-width:100%}.lumi-feed-thread-actions>button:not(:last-child){display:none}}
