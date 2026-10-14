@@ -1,0 +1,124 @@
+/* 策略回测交互稿：复用知识库页的 kb-* 线框样式（knowledge-base.css），这里只补回测特有的布局与图形。 */
+.bt-compose .kb-hint{max-width:none}
+.bt-compose .kb-textarea{min-height:64px;font-size:14px;line-height:22px}
+.bt-mini{display:flex;gap:18px;flex-wrap:wrap}
+.bt-mini>span{display:flex;flex-direction:column;color:#888c94;font-size:12px;line-height:18px}
+.bt-mini b{font-size:15px;line-height:22px}
+.bt-layout{display:grid;grid-template-columns:272px minmax(0,1fr);gap:16px;align-items:start}
+.bt-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.bt-settings{gap:10px}
+.bt-settings .kb-btn{width:100%}
+.bt-field{display:flex;flex-direction:column;gap:4px;min-width:0;color:#aaaeb5;font-size:12px}
+.bt-field .kb-input,.bt-field select{width:100%;min-height:30px;padding:4px 8px}
+.bt-field small{color:#6d7077;font-size:11px;line-height:16px}
+.bt-field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bt-divider{height:1px;background:#34363b;margin:4px 0}
+.bt-settings .kb-check{flex-wrap:wrap;font-size:12px}
+.bt-settings .kb-check small{flex-basis:100%;padding-left:21px}
+.bt-metrics{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.bt-metrics .kb-stat{padding:10px 14px}
+.bt-metrics .kb-stat b{font-size:18px;line-height:26px}
+.bt-chart{display:flex;gap:8px;min-width:0}
+.bt-plot{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.bt-plot svg{display:block;width:100%;border:1px solid #41434a}
+.bt-axis-y{flex:none;display:flex;flex-direction:column;justify-content:space-between;width:58px;padding-bottom:20px;color:#888c94;font-size:11px;text-align:right}
+.bt-axis-x{display:flex;justify-content:space-between;color:#888c94;font-size:11px;line-height:16px}
+.bt-grid{stroke:#34363b;stroke-width:1;fill:none;vector-effect:non-scaling-stroke}
+.bt-line{fill:none;stroke:#eeeff0;stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.bt-line.is-bench{stroke:#858890;stroke-dasharray:4 3}
+.bt-area{fill:#34363b;stroke:#74777e;stroke-width:1;vector-effect:non-scaling-stroke}
+.bt-legend{display:inline-flex;align-items:center;gap:6px;color:#aaaeb5;font-size:12px}
+.bt-legend i{width:18px;border-top:2px solid #eeeff0}
+.bt-legend.is-bench i{border-top:2px dashed #858890}
+.bt-months{border:1px solid #41434a;overflow:auto;scrollbar-width:thin}
+.bt-month-row{display:grid;grid-template-columns:52px repeat(12,minmax(42px,1fr)) 56px;min-width:620px;border-top:1px solid #34363b;font-size:12px}
+.bt-month-row:first-child{border-top:0}
+.bt-month-row.is-head{color:#888c94;background:#222327}
+.bt-month-row>span{padding:5px 6px;text-align:right;white-space:nowrap}
+.bt-month-row>span:first-child{text-align:left}
+.bt-month-row .is-pos{color:#eeeff0}
+.bt-month-row .is-neg{color:#888c94;background:#25262a}
+.bt-table{border:1px solid #53555c;min-width:0;overflow:visible}
+.bt-tr{display:grid;grid-template-columns:var(--bt-cols);align-items:center;gap:12px;min-height:42px;padding:6px 14px;border-top:1px solid #34363b}
+.bt-tr>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bt-tr>span.kb-menu-anchor{overflow:visible}
+.bt-tr .kb-menu{left:auto;right:0}
+.bt-th{border-top:0;min-height:34px;color:#888c94;font-size:12px;background:#222327}
+.bt-rules{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px 20px}
+.bt-rules>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.bt-rules span{color:#888c94;font-size:12px}
+.bt-code{margin:0;padding:14px 16px;border:1px solid #41434a;background:#18191c;color:#d6d8dd;font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;line-height:20px;overflow:auto;scrollbar-width:thin;white-space:pre}
+.bt-log .kb-list-row{min-height:36px}
+/* 代码编辑与改动对比：新增 / 删除是需要一眼分辨的语义，这里例外使用绿、红底色 */
+.bt-code-edit{display:block;width:100%;resize:vertical;outline:none;border-color:#74777e;border-radius:0;tab-size:4}
+.bt-code-edit:focus{border-color:#aaaeb5}
+.bt-diff{border:1px solid #41434a;background:#18191c;overflow:auto;scrollbar-width:thin;font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;line-height:20px}
+.bt-diff-row{display:flex;align-items:center;min-width:max-content;position:relative}
+.bt-diff-row code{flex:1;padding-right:96px;white-space:pre;color:#d6d8dd;font-family:inherit;word-break:normal}
+.bt-ln{flex:none;width:34px;padding-right:8px;text-align:right;color:#5d5f66;user-select:none}
+.bt-sign{flex:none;width:18px;text-align:center;color:#888c94}
+.bt-diff-row.is-add{background:rgba(63,145,96,.22)}
+.bt-diff-row.is-add .bt-sign{color:#7fc79b}
+.bt-diff-row.is-del{background:rgba(190,80,80,.22)}
+.bt-diff-row.is-del code{color:#aaaeb5}
+.bt-diff-row.is-del .bt-sign{color:#e09a9a}
+.bt-hunk{position:sticky;right:6px;margin-left:auto;padding:0 8px!important;border:1px solid #74777e!important;background:#25262a!important;font-family:"Microsoft YaHei",sans-serif;font-size:11px!important;line-height:18px;white-space:nowrap}
+.bt-hunk:hover{border-color:#d6d8dd!important}
+.bt-diff-stat{font-size:12px}
+.bt-diff-stat.is-add{color:#7fc79b}
+.bt-diff-stat.is-del{color:#e09a9a}
+.bt-kline{display:block;width:100%;height:200px;border:1px solid #41434a}
+.bt-wick{stroke:#858890;stroke-width:1;vector-effect:non-scaling-stroke}
+.bt-up{fill:#eeeff0}
+.bt-down{fill:#1c1d21;stroke:#858890;stroke-width:1;vector-effect:non-scaling-stroke}
+.bt-gridline{stroke:#858890;stroke-dasharray:3 4;stroke-width:1;fill:none;vector-effect:non-scaling-stroke}
+.bt-mark{fill:#eeeff0;font-size:11px;text-anchor:middle}
+.bt-result-card{display:flex;flex-direction:column;gap:10px;max-width:360px;padding:14px;border:1px solid #5d5f66;background:#25262a}
+.bt-result-card .bt-axis-y,.bt-result-card .bt-axis-x{display:none}
+.bt-page .kb-link:disabled{text-decoration:none;color:#6d7077}
+.bt-page .kb-head>.kb-row.kb-grow{flex-basis:300px}
+@container(max-width:900px){.bt-layout{grid-template-columns:1fr}.bt-runs .bt-tr{grid-template-columns:60px 32px minmax(0,1fr) 68px 52px auto}.bt-runs .bt-tr>span:nth-child(5),.bt-runs .bt-tr>span:nth-child(6){display:none}.bt-settings{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px 12px}.bt-settings>*{grid-column:1/-1}.bt-settings>.bt-field{grid-column:auto}.bt-settings>.bt-field-row{grid-column:span 2}.bt-settings>.kb-btn{width:auto;justify-self:start;min-width:160px}.bt-tr{gap:8px;padding:6px 10px}}
+@container(max-width:560px){.bt-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.bt-axis-y{width:46px}}
+
+/* 对话中的策略卡片（BacktestChat）：在对话区里，不在 .kb-page 之下，所以单独定义字号与按钮 */
+.bt-new .kb-btn{flex:none}
+.bt-chat-card{display:flex;flex-direction:column;gap:10px;margin-top:10px;padding:14px;border:1px solid #53555c;background:#1f2024;color:#d6d8dd;font-size:13px;line-height:20px;max-width:560px}
+.bt-chat-card p{margin:0}
+.bt-chat-card b{font-weight:500;color:#eeeff0}
+.bt-chat-card button{font:inherit;cursor:pointer}
+.bt-chat-card button:disabled{opacity:.5;cursor:not-allowed}
+.bt-chat-card .kb-btn{color:#d6d8dd}
+.bt-chat-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bt-chat-grow{flex:1}
+.bt-chat-sub{color:#888c94;font-size:12px;line-height:18px}
+.bt-chat-error{color:#d8b98c;font-size:12px}
+.bt-chat-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bt-chat-options{display:flex;flex-direction:column;gap:6px}
+.bt-chat-option{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:9px 12px;border:1px solid #46484d;background:none;color:#d6d8dd;text-align:left}
+.bt-chat-option span{color:#aaaeb5;font-size:12px}
+.bt-chat-option:hover:not(:disabled){border-color:#858890}
+.bt-chat-option.is-active{border-color:#d6d8dd;background:#2a2c31}
+.bt-chat-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.bt-chat-fields label{display:flex;flex-direction:column;gap:4px;color:#aaaeb5;font-size:12px}
+.bt-chat-fields .kb-input{min-height:30px;padding:4px 8px;border:1px solid #53555c;background:transparent;color:#eeeff0;font:inherit;outline:none}
+.bt-chat-rows{display:flex;flex-direction:column;border:1px solid #41434a}
+.bt-chat-rows>div{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;padding:6px 10px;border-top:1px solid #34363b}
+.bt-chat-rows>div:first-child{border-top:0}
+.bt-chat-rows span{color:#888c94;font-size:12px}
+.bt-chat-assume{padding:8px 10px;border:1px dashed #5d5f66}
+.bt-chat-assume ul,.bt-chat-checks{margin:6px 0 0;padding-left:18px;color:#bdc0c6;font-size:12px;line-height:19px}
+.bt-chat-checks{margin:0}
+.bt-chat-code{margin:0;max-height:260px;overflow:auto;padding:10px 12px;border:1px solid #41434a;background:#18191c;font-family:Consolas,"Cascadia Mono",monospace;font-size:12px;line-height:19px;white-space:pre}
+.bt-chat-progress{height:6px;border:1px solid #5d5f66}
+.bt-chat-progress i{display:block;height:100%;background:#9a9da4;transition:width .25s}
+.bt-chat-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.bt-chat-stats span{display:flex;flex-direction:column;color:#888c94;font-size:12px}
+.bt-chat-stats b{font-size:16px;line-height:24px}
+.bt-chat-spark{display:block;width:100%;height:64px;border:1px solid #41434a}
+.bt-chat-spark polyline{fill:none;stroke:#eeeff0;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.bt-chat-spark polyline.is-bench{stroke:#858890;stroke-dasharray:4 3}
+.bt-chat-legend{display:flex;gap:14px;color:#aaaeb5;font-size:12px}
+.bt-chat-legend span{display:inline-flex;align-items:center;gap:6px}
+.bt-chat-legend i{width:16px;border-top:2px solid #eeeff0}
+.bt-chat-legend .is-bench i{border-top-style:dashed;border-top-color:#858890}
+.bt-chat-files{display:flex;gap:6px;flex-wrap:wrap}
