@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="&#230;&#148;&#182;&#232;&#181;&#183;">
+<mask id="path-1-outside-1_0_84" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20" fill="black">
+<rect fill="white" width="21" height="20"/>
+<path d="M1 0L21 0L21 20L1 20L1 0Z"/>
+</mask>
+<path d="M1 0L21 0L21 20L1 20L1 0Z" fill="#202020"/>
+<path d="M1 20H2L2 0L1 0L0 0L0 20H1Z" fill="#2F2F2F" mask="url(#path-1-outside-1_0_84)"/>
+<path id="Vector" d="M13.8238 4.5L13.8238 15.5L8.17622 10L13.8238 4.5Z" fill="#7C7973"/>
+</g>
+</svg>
