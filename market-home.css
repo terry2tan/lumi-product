@@ -23,21 +23,18 @@
 /* The new-chat composer leads the page; all market content follows in one scroll. */
 .market-home{scrollbar-width:thin;scrollbar-color:#3b3c41 transparent}
 .mh-hero{width:min(100%,840px);margin:20px auto 36px;--conversation-width-min:0px}
-.mh-welcome{display:flex;flex-direction:column;align-items:center;gap:18px;margin-bottom:28px;text-align:center}
-.mh-welcome-logo{display:block;width:112px;height:99px;object-fit:contain;flex:none}
-.mh-welcome-title{margin:0;color:#f5f5f6;font-size:28px;font-weight:600;line-height:1.45;text-wrap:balance}
+.mh-welcome{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:16px;text-align:center}
+.mh-welcome-logo{display:block;width:64px;height:58px;object-fit:contain;flex:none}
+.mh-welcome-title{margin:0;color:#f5f5f6;font-size:20px;font-weight:500;line-height:30px;text-wrap:balance}
 .mh-hero .chat-composer{min-height:148px;padding:18px 0 14px;gap:18px;border-radius:16px}
 .mh-hero .composer-field{min-height:70px;padding-inline:20px}
 .mh-hero .conversation-input{font-size:15px}
 .mh-hero .composer-toolbar{padding-inline:16px}
-.mh-hero .mh-prompts{justify-content:center;margin:16px 0 0;gap:10px}
-.mh-hero .mh-prompt{padding:8px 13px;border-radius:20px;font-size:12px}
 .mh-workspace{align-items:start;flex:none;min-height:0}
 .mh-main{display:block;min-height:0}
 .mh-feed,.mh-aside{height:auto;max-height:none;overflow:visible}
 .mh-small .mh-hero{margin:8px auto 28px}
-.mh-small .mh-welcome{gap:14px;margin-bottom:24px}
-.mh-small .mh-welcome-logo{width:88px;height:78px}
+.mh-small .mh-welcome{gap:10px;margin-bottom:12px}
 
 .mh-small .mh-hero .chat-composer{min-height:128px;padding:14px 0 12px;gap:14px}
 .mh-small .mh-hero .composer-field{min-height:58px;padding-inline:14px}
@@ -45,8 +42,6 @@
 .mh-small .mh-hero .composer-toolbar{padding-inline:10px}
 
 .mh-small .mh-hero .composer-toolbar-right{gap:2px}
-.mh-small .mh-hero .mh-prompts{gap:7px;margin-top:12px}
-.mh-small .mh-hero .mh-prompt{padding:7px 9px}
 .mh-small .mh-aside{padding-bottom:0}
 
 .market-home{container-name:market-home}
@@ -65,6 +60,3 @@
 .market-home.mh-small .mh-market-tabs button{flex:1;min-width:0;padding-inline:10px;font-size:13px}
 @container market-home (max-width:460px){.market-home .mh-page-head{gap:0}.market-home .mh-page-intro{width:100%;padding:6px 0 0}.market-home .mh-market-tabs{width:100%}.market-home .mh-market-tabs button{flex:1}}
 
-.mh-hero .mh-prompt{max-width:100%;min-width:0;line-height:20px;text-align:left;white-space:normal}
-.mh-hero .mh-prompt>svg{flex:none}
-.mh-hero .mh-prompt>span{min-width:0;overflow-wrap:anywhere}

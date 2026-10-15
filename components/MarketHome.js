@@ -124,20 +124,9 @@ window.MarketHome = (() => {
     }
     refresh();const timer=setInterval(()=>{if(!mounted.isConnected)clearInterval(timer);else if(!document.hidden)refresh()},60000);
   }
-  function personalPrompts(){
-    const profile=ChatStore.get('lumi').profile;
-    const holdings=profile.holdings.map(holding=>`${holding.name} ${holding.weight}%（${holding.theme}）`).join('、');
-    const background=`结合已记录的投资偏好和持仓：风险偏好${profile.risk}，投资周期${profile.horizon}，关注回撤；持仓为${holdings}；提醒方式为${profile.reminders}。`;
-    const computeHoldings=profile.holdings.filter(holding=>holding.theme.includes('算力'));
-    const shared=computeHoldings.map(holding=>holding.name).join('与'),weight=computeHoldings.reduce((sum,holding)=>sum+holding.weight,0);
-    return [
-      [`我的持仓符合${profile.risk}偏好吗？`,`我的持仓符合${profile.risk}偏好吗？\n\n${background}请结合仓位集中度、共同主题和投资周期，整理需要关注的回撤风险。`],
-      ['算力持仓有哪些共同风险？',`算力持仓有哪些共同风险？\n\n${background}${shared}合计占仓位${weight}%。请对照公告、项目订单、业绩兑现和现金流，区分共同主题风险与公司各自的变化。`],
-      ['哪些持仓变化值得提醒我？',`哪些持仓变化值得提醒我？\n\n${background}请围绕你记住的关注重点，合并相关公告、订单和业绩变化，只保留与我的持仓和投资周期相关的关键内容。`]
-    ];
-  }
   function mount(parent){closeDialog();root=make('section','market-home');root.setAttribute('aria-label','新对话市场首页');
-    const hero=make('div','mh-hero'),welcome=make('div','mh-welcome'),logo=make('img','mh-welcome-logo');logo.src='assets/bd5dc.png';logo.alt='';logo.width=112;logo.height=99;welcome.append(logo,make('p','mh-welcome-title','Lumi 相伴，让投资变得更简单'));const prompts=make('div','mh-prompts');prompts.setAttribute('aria-label','为你推荐的问题');for(const [label,prompt]of personalPrompts()){const b=control(label,'mh-prompt',()=>ask(prompt),'spark');b.append(make('span',null,label));prompts.append(b)}const composer=make('div','mh-composer');hero.append(welcome,composer,prompts);root.append(hero);
+    const hero=make('div','mh-hero'),welcome=make('div','mh-welcome'),logo=make('img','mh-welcome-logo');logo.src='assets/bd5dc.png';logo.alt='';logo.width=64;logo.height=58;
+    const recommendations=HomeRecommendations.create({ask,openDialog,openWatchlist:()=>navigate('自选'),openMonitor:openLumi});welcome.append(logo,recommendations.headline);const composer=make('div','mh-composer');hero.append(welcome,recommendations.section,composer);root.append(hero);
     const head=make('header','mh-page-head'),intro=make('div','mh-page-intro');intro.append(make('h1',null,'市场概览'));
     const marketTabs=HomeFinance.tabs(Object.keys(markets),preference.market,label=>{preference.market=label;refreshMarket()},'市场切换');marketTabs.classList.add('mh-market-tabs');
     [...marketTabs.children].forEach((tab,index)=>{tab.id=`home-market-${index}`;tab.setAttribute('aria-controls','home-market-dashboard')});head.append(intro,marketTabs);root.append(head);
