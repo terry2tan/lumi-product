@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "lumi-static",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["--yes", "http-server", "-p", "5173", "-c-1", "."],
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".claude/serve.ps1", "-Root", ".", "-Port", "5173"],
       "port": 5173
     }
   ]

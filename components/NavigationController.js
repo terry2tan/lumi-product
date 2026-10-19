@@ -1,4 +1,4 @@
-/* Persistent navigation and the reused project/history records. */
+/* Persistent navigation and the reused history records. */
 window.NavigationController=class {
   constructor() {
     this.rail=document.createElement('nav');
@@ -52,7 +52,7 @@ window.NavigationController=class {
       <button type="button" class="home-sidebar-action" data-open-artifacts aria-label="对话产物" aria-pressed="false"><img src="assets/navigation/文件.svg" alt=""><span>对话产物</span></button>
     </div><div class="home-sidebar-search-area">
       <div class="home-sidebar-history-heading"><h2>全部历史</h2><button type="button" class="home-sidebar-search-toggle" aria-label="搜索历史" aria-expanded="false" aria-controls="home-history-search" title="搜索历史"><img src="assets/pages/377a9.svg" alt=""></button></div>
-      <div class="home-sidebar-search" id="home-history-search" hidden><img src="assets/pages/377a9.svg" alt=""><input type="search" placeholder="搜索" aria-label="搜索知识库和对话" autocomplete="off"><button type="button" class="home-sidebar-search-close" aria-label="收起历史搜索" title="收起搜索">×</button></div>
+      <div class="home-sidebar-search" id="home-history-search" hidden><img src="assets/pages/377a9.svg" alt=""><input type="search" placeholder="搜索" aria-label="搜索对话" autocomplete="off"><button type="button" class="home-sidebar-search-close" aria-label="收起历史搜索" title="收起搜索">×</button></div>
     </div><div class="home-sidebar-search-results" aria-label="搜索结果" hidden><div class="home-sidebar-search-list"></div><p class="home-sidebar-search-empty" role="status" hidden>未找到结果</p></div><div class="conversation-scroll">${NavigationHistoryTemplate()}</div>`;
     this.pane.onclick=e=>this.handlePaneClick(e);
     for(const button of $$('[data-sidebar-section-toggle]',this.pane))button.setAttribute('aria-label',`折叠或展开${$('span',button).textContent}分组`);
@@ -148,26 +148,13 @@ window.NavigationController=class {
     if(!term)return;
     const addResult=(name,kind,onSelect)=>{
       const button=document.createElement('button');button.type='button';button.className='home-sidebar-search-result';button.title=name;button.setAttribute('aria-label',name);
-      if(kind==='知识库'){const icon=document.createElement('img');icon.src='assets/navigation/项目-收起.svg';icon.alt='';button.append(icon)}
       const title=document.createElement('span');title.textContent=name;const type=document.createElement('small');type.textContent=kind;button.append(title,type);
       button.onclick=e=>{e.stopPropagation();onSelect()};list.append(button);
     };
-    for(const project of $$('[data-toggle-project]',this.pane)){
-      const name=project.dataset.projectName;
-      if(name.toLowerCase().includes(term))addResult(name,'知识库',()=>{
-        input.value='';this.searchRecords();
-        const block=project.closest('.sidebar-block');
-        if(block.classList.contains('is-flat'))$('[data-organize-mode="按知识库"]',block)?.click();
-        block.classList.remove('is-section-collapsed');$('[data-sidebar-section-toggle]',block).setAttribute('aria-expanded','true');
-        project.setAttribute('aria-expanded','true');project.classList.add('is-expanded');$('img',project).src='assets/navigation/项目-打开.svg';
-        document.getElementById(project.getAttribute('aria-controls')).hidden=false;
-        project.scrollIntoView({block:'nearest'});project.focus({preventScroll:true});
-      });
-    }
     const seen=new Set();
     for(const chat of $$('[data-open-chat]',this.pane)){
       const name=chat.dataset.openChat,id=chat.dataset.threadId;
-      if(seen.has(id)||!`${name} ${chat.dataset.projectName||''}`.toLowerCase().includes(term))continue;
+      if(seen.has(id)||!name.toLowerCase().includes(term))continue;
       seen.add(id);addResult(name,'对话',()=>openConversation(id));
     }
     empty.hidden=!!list.children.length;
@@ -204,18 +191,10 @@ window.NavigationController=class {
     }
   }
   historyRecords() {
-    const record=button=>({kind:'thread',id:button.dataset.threadId,title:$('b',button)?.textContent||button.dataset.openChat,time:$('em',button)?.textContent||'',project:button.dataset.projectName||''});
+    const record=button=>({kind:'thread',id:button.dataset.threadId,title:$('b',button)?.textContent||button.dataset.openChat,time:$('em',button)?.textContent||''});
     return Array.from($('.conversation-scroll',this.pane).children).filter(block=>block.classList.contains('sidebar-block')).map(block=>{
-      const heading=$('[data-sidebar-section-toggle]',block),entries=[],projects=[];
-      for(const child of block.children){
-        if(child.classList.contains('project-row')){
-          const button=$('[data-toggle-project]',child),name=$('b',button).textContent,list=$(`#${button.getAttribute('aria-controls')}`,this.pane),flat=block.classList.contains('is-flat');
-          const records=flat?$$('[data-open-chat]',block).filter(item=>item.dataset.projectName===button.dataset.projectName):$$('[data-open-chat]',list||child);
-          const project={kind:'project',name,expanded:button.getAttribute('aria-expanded')!=='false',records:records.map(button=>({...record(button),project:name}))};
-          projects.push(project);if(!flat)entries.push(project);
-        }else if(child.classList.contains('history-list')&&!child.hidden)entries.push(...$$('[data-open-chat]',child).map(record));
-      }
-      return {name:$('span',heading).textContent,expanded:heading.getAttribute('aria-expanded')!=='false',entries,projects};
+      const heading=$('[data-sidebar-section-toggle]',block),entries=$$('.history-list:not([hidden]) [data-open-chat]',block).map(record);
+      return {name:$('span',heading).textContent,expanded:heading.getAttribute('aria-expanded')!=='false',entries};
     });
   }
   addThread(thread,list=$('#sidebar-history-list',this.pane)) {
@@ -233,12 +212,11 @@ window.NavigationController=class {
       if(pin){const action=`${pinned?'取消置顶':'置顶'}${name}`;pin.setAttribute('aria-label',action);pin.setAttribute('aria-pressed',String(pinned));pin.title=action;$('img',pin).src=PinIcon.src(pinned);}
       $('[data-delete-chat]',row)?.setAttribute('aria-label',`删除${name}`);
     }
-    for(const button of $$('[data-sidebar-new-project-chat]',this.pane))button.setAttribute('aria-label',`在${button.dataset.projectName}中新对话`);
     this.searchRecords();
   }
   closeLocalMenus() {
     $$('[data-sidebar-organize-menu]',this.pane).forEach(menu=>menu.hidden=true);
-    $$('[data-sidebar-project-more],[data-sidebar-history-more]',this.pane).forEach(button=>button.setAttribute('aria-expanded','false'));
+    $$('[data-sidebar-history-more]',this.pane).forEach(button=>button.setAttribute('aria-expanded','false'));
   }
   openRecordMenu(row,x,y) {
     this.closeLocalMenus();state.context={kind:'history',row,x,y};state.menu='history';renderOverlays();
@@ -258,13 +236,6 @@ window.NavigationController=class {
       button.setAttribute('aria-expanded',String(!expanded));
       button.closest('.sidebar-block').classList.toggle('is-section-collapsed',expanded);return;
     }
-    if(button.matches('[data-toggle-project]')) {
-      const expanded=button.getAttribute('aria-expanded')!=='false';
-      button.setAttribute('aria-expanded',String(!expanded));
-      button.classList.toggle('is-expanded',!expanded);
-      $('img',button).src=`assets/navigation/项目-${expanded?'收起':'打开'}.svg`;
-      document.getElementById(button.getAttribute('aria-controls')).hidden=expanded;return;
-    }
     if(button.matches('[data-open-chat]'))return openConversation(button.dataset.threadId);
     if(button.matches('[data-pin-chat]')) {
       const row=button.closest('.sidebar-chat-row'),pinned=row.classList.toggle('is-pinned');
@@ -273,35 +244,16 @@ window.NavigationController=class {
       button.title=pinned?'取消置顶':'置顶';this.setActionLabels();return;
     }
     if(button.matches('[data-delete-chat]'))return this.deleteRecord(button.closest('.sidebar-chat-row'));
-    if(button.matches('[data-sidebar-new-project-chat]')) {
-      const project=$$('[data-toggle-project]',this.pane).find(item=>item.dataset.projectName===button.dataset.projectName);
-      const list=document.getElementById(project.getAttribute('aria-controls'));
-      const thread=ChatStore.create('新对话'),row=this.addThread(thread,list),main=$('[data-open-chat]',row);main.className='sidebar-chat-main';main.dataset.projectName=button.dataset.projectName;
-      project.setAttribute('aria-expanded','true');project.classList.add('is-expanded');$('img',project).src='assets/navigation/项目-打开.svg';list.hidden=false;
-      const full=isPageCopilotFullscreen();if(full){startNewChat();state.copilotThreadId=thread.id;render({preservePage:true})}else startNewChat({threadId:thread.id});return;
-    }
-    if(button.matches('[data-project-more]')) {
-      const project=button.closest('.project-row');const rect=button.getBoundingClientRect();
-      this.openRecordMenu(project,rect.right,rect.bottom);return;
-    }
-    if(button.matches('[data-sidebar-project-more],[data-sidebar-history-more]')) {
+    if(button.matches('[data-sidebar-history-more]')) {
       const block=button.closest('.sidebar-block');let menu=$('[data-sidebar-organize-menu]',block);
       if(!menu){menu=document.createElement('div');menu.className='sidebar-organize-menu';menu.dataset.sidebarOrganizeMenu='';menu.setAttribute('role','menu');menu.innerHTML='<p>排序方式</p><button type="button" data-sort-mode="最近更新">最近更新</button><button type="button" data-sort-mode="手动排序">手动排序</button>';$('.sidebar-section-head',block).append(menu);menu.hidden=true}
       const visible=menu.hidden;this.closeLocalMenus();menu.hidden=!visible;button.setAttribute('aria-expanded',String(visible));return;
     }
-    if(button.matches('[data-organize-mode]')) {
-      const block=button.closest('.sidebar-block'),flat=$('[data-flat-conversation-list]',block),isFlat=button.dataset.organizeMode==='在一个列表中';
-      if(isFlat){for(const row of $$('.project-chat-list>.sidebar-chat-row',block)){row.dataset.projectOrigin=row.parentElement.id;flat.append(row)}}
-      else {for(const row of Array.from(flat.children))document.getElementById(row.dataset.projectOrigin)?.append(row)}
-      flat.hidden=!isFlat;block.classList.toggle('is-flat',isFlat);
-      for(const item of $$('[data-organize-mode]',block)){item.classList.toggle('is-selected',item===button);item.setAttribute('aria-checked',String(item===button))}
-      this.closeLocalMenus();return;
-    }
     if(button.matches('[data-sort-mode]')) {
       const block=button.closest('.sidebar-block');
-      for(const list of $$('.history-list,.project-chat-list',block)) {
+      for(const list of $$('.history-list',block)) {
         if(!list._manualOrder)list._manualOrder=Array.from(list.children);
-        const rows=Array.from(list.children),rank=row=>({'刚刚':0,'1天':1,'2天':2,'3天':3}[$('em',row)?.textContent]??4);
+        const rows=Array.from(list.children),rank=row=>{const time=$('em',row)?.textContent||'';return time.startsWith('今天')?0.5:{'刚刚':0,'1天':1,'2天':2,'3天':3}[time]??4};
         rows.sort(button.dataset.sortMode==='最近更新'?(a,b)=>rank(a)-rank(b):(a,b)=>list._manualOrder.indexOf(a)-list._manualOrder.indexOf(b));list.append(...rows);
       }
       for(const item of $$('[data-sort-mode]',block)){item.classList.toggle('is-selected',item===button);item.setAttribute('aria-checked',String(item===button))}
@@ -316,9 +268,7 @@ window.NavigationController=class {
     input.onclick=e=>e.stopPropagation();input.onblur=()=>finish(true);input.onkeydown=e=>{e.stopPropagation();if(e.key==='Enter')finish(true);if(e.key==='Escape')finish(false)};
   }
   deleteRecord(row) {
-    let rows=[row];
-    if(row.classList.contains('project-row')) {const id=$('[data-toggle-project]',row)?.getAttribute('aria-controls'),list=document.getElementById(id);rows=$$('.sidebar-chat-row',list||row);list?.remove()}
-    const ids=rows.map(record=>record.dataset.threadId).filter(Boolean);ids.forEach(id=>ChatStore.remove(id));
+    const ids=[row.dataset.threadId].filter(Boolean);ids.forEach(id=>ChatStore.remove(id));
     row.remove();
     this.searchRecords();
     NavigationHistory.sync();

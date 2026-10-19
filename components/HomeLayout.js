@@ -65,10 +65,11 @@
   }
   function emptyTab(item){
     const root=make('section','home-empty-tab'),actions=make('div','home-empty-tab-actions');
-    for(const [type,title,icon]of [['project-files','知识库文件','项目-收起'],['conversation-artifacts','对话产物','文件']]){
+    const entries=[['knowledge','知识库','知识库'],...(NativeBridge.available?[['project-files','工作目录文件','项目-收起']]:[]),['conversation-artifacts','对话产物','文件']];
+    for(const [type,title,icon]of entries){
       const button=make('button','home-empty-tab-button');button.type='button';button.setAttribute('aria-label',`打开${title}`);
       const glyph=make('img');glyph.src=`assets/navigation/${icon}.svg`;glyph.alt='';button.append(glyph,make('span',null,`打开${title}`));
-      button.onclick=()=>{save();item.type=type;item.title=title;sync();requestAnimationFrame(()=>panel.querySelector('[role=treeitem]')?.focus({preventScroll:true}))};actions.append(button);
+      button.onclick=type==='knowledge'?()=>navigate('知识库'):()=>{save();item.type=type;item.title=title;sync();requestAnimationFrame(()=>panel.querySelector('[role=treeitem]')?.focus({preventScroll:true}))};actions.append(button);
     }
     root.append(actions);return root;
   }
@@ -81,8 +82,8 @@
   function conversationHeader(){
     if(state.nav!=='首页')return null;
     const owner=thread();if(!usesConversationLayout()||state.nav==='首页'&&!combinedTabs()&&(!owner||owner.kind==='personal'&&owner.onboarding?.phase==='welcome'||owner.kind!=='personal'&&!owner.messages.length))return null;
-    const personal=owner?.kind==='personal'||state.nav!=='首页'&&state.pageCopilotKind==='lumi',record=owner&&[...sidebarView.pane.querySelectorAll('[data-open-chat]')].find(node=>node.dataset.threadId===owner.id),project=record?.dataset.projectName;
-    const fresh=!owner||!personal&&!owner.messages.length,title=personal?'你的 Lumi':fresh?'新对话':owner.title,icon=make('img',combinedTabs()?'top-workspace-tab-icon':'conversation-title-icon');icon.src=personal?LumiProfile.avatar:`assets/navigation/${fresh?'新对话':project?'项目-收起':'Copilot'}.svg`;icon.alt='';if(personal)icon.dataset.lumiAvatar='';
+    const personal=owner?.kind==='personal'||state.nav!=='首页'&&state.pageCopilotKind==='lumi';
+    const fresh=!owner||!personal&&!owner.messages.length,title=personal?'你的 Lumi':fresh?'新对话':owner.title,icon=make('img',combinedTabs()?'top-workspace-tab-icon':'conversation-title-icon');icon.src=personal?LumiProfile.avatar:`assets/navigation/${fresh?'新对话':'Copilot'}.svg`;icon.alt='';if(personal)icon.dataset.lumiAvatar='';
     if(!combinedTabs()){const heading=make('div','conversation-title');heading.title=title;heading.append(icon,make('span','conversation-title-text',title));return heading}
     const selected=!fullscreenPreview(),row=make('div','top-workspace-tab'+(selected?' is-active':''));row.dataset.tabId='home-conversation';
     const button=make('button','top-workspace-tab-label');button.type='button';button.id='home-conversation-tab';button.title=title;button.setAttribute('role','tab');button.setAttribute('aria-label',title);button.setAttribute('aria-selected',String(selected));button.setAttribute('aria-controls','surface');button.tabIndex=selected?0:-1;button.onclick=chooseConversation;

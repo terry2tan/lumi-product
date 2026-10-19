@@ -13,7 +13,7 @@ window.CopilotHistory=(()=>{
   search.innerHTML='<img src="assets/pages/377a9.svg" alt="">';
   const field=make('div','copilot-history-search');field.id='copilot-history-search';field.hidden=true;
   const glyph=make('img','');glyph.src='assets/pages/377a9.svg';glyph.alt='';
-  const input=make('input','');input.type='search';input.placeholder='搜索';input.value='';input.setAttribute('aria-label','搜索知识库和对话');input.autocomplete='off';
+  const input=make('input','');input.type='search';input.placeholder='搜索';input.value='';input.setAttribute('aria-label','搜索对话');input.autocomplete='off';
   const clear=make('button','copilot-history-search-clear','×');clear.type='button';clear.title='收起搜索';clear.setAttribute('aria-label','收起历史搜索');field.append(glyph,input,clear);
   const close=make('button','copilot-toolbar-button copilot-history-close');close.type='button';close.title='关闭全部历史';close.setAttribute('aria-label','关闭全部历史');
   close.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>';
@@ -49,30 +49,16 @@ window.CopilotHistory=(()=>{
    list.replaceChildren();
    if(term){
     const seen=new Set();
-    for(const group of groups)for(const entry of [...group.projects,...group.entries.filter(entry=>entry.kind==='thread')]){
-     if(entry.kind==='project'&&matches(entry.name)){
-      const result=make('button','copilot-history-item copilot-history-project-result');result.type='button';result.setAttribute('aria-label',entry.name);
-      const icon=make('img','');icon.src='assets/navigation/项目-收起.svg';icon.alt='';result.append(icon,make('span','copilot-history-item-title',entry.name),make('small','copilot-history-item-time','知识库'));
-      result.onclick=()=>{expanded.set(group.name,true);expanded.set(`projects/${group.name}`,true);expanded.set(`${group.name}/${entry.name}`,true);setSearch(false,false);const target=[...list.querySelectorAll('[data-history-project]')].find(button=>button.dataset.historyProject===entry.name);target?.scrollIntoView({block:'nearest'});target?.focus({preventScroll:true})};list.append(result);
-     }
-     for(const record of entry.kind==='project'?entry.records:[entry]){
-      if(seen.has(record.id)||!matches(`${record.title} ${record.project}`))continue;
-      seen.add(record.id);list.append(threadRow(record,true));
-     }
+    for(const group of groups)for(const record of group.entries){
+     if(seen.has(record.id)||!matches(record.title))continue;
+     seen.add(record.id);list.append(threadRow(record,true));
     }
    }else{
     for(const group of groups){
      const section=make('section','copilot-history-group'),toggle=make('button','copilot-history-group-toggle',group.name),body=make('div','copilot-history-group-body');toggle.type='button';
      const opened=expanded.get(group.name)??group.expanded;toggle.setAttribute('aria-expanded',String(opened));body.hidden=!opened;
      toggle.onclick=()=>{const open=body.hidden;expanded.set(group.name,open);body.hidden=!open;toggle.setAttribute('aria-expanded',String(open))};section.append(toggle,body);
-     for(const entry of expanded.get(`projects/${group.name}`)?group.projects:group.entries){
-      if(entry.kind==='thread'){body.append(threadRow(entry));continue}
-      const project=make('button','copilot-history-project');project.type='button';project.dataset.historyProject=entry.name;project.setAttribute('aria-label',entry.name);
-      const opened=expanded.get(`${group.name}/${entry.name}`)??entry.expanded,records=make('div','copilot-history-project-records'),icon=make('img','');icon.alt='';
-      const setOpen=open=>{records.hidden=!open;project.setAttribute('aria-expanded',String(open));icon.src=`assets/navigation/项目-${open?'打开':'收起'}.svg`};setOpen(opened);project.append(icon,make('span','',entry.name));
-      project.onclick=()=>{const open=records.hidden;expanded.set(`${group.name}/${entry.name}`,open);setOpen(open)};
-      for(const record of entry.records)records.append(threadRow(record));body.append(project,records);
-     }
+     for(const entry of group.entries)body.append(threadRow(entry));
      list.append(section);
     }
    }
@@ -86,7 +72,7 @@ window.CopilotHistory=(()=>{
   close.onclick=()=>restore();header.append(title,search,field,close);page.append(header,list);panel.append(page);draw();
   if(typeof MutationObserver!=='undefined'){
    observer=new MutationObserver(()=>{if(page.isConnected)draw();else observer.disconnect()});
-   observer.observe(sidebarView.pane.querySelector('.conversation-scroll'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','hidden','aria-expanded','data-open-chat','data-project-name','data-thread-id']});
+   observer.observe(sidebarView.pane.querySelector('.conversation-scroll'),{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','hidden','aria-expanded','data-open-chat','data-thread-id']});
   }
   page.onkeydown=event=>{if(event.key==='Escape'){event.preventDefault();event.stopPropagation();restore()}};
   title.focus({preventScroll:true});

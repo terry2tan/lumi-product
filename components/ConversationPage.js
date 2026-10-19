@@ -65,6 +65,7 @@
     if(message.task){const task=el('div','conversation-task');task.append(el('span',null,message.task.title),el('span','conversation-task-status',message.task.status));content.append(task)}
     if(message.backtest&&window.BacktestChat)content.append(BacktestChat.card(message,thread));
     if(message.goal&&window.GoalChat)content.append(GoalChat.card(message,thread));
+    if(message.kb&&window.KnowledgeChat)content.append(KnowledgeChat.card(message,thread));
     item.append(personal&&message.role==='assistant'&&!message.streaming&&!message.interrupted?LumiReply.messageRow(message,thread,content):content);if(message.action)item.append(inlineAction(message.action));
     if(personal&&showStatus&&message.status)item.append(el('div','conversation-message-status',message.status==='已读'?`已读 ${message.receiptTime||message.time}`:message.status));
     if(!personal&&message.role==='assistant'&&!message.streaming&&!message.interrupted)item.append(replyActions(message,thread));return item;

@@ -1,4 +1,4 @@
-/* Project documents and generated artifacts share an expandable tree view. */
+/* Working-directory files (desktop app) and generated artifacts share an expandable tree view. */
 (() => {
   const make=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node};
   const icons={
@@ -7,31 +7,13 @@
     chevron:'<svg viewBox="0 0 16 16" fill="none"><path d="m6 3 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
   };
   const folder=(id,name,children)=>({id,name,children});
-  function projects(){return (sidebarView.historyRecords?.()||[]).flatMap(group=>group.projects||[])}
-  function projectDocument(record){
-    const owner=ChatStore.get(record.id),paragraphs=[];
-    for(const message of owner?.messages||[]){
-      if(message.role!=='assistant')continue;
-      if(message.text)paragraphs.push(message.text);
-      if(message.table)paragraphs.push([message.table.headers,...message.table.rows].map(row=>row.join(' · ')).join('\n'));
-    }
-    return {id:`project-file-${record.id}`,title:record.title,type:'text',text:paragraphs.join('\n\n')};
-  }
   function data(type,owner){
-    const catalog=projects(),project=catalog.find(item=>item.records.some(record=>record.id===owner?.id));
-    if(type==='project-files'&&NativeBridge.available)return{heading:'工作目录文件',nodes:[]};
-    if(type==='project-files'){
-      const records=project?[project]:catalog;
-      return {heading:project?`${project.name}的知识库文件`:'知识库文件',nodes:records.map(item=>folder(`project:${item.name}`,item.name,[folder(`project:${item.name}:research`,'研究资料',item.records.map(record=>({id:`project-file-${record.id}`,name:record.title,file:projectDocument(record)})))]))};
-    }
+    // The single knowledge base lives on its own page; 'project-files' now only lists the desktop app's working directory.
+    if(type==='project-files')return{heading:'工作目录文件',nodes:[]};
     const owners=owner?[owner]:[...ChatStore.threads.values()],nodes=[];
     for(const current of owners){
       const children=current.messages.filter(message=>message.role==='assistant').flatMap(message=>[...(message.document||message.report?[WorkspaceTabs.fileFor(current,message)]:[]),...(message.files||[])]).filter((file,index,list)=>list.findIndex(item=>item.id===file.id)===index).map(file=>({id:file.id,name:file.title,file}));
-      if(!children.length)continue;
-      const conversation=folder(`artifacts:${current.id}`,current.title,children),group=catalog.find(item=>item.records.some(record=>record.id===current.id));
-      if(owner||!group){nodes.push(conversation);continue}
-      let branch=nodes.find(item=>item.id===`artifacts-project:${group.name}`);
-      if(!branch){branch=folder(`artifacts-project:${group.name}`,group.name,[]);nodes.push(branch)}branch.children.push(conversation);
+      if(children.length)nodes.push(folder(`artifacts:${current.id}`,current.title,children));
     }
     return {heading:owner?`${owner.title}的对话产物`:'对话产物',nodes};
   }
@@ -62,7 +44,7 @@
     const visible=()=>rows.filter(row=>{for(let parent=row.parentElement;parent&&parent!==tree;parent=parent.parentElement)if(parent.hidden)return false;return true});
     function updateFocus(){const available=visible(),focused=available.find(row=>row.dataset.treeNode===item.focused)||available.find(row=>row.dataset.treeNode===item.selected)||available[0];for(const row of rows)row.tabIndex=row===focused?0:-1}
     for(const node of model.nodes)add(tree,node,1,null);
-    if(!model.nodes.length){const empty=make('p','home-file-tree-empty',item.type==='project-files'?'暂无知识库文件':'暂无对话产物');root.append(empty);tree.hidden=true}
+    if(!model.nodes.length){const empty=make('p','home-file-tree-empty',item.type==='project-files'?'暂无文件':'暂无对话产物');root.append(empty);tree.hidden=true}
     updateFocus();
     tree.onkeydown=event=>{
       const row=event.target.closest('[data-tree-node]');if(!row||!['ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;
