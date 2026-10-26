@@ -6,7 +6,7 @@ window.NavigationController=class {
     this.rail.id='main-navigation';
     this.rail.setAttribute('aria-label','主导航');
     this.rail.innerHTML='<div class="rail-main"></div><div class="rail-bottom"></div>';
-    for(const label of ['首页','行情','工作台','交易','商城','目标','反馈','个人中心']) {
+    for(const label of ['首页','行情','工作台','资讯','交易','商城','目标','反馈','个人中心']) {
       const button=document.createElement('button');
       button.type='button';
       button.className='rail-button';

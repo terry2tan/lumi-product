@@ -11,6 +11,8 @@ while ($true) {
   $client = $listener.AcceptTcpClient()
   try {
     $stream = $client.GetStream()
+    # Browsers open speculative connections that never send a request; drop them instead of blocking every other request.
+    $stream.ReadTimeout = 2000
     $reader = [IO.StreamReader]::new($stream, [Text.Encoding]::ASCII, $false, 4096, $true)
     $line = $reader.ReadLine()
     while ($reader.ReadLine()) {}

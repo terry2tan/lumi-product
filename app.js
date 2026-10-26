@@ -75,7 +75,8 @@ function workbench(){
  if(state.page==='projects')KnowledgeBasePage.mount(wb);
  if(state.page==='backtest')BacktestPage.mount(wb);
  if(state.page==='goals')GoalsPage.mount(wb);
- if(['catalog','documents','tasks','news','funds','futures','settings'].includes(state.page))MoreFeaturePages.mount(wb,state.page);
+ if(state.page==='news')NewsPage.mount(wb);
+ if(['catalog','documents','tasks','funds','futures','settings'].includes(state.page))MoreFeaturePages.mount(wb,state.page);
  WorkspaceTabs.syncContent(wb);
 }
 function renderOverlays(){overlays.replaceChildren();if(state.menu==='pages')pageMenu();if(state.menu==='account')account();if(state.menu==='history')historyMenu();if(state.context?.kind==='page')contextMenu();if(state.detached)detached();viewportSafeOverlays();}
